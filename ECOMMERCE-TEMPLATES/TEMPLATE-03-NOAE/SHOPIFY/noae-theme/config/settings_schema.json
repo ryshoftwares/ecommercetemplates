@@ -1,0 +1,260 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Noaé",
+    "theme_version": "1.0.0",
+    "theme_author": "Noaé",
+    "theme_documentation_url": "https://noae.example.com/theme-docs",
+    "theme_support_url": "https://noae.example.com/support"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image",
+        "info": "Optional. If left blank, the italic NO/AÉ wordmark is shown, matching the NOAÉ demo."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Default logo width",
+        "min": 80,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "default": 140
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px. Falls back to the bundled NOAÉ favicon."
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand palette"
+      },
+      {
+        "type": "paragraph",
+        "content": "These default to the fixed NOAÉ brand tokens (Cream / Dusty Rose / Sage / Charcoal Plum / Warm Gold) used throughout the master design. Adjust only if you intend to depart from the brand guidelines."
+      },
+      {
+        "type": "color",
+        "id": "color_cream",
+        "label": "Cream (page background)",
+        "default": "#FBF7F4"
+      },
+      {
+        "type": "color",
+        "id": "color_cream_soft",
+        "label": "Cream soft (alternating section background)",
+        "default": "#F5EDE7"
+      },
+      {
+        "type": "color",
+        "id": "color_rose",
+        "label": "Dusty rose (primary accent)",
+        "default": "#D9A9A0"
+      },
+      {
+        "type": "color",
+        "id": "color_rose_dark",
+        "label": "Rose dark (hover states)",
+        "default": "#C68F85"
+      },
+      {
+        "type": "color",
+        "id": "color_rose_light",
+        "label": "Rose light (announcement bar, soft fills)",
+        "default": "#EFDFD8"
+      },
+      {
+        "type": "color",
+        "id": "color_sage",
+        "label": "Sage (secondary accent)",
+        "default": "#A9B6A1"
+      },
+      {
+        "type": "color",
+        "id": "color_sage_dark",
+        "label": "Sage dark",
+        "default": "#8DA084"
+      },
+      {
+        "type": "color",
+        "id": "color_sage_light",
+        "label": "Sage light",
+        "default": "#DCE4D8"
+      },
+      {
+        "type": "color",
+        "id": "color_plum",
+        "label": "Charcoal plum (headings, buttons, footer)",
+        "default": "#3A2E30"
+      },
+      {
+        "type": "color",
+        "id": "color_plum_soft",
+        "label": "Plum soft (body text)",
+        "default": "#6B5A5C"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Warm gold (accent, eyebrows, stars)",
+        "default": "#C9A66B"
+      },
+      {
+        "type": "color",
+        "id": "color_gold_light",
+        "label": "Gold light",
+        "default": "#E4D9CC"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border",
+        "default": "#E8DED7"
+      },
+      {
+        "type": "color",
+        "id": "color_success",
+        "label": "Success",
+        "default": "#7A9471"
+      },
+      {
+        "type": "color",
+        "id": "color_error",
+        "label": "Error",
+        "default": "#B4635A"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "info": "Master design uses Cormorant Garamond (italic). Choosing another font here will not automatically apply italic styling.",
+        "default": "cormorant_garamond_i5"
+      },
+      {
+        "type": "header",
+        "content": "Body"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body / UI font",
+        "default": "nunito_sans_n4"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Container max width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1320
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "default": "https://instagram.com/noae"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "default": "https://pinterest.com/noae"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "default": "https://facebook.com/noae"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free shipping threshold (₹)",
+        "info": "Amount (in your shop's currency major unit, e.g. rupees) at which the free-shipping progress bar in the cart drawer/cart page reaches 100% and shows \"You've unlocked FREE SHIPPING\". The NOAÉ demo uses ₹1,999. Shopify's own shop currency setting (Settings > General) and any shipping rates/apps govern what actually gets charged at checkout — this setting only drives the visual progress bar copy (e.g. \"Add ₹450 more to unlock FREE SHIPPING\").",
+        "default": 1999
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_type_drawer",
+        "label": "Use bag drawer",
+        "default": true,
+        "info": "When enabled, adding a product opens the slide-in bag drawer, matching the demo. The dedicated bag page (/cart) is always available."
+      }
+    ]
+  },
+  {
+    "name": "SEO & sharing",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "default_meta_description",
+        "label": "Default meta description",
+        "default": "NOAÉ is a modern beauty brand crafting ingredient-forward skincare, haircare, wellness and body rituals. Shop bestselling serums, creams and daily rituals.",
+        "info": "Used as a fallback on any page that has no page-specific description (product/collection descriptions are preferred automatically when present)."
+      },
+      {
+        "type": "image_picker",
+        "id": "social_sharing_image",
+        "label": "Default social sharing image",
+        "info": "Used for Open Graph / Twitter previews when a page has no more specific image (e.g. no product/collection image)."
+      }
+    ]
+  },
+  {
+    "name": "Wishlist",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Shopify has no native wishlist object. Wishlist state is stored client-side in the shopper's browser via localStorage, keyed by product handle (see assets/theme.js, NoaeWishlist). It is per-browser, not synced to the customer account."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_wishlist",
+        "label": "Enable wishlist icon + heart toggles",
+        "default": true
+      }
+    ]
+  }
+]

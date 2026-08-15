@@ -1,0 +1,10 @@
+{%- comment -%}
+  snippets/quick-view-modal.liquid
+  Empty modal shell, populated live by assets/theme.js (initQuickView) from
+  Shopify's real /products/{handle}.js JSON endpoint when a
+  [data-quickview] button is clicked. Ported from the demo's quick-view
+  markup built in js/app.js -> buildQuickViewMarkup().
+{%- endcomment -%}
+<div class="noae-modal-overlay" id="quickViewOverlay" data-quickview-modal>
+  <div class="noae-modal" id="quickViewModal" data-qv-body></div>
+</div>

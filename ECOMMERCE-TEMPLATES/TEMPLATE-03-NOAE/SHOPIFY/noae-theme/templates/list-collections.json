@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "heading": "Shop by Category",
+        "subheading": "Every NOAÉ collection in one place — skincare, haircare, wellness and body."
+      }
+    }
+  },
+  "order": ["main"]
+}

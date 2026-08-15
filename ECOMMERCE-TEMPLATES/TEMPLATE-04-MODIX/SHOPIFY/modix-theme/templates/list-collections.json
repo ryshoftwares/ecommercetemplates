@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "heading": "Shop by Category",
+        "subheading": "Browse every Modix product family, from audio to wearables.",
+        "sort_by": "alphabetical"
+      }
+    }
+  },
+  "order": ["main"]
+}

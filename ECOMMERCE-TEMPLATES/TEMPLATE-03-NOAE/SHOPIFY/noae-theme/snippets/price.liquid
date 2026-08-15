@@ -1,0 +1,26 @@
+{%- comment -%}
+  snippets/price.liquid
+  Renders the .noae-price / .noae-price--compare markup from the demo's
+  product cards and PDP, using real money objects.
+  Accepts:
+    product        - a Shopify product object
+    variant        - (optional) a specific variant; defaults to product.selected_or_first_available_variant
+    wrapper_class  - (optional) CSS class for the wrapping div, default
+                     "noae-product-card__price" (PDP callers pass
+                     "noae-pdp__price-row" to match the demo's larger price type)
+{%- endcomment -%}
+{%- liquid
+  assign target_variant = variant | default: product.selected_or_first_available_variant
+  assign compare_at = target_variant.compare_at_price
+  assign current_price = target_variant.price
+  assign on_sale = false
+  if compare_at > current_price
+    assign on_sale = true
+    assign discount_pct = compare_at | minus: current_price | times: 100.0 | divided_by: compare_at | round
+  endif
+  assign wrap_class = wrapper_class | default: 'noae-product-card__price'
+-%}
+<div class="{{ wrap_class }}">
+  <span class="noae-price" data-price-current>{{ current_price | money }}</span>
+  <span class="noae-price noae-price--compare{% unless on_sale %} noae-hide{% endunless %}" data-price-compare>{{ compare_at | money }}</span>
+</div>

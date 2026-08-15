@@ -1,0 +1,72 @@
+{%- comment -%}
+  snippets/product-form.liquid
+  Native Shopify {% form 'product' %} — real variant picker rendered as
+  text-pill swatches (ported 1:1 from the demo's .swatch-list / .swatch
+  markup: product.html's Finish option uses full-text pills like
+  "Natural Oak / Sand Linen", not color dots, because Ardea finish values
+  are compound descriptions rather than single colors), qty stepper,
+  Add to Cart + Buy Now (native dynamic checkout button), and the wishlist
+  heart toggle.
+  Expects: product (required)
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+<product-form data-product-form>
+{%- form 'product', product, id: 'product-form', class: 'pdp-product-form', data-product-form-el: '' -%}
+  <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id-input>
+
+  {%- for option in product.options_with_values -%}
+    <div class="option-group" data-option-index="{{ forloop.index0 }}">
+      <div class="option-group__label">
+        <span>{{ option.name }}</span>
+        <span class="value" data-option-selected-value>{{ option.selected_value }}</span>
+      </div>
+      <div class="swatch-list" data-option-values>
+        {%- for value in option.values -%}
+          <button type="button"
+            class="swatch"
+            data-option-value
+            data-option-index="{{ forloop.parentloop.index0 }}"
+            data-value="{{ value | escape }}"
+            aria-pressed="{% if value == option.selected_value %}true{% else %}false{% endif %}">{{ value }}</button>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endfor -%}
+
+  {%- if product.metafields.custom.dimensions.value != blank -%}
+    <p class="form-hint" data-pdp-dimensions style="margin-bottom:1.5rem;">Dimensions: {{ product.metafields.custom.dimensions.value }}</p>
+  {%- endif -%}
+
+  <div class="pdp__buy-row">
+    <div class="qty-stepper" data-pdp-qty>
+      <button type="button" data-qty-dec aria-label="Decrease quantity">−</button>
+      <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="{{ 'sections.product.quantity' | t }}" data-qty-input>
+      <button type="button" data-qty-inc aria-label="Increase quantity">+</button>
+    </div>
+    <button type="submit" name="add" class="btn btn--primary" data-pdp-add{% unless current_variant.available %} disabled{% endunless %}>
+      <span data-add-text>{% if current_variant.available %}{{ 'sections.product.add_to_cart' | t }}{% else %}{{ 'sections.product.sold_out' | t }}{% endif %}</span>
+    </button>
+    {%- if current_variant.available -%}
+      <button type="button" class="btn btn--dark" data-pdp-buy-now>{{ 'sections.product.buy_now' | t }}</button>
+    {%- endif -%}
+  </div>
+
+  {%- if settings.enable_wishlist -%}
+    <div class="pdp__secondary-actions">
+      <button type="button" data-wishlist-toggle data-handle="{{ product.handle }}" aria-pressed="false">
+        {%- render 'icon', icon: 'wishlist', width: 18, height: 18 -%}
+        {{ 'sections.product.add_to_wishlist' | t }}
+      </button>
+    </div>
+  {%- endif -%}
+
+  <div class="visually-hidden" data-pdp-buy-now-wrap>{{ form | payment_button }}</div>
+{%- endform -%}
+</product-form>
+
+{%- comment -%} Full variant + availability data for assets/product.js to drive live updates. {%- endcomment -%}
+<script type="application/json" data-product-json>
+  {{ product | json }}
+</script>

@@ -1,0 +1,46 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "layout": "about",
+        "eyebrow": "Est. 2018 · Bengaluru",
+        "intro_text": "Modix started as a five-person acoustics team frustrated with headphone spec sheets that didn't hold up outside a lab. Eight years later we design and test smartphones, laptops, wireless audio, smart home devices and wearables from one studio — and we still publish the same real-world numbers we'd want to see before buying something ourselves.",
+        "values_eyebrow": "What We Believe",
+        "values_heading": "The three rules behind every Modix product"
+      },
+      "blocks": {
+        "stat-1": { "type": "stat", "settings": { "value": "2018", "label": "Studio founded in Bengaluru" } },
+        "stat-2": { "type": "stat", "settings": { "value": "16", "label": "Products currently in the lineup" } },
+        "stat-3": { "type": "stat", "settings": { "value": "4.6★", "label": "Average rating across 4,300+ reviews" } },
+        "stat-4": { "type": "stat", "settings": { "value": "300+", "label": "Drop-test cycles per chassis design" } },
+        "value-1": {
+          "type": "value_card",
+          "settings": {
+            "icon": "check-circle",
+            "title": "Real specs, not rounded ones",
+            "body": "If we can't verify a number in our own lab, we don't publish it. Battery life, water resistance and driver specs on every product page reflect measured results, not marketing best-cases."
+          }
+        },
+        "value-2": {
+          "type": "value_card",
+          "settings": {
+            "icon": "warranty",
+            "title": "A warranty you can actually read",
+            "body": "Every Modix product ships with a 1-2 year limited warranty written in plain language, with battery and material coverage called out explicitly rather than buried in fine print."
+          }
+        },
+        "value-3": {
+          "type": "value_card",
+          "settings": {
+            "icon": "home",
+            "title": "One connected system",
+            "body": "Audio, smartphones, laptops, smart home and wearables are designed to work together — Hub talks to Cam and Glow out of the box, and every device shares the same Modix Home and Health apps."
+          }
+        }
+      },
+      "block_order": ["stat-1", "stat-2", "stat-3", "stat-4", "value-1", "value-2", "value-3"]
+    }
+  },
+  "order": ["main"]
+}

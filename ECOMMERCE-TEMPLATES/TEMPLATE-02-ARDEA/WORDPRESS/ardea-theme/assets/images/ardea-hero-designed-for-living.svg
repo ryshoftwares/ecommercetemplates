@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" role="img" aria-labelledby="t1">
+<title id="t1">Sunlit living room corner with an oak lounge chair and linen sofa, rendered as warm abstract line art</title>
+<defs>
+<linearGradient id="h-bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#FAF7F2"/>
+<stop offset="45%" stop-color="#EDE6DA"/>
+<stop offset="100%" stop-color="#E3D8C4"/>
+</linearGradient>
+<radialGradient id="h-glow1" cx="78%" cy="18%" r="55%">
+<stop offset="0%" stop-color="#C98860" stop-opacity="0.38"/>
+<stop offset="100%" stop-color="#C98860" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="h-glow2" cx="12%" cy="85%" r="50%">
+<stop offset="0%" stop-color="#4B5A45" stop-opacity="0.28"/>
+<stop offset="100%" stop-color="#4B5A45" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1600" height="1100" fill="url(#h-bg)"/>
+<ellipse cx="1250" cy="220" rx="420" ry="360" fill="url(#h-glow1)"/>
+<ellipse cx="180" cy="920" rx="460" ry="320" fill="url(#h-glow2)"/>
+<rect x="0" y="760" width="1600" height="340" fill="#2E2A26" opacity="0.05"/>
+<ellipse cx="560" cy="905" rx="360" ry="46" fill="#2E2A26" opacity="0.10"/>
+<ellipse cx="1180" cy="930" rx="260" ry="36" fill="#2E2A26" opacity="0.08"/>
+<!-- sofa silhouette -->
+<g stroke="#2E2A26" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.82">
+<path d="M120 780 L120 700 Q120 660 160 660 L980 660 Q1020 660 1020 700 L1020 780"/>
+<path d="M120 780 L1020 780 L1020 860 L120 860 Z"/>
+<path d="M160 660 L160 560 Q160 520 210 520 L260 520 Q300 520 300 560 L300 660"/>
+<path d="M840 660 L840 560 Q840 520 890 520 L940 520 Q980 520 980 560 L980 660"/>
+<path d="M120 860 L90 940 M1020 860 L1050 940"/>
+<line x1="300" y1="700" x2="300" y2="860"/>
+<line x1="560" y1="700" x2="560" y2="860"/>
+<line x1="840" y1="700" x2="840" y2="860"/>
+</g>
+<!-- lounge chair silhouette -->
+<g stroke="#A9603E" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.75" transform="translate(1140,540)">
+<path d="M0 260 L0 160 Q0 100 60 100 L160 100 Q220 100 220 160 L220 260"/>
+<path d="M0 260 L220 260 L220 330 L0 330 Z"/>
+<path d="M-10 330 L-30 400 M230 330 L250 400"/>
+<path d="M0 160 L-40 200 L-40 260"/>
+<path d="M220 160 L260 200 L260 260"/>
+</g>
+<!-- side table + lamp -->
+<g stroke="#4B5A45" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" transform="translate(1420,640)">
+<line x1="0" y1="0" x2="0" y2="140"/>
+<line x1="-60" y1="140" x2="60" y2="140"/>
+<line x1="-70" y1="0" x2="70" y2="0"/>
+<path d="M-35 -30 L35 -30 L20 -90 L-20 -90 Z"/>
+<line x1="0" y1="-90" x2="0" y2="-130"/>
+</g>
+</svg>

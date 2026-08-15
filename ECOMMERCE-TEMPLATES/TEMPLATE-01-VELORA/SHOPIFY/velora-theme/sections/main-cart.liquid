@@ -1,0 +1,118 @@
+{%- comment -%}
+  sections/main-cart.liquid
+  Ported from the demo's cart.html .cart-page-layout / .cart-table-head /
+  .cart-row / .cart-summary-box markup. Rendered server-side from the real
+  cart object on first paint; assets/cart.js re-renders the same DOM after
+  any AJAX cart mutation so it never drifts from /cart.js.
+
+  DISCOUNT CODE LIMITATION (documented, not faked): Shopify does not expose
+  an API to validate or apply a discount code from theme JavaScript — codes
+  are only validated at Checkout. The field below stores the entered code on
+  the cart's note attributes (via /cart/update.js) purely so it's visible to
+  the merchant on the order, and shows the shopper an explicit message that
+  the code will be applied at checkout. No discount total is computed or
+  displayed here, unlike the demo's client-side VELORA10 simulation.
+{%- endcomment -%}
+<div class="page-band">
+  <div class="container">
+    {%- render 'breadcrumb' -%}
+    <h1>{{ section.settings.heading }}</h1>
+  </div>
+</div>
+
+<div class="container" data-cart-page>
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-empty" data-cart-empty>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="56" height="56"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+      <h3>{{ 'sections.cart.empty' | t }}</h3>
+      <p class="text-muted">{{ 'sections.cart.empty_body' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">{{ 'general.continue_shopping' | t }}</a>
+    </div>
+  {%- else -%}
+    <div class="cart-page-layout" data-cart-layout>
+      <div>
+        <div class="freeship-bar" data-freeship-bar style="margin-bottom:24px"></div>
+        <div class="cart-table-head">
+          <span>Product</span><span>Price</span><span>{{ 'sections.cart.quantity' | t }}</span><span>{{ 'sections.cart.total' | t }}</span>
+        </div>
+        <div data-cart-rows>
+          {%- for item in cart.items -%}
+            <div class="cart-row" data-line-key="{{ item.key }}">
+              <div class="cart-row-product">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 96, height: 120, crop: 'center' }}" alt="{{ item.title | escape }}" width="96" height="120">
+                {%- endif -%}
+                <div>
+                  <div class="cart-line-name"><a href="{{ item.url }}">{{ item.product.title }}</a></div>
+                  {%- if item.variant.title != 'Default Title' -%}
+                    <div class="cart-line-variant">{{ item.variant.title }}</div>
+                  {%- endif -%}
+                  <button type="button" class="cart-line-remove" data-remove-line data-key="{{ item.key }}">{{ 'sections.cart.remove' | t }}</button>
+                </div>
+              </div>
+              <div>{{ item.original_price | money }}</div>
+              <div>
+                <div class="qty-stepper" data-qty-stepper data-key="{{ item.key }}">
+                  <button type="button" data-qty-dec aria-label="Decrease quantity">-</button>
+                  <input type="number" min="1" value="{{ item.quantity }}" aria-label="{{ 'sections.cart.quantity' | t }}" data-qty-input>
+                  <button type="button" data-qty-inc aria-label="Increase quantity">+</button>
+                </div>
+              </div>
+              <div class="cart-line-price">{{ item.final_line_price | money }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+        <a href="{{ routes.all_products_collection_url }}" class="btn-text" style="margin-top:24px;display:inline-block">&larr; {{ 'general.continue_shopping' | t }}</a>
+      </div>
+
+      <div class="cart-summary-box" data-cart-summary>
+        <h3 style="margin-bottom:20px">{{ 'sections.cart.order_summary' | t }}</h3>
+
+        <form data-coupon-form data-cart-note-form>
+          <div class="coupon-row">
+            <input type="text" placeholder="{{ 'sections.cart.discount_code_placeholder' | t }}" aria-label="{{ 'sections.cart.discount_code_placeholder' | t }}" data-coupon-input>
+            <button type="submit" class="btn btn-outline btn-sm">{{ 'sections.cart.apply' | t }}</button>
+          </div>
+          <p class="coupon-msg" data-coupon-msg></p>
+          <p class="field-hint">{{ 'sections.cart.discount_note' | t }}</p>
+        </form>
+
+        <div class="summary-row"><span>{{ 'sections.cart.subtotal' | t }}</span><span data-subtotal>{{ cart.original_total_price | money }}</span></div>
+        {%- if cart.total_discount > 0 -%}
+          <div class="summary-row" data-discount-row><span>{{ 'sections.cart.discount' | t }}</span><span class="discount-amt" data-discount>-{{ cart.total_discount | money }}</span></div>
+        {%- else -%}
+          <div class="summary-row" data-discount-row style="display:none"><span>{{ 'sections.cart.discount' | t }}</span><span class="discount-amt" data-discount>{{ 0 | money }}</span></div>
+        {%- endif -%}
+        <div class="summary-row"><span>{{ 'sections.cart.shipping' | t }}</span><span data-shipping>—</span></div>
+        <div class="summary-row total"><span>{{ 'sections.cart.total' | t }}</span><span data-total>{{ cart.total_price | money }}</span></div>
+        <a href="{{ routes.cart_url }}/checkout" class="btn btn-primary btn-block" style="margin-top:20px">{{ section.settings.checkout_button_text }}</a>
+
+        <div class="trust-badges-row">
+          <div>{%- render 'icon', icon: 'shield', width: 22, height: 22 -%}{{ 'sections.cart.secure_checkout' | t }}</div>
+          <div>{%- render 'icon', icon: 'returns', width: 22, height: 22 -%}{{ 'sections.cart.easy_returns' | t }}</div>
+          <div>{%- render 'icon', icon: 'truck', width: 22, height: 22 -%}{{ 'sections.cart.fast_shipping' | t }}</div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Cart"
+    },
+    {
+      "type": "text",
+      "id": "checkout_button_text",
+      "label": "Checkout button label",
+      "default": "Proceed to Checkout"
+    }
+  ]
+}
+{% endschema %}

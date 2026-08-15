@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="t4">
+<title id="t4">Kitchen with a marble island and oak bar stools shown as warm abstract line art</title>
+<defs>
+<linearGradient id="c3-bg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#FAF7F2"/>
+<stop offset="100%" stop-color="#E3D8C4"/>
+</linearGradient>
+<radialGradient id="c3-glow" cx="75%" cy="20%" r="55%">
+<stop offset="0%" stop-color="#A9603E" stop-opacity="0.28"/>
+<stop offset="100%" stop-color="#A9603E" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#c3-bg)"/>
+<ellipse cx="600" cy="220" rx="280" ry="240" fill="url(#c3-glow)"/>
+<ellipse cx="400" cy="780" rx="300" ry="40" fill="#2E2A26" opacity="0.09"/>
+<g stroke="#2E2A26" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.82">
+<rect x="180" y="480" width="440" height="140" rx="6"/>
+<line x1="180" y1="620" x2="180" y2="700"/>
+<line x1="620" y1="620" x2="620" y2="700"/>
+<line x1="240" y1="480" x2="240" y2="440" />
+<line x1="560" y1="480" x2="560" y2="440" />
+</g>
+<g stroke="#4B5A45" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.72">
+<line x1="300" y1="700" x2="300" y2="820"/>
+<circle cx="300" cy="690" r="26"/>
+<line x1="500" y1="700" x2="500" y2="820"/>
+<circle cx="500" cy="690" r="26"/>
+</g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="t10">
+<title id="t10">Oak platform bed frame with a slatted headboard shown as warm abstract line art</title>
+<defs>
+<linearGradient id="p4-bg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#FAF7F2"/>
+<stop offset="100%" stop-color="#E3D8C4"/>
+</linearGradient>
+<radialGradient id="p4-glow" cx="25%" cy="15%" r="55%">
+<stop offset="0%" stop-color="#4B5A45" stop-opacity="0.26"/>
+<stop offset="100%" stop-color="#4B5A45" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#p4-bg)"/>
+<ellipse cx="240" cy="220" rx="280" ry="230" fill="url(#p4-glow)"/>
+<ellipse cx="400" cy="800" rx="300" ry="38" fill="#2E2A26" opacity="0.10"/>
+<g stroke="#2E2A26" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+<path d="M160 420 L160 320 L280 320 L280 420"/>
+<line x1="190" y1="330" x2="190" y2="420"/>
+<line x1="220" y1="330" x2="220" y2="420"/>
+<line x1="250" y1="330" x2="250" y2="420"/>
+<path d="M160 420 L640 420 L640 620 L160 620 Z"/>
+<line x1="160" y1="500" x2="640" y2="500"/>
+<line x1="180" y1="620" x2="170" y2="700"/>
+<line x1="620" y1="620" x2="630" y2="700"/>
+</g>
+</svg>

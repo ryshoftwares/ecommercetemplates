@@ -1,0 +1,88 @@
+{%- comment -%}
+  snippets/product-form.liquid
+  Native Shopify {% form 'product' %} — real variant picker rendered as
+  circular color swatches for a "Color" option (ported 1:1 from the demo's
+  .option-swatch markup, hex resolved from the option value's name via the
+  case statement below — same named palette as js/products.js's `colors`
+  array: Charcoal / Off-White / Electric Blue / Silver) and text pills for
+  any other option (e.g. Storage/Size, matching .option-pill), qty stepper,
+  Add to Cart + Buy Now (native dynamic checkout button), and the wishlist
+  heart toggle.
+  Expects: product (required)
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+<product-form data-product-form>
+{%- form 'product', product, id: 'product-form', class: 'pdp-product-form', data-product-form-el: '' -%}
+  <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id-input>
+
+  {%- for option in product.options_with_values -%}
+    <div class="option-group" data-option-index="{{ forloop.index0 }}">
+      <div class="option-group__label">
+        <span>{{ option.name }}</span>
+        <span class="selected-value" data-option-selected-value>{{ option.selected_value }}</span>
+      </div>
+      {%- if option.name == 'Color' or option.name == 'Colour' -%}
+        <div class="option-swatches" data-option-values>
+          {%- for value in option.values -%}
+            {%- assign swatch_hex = '#8A93A3' -%}
+            {%- case value -%}
+              {%- when 'Charcoal' -%}{%- assign swatch_hex = '#17181C' -%}
+              {%- when 'Off-White' -%}{%- assign swatch_hex = '#F5F6F8' -%}
+              {%- when 'Electric Blue' -%}{%- assign swatch_hex = '#2F5DFF' -%}
+              {%- when 'Silver' -%}{%- assign swatch_hex = '#C9CDD6' -%}
+            {%- endcase -%}
+            <button type="button"
+              class="option-swatch{% if value == option.selected_value %} is-active{% endif %}"
+              style="background:{{ swatch_hex }};{% if swatch_hex == '#F5F6F8' %}border-color:var(--color-border-strong);{% endif %}"
+              data-option-value
+              data-option-index="{{ forloop.parentloop.index0 }}"
+              data-value="{{ value | escape }}"
+              aria-pressed="{% if value == option.selected_value %}true{% else %}false{% endif %}"
+              title="{{ value }}"
+              aria-label="Select color {{ value }}"></button>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="option-pills" data-option-values>
+          {%- for value in option.values -%}
+            <button type="button"
+              class="option-pill{% if value == option.selected_value %} is-active{% endif %}"
+              data-option-value
+              data-option-index="{{ forloop.parentloop.index0 }}"
+              data-value="{{ value | escape }}"
+              aria-pressed="{% if value == option.selected_value %}true{% else %}false{% endif %}">{{ value }}</button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endfor -%}
+
+  <div class="pdp-actions">
+    <div class="qty-stepper" data-pdp-qty>
+      <button type="button" data-qty-dec aria-label="Decrease quantity">–</button>
+      <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="{{ 'sections.product.quantity' | t }}" data-qty-input>
+      <button type="button" data-qty-inc aria-label="Increase quantity">+</button>
+    </div>
+    <button type="submit" name="add" class="btn btn-primary" data-pdp-add{% unless current_variant.available %} disabled{% endunless %}>
+      <span data-add-text>{% if current_variant.available %}{{ 'sections.product.add_to_cart' | t }}{% else %}{{ 'sections.product.sold_out' | t }}{% endif %}</span>
+    </button>
+    {%- if current_variant.available -%}
+      <button type="button" class="btn btn-dark" data-pdp-buy-now>{{ 'sections.product.buy_now' | t }}</button>
+    {%- endif -%}
+    {%- if settings.enable_wishlist -%}
+      <button type="button" class="icon-btn btn-icon pdp-wishlist-btn" data-wishlist-toggle data-handle="{{ product.handle }}" aria-pressed="false" aria-label="{{ 'sections.product.add_to_wishlist' | t }}">
+        {%- render 'icon', icon: 'wishlist', width: 20, height: 20 -%}
+      </button>
+    {%- endif -%}
+  </div>
+
+  <div class="visually-hidden" data-pdp-buy-now-wrap>{{ form | payment_button }}</div>
+{%- endform -%}
+</product-form>
+
+{%- comment -%} Full variant + availability data for assets/product.js to drive live updates. {%- endcomment -%}
+<script type="application/json" data-product-json>
+  {{ product | json }}
+</script>

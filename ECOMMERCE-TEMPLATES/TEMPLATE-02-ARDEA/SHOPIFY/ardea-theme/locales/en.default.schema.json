@@ -1,0 +1,35 @@
+{
+  "settings_schema": {
+    "logo": {
+      "name": "Logo",
+      "settings": {
+        "logo_info": "Optional. If left blank, the shop name is shown as a wordmark, matching the ARDEA demo."
+      }
+    },
+    "colors": {
+      "name": "Colors",
+      "settings": {
+        "palette_info": "These default to the fixed ARDEA brand tokens (Sand / Terracotta / Deep Olive / Charcoal Brown / Cream) used throughout the master design. Adjust only if you intend to depart from the brand guidelines."
+      }
+    },
+    "typography": {
+      "name": "Typography",
+      "settings": {
+        "heading_font": "Heading font (Fraunces)",
+        "body_font": "Body font (Manrope)"
+      }
+    },
+    "cart": {
+      "name": "Cart",
+      "settings": {
+        "free_shipping_threshold_info": "Amount at which the free-delivery progress bar in the cart drawer/cart page reaches 100%. The ARDEA demo uses ₹6,000."
+      }
+    },
+    "wishlist": {
+      "name": "Wishlist",
+      "settings": {
+        "wishlist_info": "Shopify has no native wishlist object. Wishlist state is stored client-side in the shopper's browser via localStorage, keyed by product handle."
+      }
+    }
+  }
+}

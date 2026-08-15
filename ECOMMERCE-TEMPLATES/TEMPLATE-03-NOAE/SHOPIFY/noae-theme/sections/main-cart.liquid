@@ -1,0 +1,132 @@
+{%- comment -%}
+  sections/main-cart.liquid
+  Ported from the demo's cart.html .noae-cart-table / .noae-summary-card
+  markup. Rendered server-side from the real cart object on first paint;
+  assets/cart.js re-renders the same DOM after any AJAX cart mutation so it
+  never drifts from /cart.js.
+
+  DISCOUNT CODE LIMITATION (documented, not faked): Shopify does not expose
+  an API to validate or apply a discount code from theme JavaScript — codes
+  are only validated at Checkout. The coupon field below stores the entered
+  code on the cart's note attributes (via /cart/update.js) purely so it's
+  visible to the merchant on the order, and shows the shopper an explicit
+  message that the code will be applied at checkout. No discount total is
+  computed or displayed here, unlike the demo's client-side NOAE10
+  simulation in js/cart.js.
+
+  FREE SHIPPING BAR: driven by settings.cart_free_shipping_threshold
+  (config/settings_schema.json), matching the demo's "Add ₹450 more to
+  unlock FREE SHIPPING" copy.
+{%- endcomment -%}
+<section class="noae-page-header">
+  <div class="noae-container">
+    {%- render 'breadcrumb' -%}
+    <h1>{{ section.settings.heading }}</h1>
+    <p class="noae-page-header__intro">{{ section.settings.intro }}</p>
+  </div>
+</section>
+
+<div class="noae-container">
+  <div id="cartPageContent" data-cart-page>
+    {%- if cart.item_count == 0 -%}
+      <div id="cartEmptyState" class="noae-empty-state" data-cart-empty>
+        <p style="font-size:3rem;line-height:1;margin-bottom:var(--space-4);">🛍️</p>
+        <h3>{{ 'sections.cart.empty' | t }}</h3>
+        <p>{{ 'sections.cart.empty_body' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="noae-btn noae-btn--dark noae-mt-6">{{ 'general.continue_shopping' | t }}</a>
+      </div>
+    {%- else -%}
+      <div id="cartFilledState">
+        <div class="noae-cart-page" data-cart-layout>
+          <div>
+            <div id="cartPageProgress" data-freeship-bar></div>
+
+            <table class="noae-cart-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>{{ 'sections.cart.quantity' | t }}</th>
+                  <th>{{ 'sections.cart.total' | t }}</th>
+                </tr>
+              </thead>
+              <tbody id="cartTableBody" data-cart-rows>
+                {%- for item in cart.items -%}
+                  <tr data-line-key="{{ item.key }}">
+                    <td>
+                      <div class="noae-cart-table__product">
+                        {%- if item.image -%}
+                          <img src="{{ item.image | image_url: width: 180, height: 180, crop: 'center' }}" alt="{{ item.title | escape }}" width="90" height="90" loading="lazy">
+                        {%- endif -%}
+                        <div>
+                          <p class="noae-cart-item__name"><a href="{{ item.url }}">{{ item.product.title }}</a></p>
+                          {%- if item.variant.title != 'Default Title' -%}
+                            <p class="noae-cart-item__variant">Size: {{ item.variant.title }}</p>
+                          {%- endif -%}
+                          <button type="button" class="noae-cart-item__remove" data-remove-line data-key="{{ item.key }}">{{ 'sections.cart.remove' | t }}</button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{{ item.original_price | money }}</td>
+                    <td>
+                      <div class="noae-qty-selector" data-qty-stepper data-key="{{ item.key }}">
+                        <button type="button" data-qty-dec aria-label="Decrease quantity">−</button>
+                        <input type="text" readonly value="{{ item.quantity }}" data-qty-input aria-label="{{ 'sections.cart.quantity' | t }}">
+                        <button type="button" data-qty-inc aria-label="Increase quantity">+</button>
+                      </div>
+                    </td>
+                    <td><strong>{{ item.final_line_price | money }}</strong></td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+
+            <a href="{{ routes.all_products_collection_url }}" class="noae-btn noae-btn--outline noae-mt-6">{{ 'general.continue_shopping' | t }}</a>
+          </div>
+
+          <aside class="noae-summary-card" data-cart-summary>
+            <form id="couponForm" class="noae-coupon-row" data-coupon-form data-cart-note-form>
+              <input id="couponInput" placeholder="{{ 'sections.cart.discount_code_placeholder' | t }}" aria-label="{{ 'sections.cart.discount_code_placeholder' | t }}" data-coupon-input>
+              <button class="noae-btn noae-btn--outline" type="submit">{{ 'sections.cart.apply' | t }}</button>
+            </form>
+            <p id="couponFeedback" class="noae-coupon-feedback" data-coupon-msg></p>
+            <p class="noae-coupon-feedback" style="color:var(--color-plum-soft);">{{ 'sections.cart.discount_note' | t }}</p>
+
+            <div class="noae-summary-row"><span>{{ 'sections.cart.subtotal' | t }}</span><span id="summarySubtotal" data-subtotal>{{ cart.original_total_price | money }}</span></div>
+            <div class="noae-summary-row" id="summaryDiscountRow" data-discount-row{% unless cart.total_discount > 0 %} style="display:none"{% endunless %}><span>{{ 'sections.cart.discount' | t }}</span><span id="summaryDiscount" data-discount>-{{ cart.total_discount | money }}</span></div>
+            <div class="noae-summary-row"><span>{{ 'sections.cart.shipping' | t }}</span><span id="summaryShipping" data-shipping>—</span></div>
+            <div class="noae-summary-row noae-summary-row--total"><span>{{ 'sections.cart.total' | t }}</span><span id="summaryTotal" data-total>{{ cart.total_price | money }}</span></div>
+
+            <a href="{{ routes.cart_url }}/checkout" class="noae-btn noae-btn--dark noae-btn--full noae-mt-6">{{ section.settings.checkout_button_text }}</a>
+          </aside>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Bag"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "Review your selected rituals, apply a coupon, and check your total before heading to checkout."
+    },
+    {
+      "type": "text",
+      "id": "checkout_button_text",
+      "label": "Checkout button label",
+      "default": "Proceed to Checkout"
+    }
+  ]
+}
+{% endschema %}

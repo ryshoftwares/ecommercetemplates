@@ -1,0 +1,46 @@
+{
+  "current": {
+    "logo_width": 150,
+    "color_sand": "#EDE6DA",
+    "color_sand_dark": "#E3D8C4",
+    "color_terracotta": "#A9603E",
+    "color_terracotta_dark": "#8A4C32",
+    "color_olive": "#4B5A45",
+    "color_charcoal": "#2E2A26",
+    "color_cream": "#FAF7F2",
+    "color_error": "#A13E2B",
+    "font_heading": "fraunces_n5",
+    "font_body": "manrope_n4",
+    "page_width": 1360,
+    "social_instagram_link": "https://www.instagram.com/ardealiving",
+    "social_pinterest_link": "https://www.pinterest.com/ardealiving",
+    "social_facebook_link": "",
+    "social_twitter_link": "",
+    "cart_free_shipping_threshold": 6000,
+    "cart_type_drawer": true,
+    "default_meta_description": "Ardea designs modern furniture and home decor for living rooms, bedrooms, kitchens and lighting — solid oak, linen and stone, made to be lived in.",
+    "enable_wishlist": true
+  },
+  "presets": {
+    "Ardea Default": {
+      "logo_width": 150,
+      "color_sand": "#EDE6DA",
+      "color_sand_dark": "#E3D8C4",
+      "color_terracotta": "#A9603E",
+      "color_terracotta_dark": "#8A4C32",
+      "color_olive": "#4B5A45",
+      "color_charcoal": "#2E2A26",
+      "color_cream": "#FAF7F2",
+      "color_error": "#A13E2B",
+      "font_heading": "fraunces_n5",
+      "font_body": "manrope_n4",
+      "page_width": 1360,
+      "social_instagram_link": "https://www.instagram.com/ardealiving",
+      "social_pinterest_link": "https://www.pinterest.com/ardealiving",
+      "cart_free_shipping_threshold": 6000,
+      "cart_type_drawer": true,
+      "default_meta_description": "Ardea designs modern furniture and home decor for living rooms, bedrooms, kitchens and lighting — solid oak, linen and stone, made to be lived in.",
+      "enable_wishlist": true
+    }
+  }
+}

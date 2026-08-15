@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="t6">
+  <title id="t6">Editorial silhouette study of a black VELORA dress against a soft ivory backdrop</title>
+  <defs>
+    <linearGradient id="db1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7F3EC"/>
+      <stop offset="100%" stop-color="#E4D9C6"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#db1)"/>
+  <ellipse cx="450" cy="1120" rx="380" ry="60" fill="#0A0A0A" opacity="0.08"/>
+  <path d="M450 220 C 390 220 350 280 350 350 L 320 950 C 320 1010 380 1050 450 1050 C 520 1050 580 1010 580 950 L 550 350 C 550 280 510 220 450 220 Z" fill="#0A0A0A"/>
+  <path d="M450 220 C 415 255 415 320 450 360 C 485 320 485 255 450 220 Z" fill="#F7F3EC" opacity="0.9"/>
+  <path d="M360 400 C 390 600 390 800 400 950" stroke="#2B2B2B" stroke-width="1.5" opacity="0.5" fill="none"/>
+  <path d="M540 400 C 510 600 510 800 500 950" stroke="#2B2B2B" stroke-width="1.5" opacity="0.5" fill="none"/>
+  <text x="450" y="1130" font-family="Georgia, 'Playfair Display', serif" font-size="20" fill="#0A0A0A" opacity="0.55" text-anchor="middle" letter-spacing="5">VELORA — SILK DRESS</text>
+</svg>

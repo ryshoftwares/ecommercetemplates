@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | Noaé</title>
+<meta name="description" content="Complete your NOAÉ order — contact details, shipping address, delivery method, and payment, all in one secure checkout.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://www.noae-demo.com/checkout.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Checkout | Noaé">
+<meta property="og:description" content="Complete your NOAÉ order — contact, shipping, delivery and payment.">
+<meta property="og:url" content="https://www.noae-demo.com/checkout.html">
+<meta property="og:image" content="https://www.noae-demo.com/assets/images/noae-hero-daily-ritual.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Checkout | Noaé">
+<meta name="twitter:description" content="Complete your NOAÉ order — contact, shipping, delivery and payment.">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<a href="#main" class="noae-skip-link">Skip to content</a>
+
+<div class="noae-announcement">
+  <div class="noae-container">
+    <div class="noae-announcement__track">
+      <p class="noae-announcement__item is-active">Free shipping on orders over ₹1,999</p>
+      <p class="noae-announcement__item">New arrival: Vitamin C Brightening Drops</p>
+      <p class="noae-announcement__item">Use code NOAE10 for 10% off your first ritual</p>
+    </div>
+  </div>
+</div>
+
+<header class="noae-header">
+  <div class="noae-container noae-header__inner">
+    <button class="noae-hamburger" type="button" aria-label="Open menu" aria-controls="mobileNavDrawer" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="index.html" class="noae-logo">NO<span>AÉ</span></a>
+    <nav class="noae-nav" aria-label="Primary">
+      <ul class="noae-nav__list">
+        <li><a href="shop.html" class="noae-nav__link">Shop</a></li>
+        <li><a href="category.html?cat=skincare" class="noae-nav__link">Skincare</a></li>
+        <li><a href="category.html?cat=haircare" class="noae-nav__link">Haircare</a></li>
+        <li><a href="category.html?cat=wellness" class="noae-nav__link">Wellness</a></li>
+        <li><a href="about.html" class="noae-nav__link">Our Story</a></li>
+        <li><a href="contact.html" class="noae-nav__link">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="noae-header__actions">
+      <button type="button" class="noae-search-trigger js-search-open" aria-haspopup="dialog" aria-label="Search">
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><line x1="16.6" y1="16.6" x2="21" y2="21" stroke="currentColor" stroke-width="2"/></svg>
+        <span>Search</span>
+      </button>
+      <div class="noae-header__icon-group">
+        <button type="button" class="noae-icon-btn js-account-btn" aria-label="Account">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" fill="currentColor"/></svg>
+        </button>
+        <a href="wishlist.html" class="noae-icon-btn noae-icon-wrap" aria-label="Wishlist">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.7-10-9.3C.5 8.1 2 4.5 5.6 3.7 8 3.2 10.2 4.3 12 6.7 13.8 4.3 16 3.2 18.4 3.7 22 4.5 23.5 8.1 22 11.7 19.5 16.3 12 21 12 21z" fill="currentColor"/></svg>
+          <span class="noae-badge--count js-wishlist-count">0</span>
+        </a>
+        <button type="button" class="noae-icon-btn noae-icon-wrap js-cart-open" aria-label="Open cart">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1.2 11.2a2 2 0 01-2 1.8H9.2a2 2 0 01-2-1.8L6 8z" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M9 8V6a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+          <span class="noae-badge--count js-cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="noae-container noae-page-header">
+    <h1>Checkout</h1>
+    <p class="noae-page-header__intro">You're almost there — confirm your details below to complete your ritual order.</p>
+  </div>
+
+  <!-- Visual-only prototype: totals are illustrative; production build must wire real cart/session data -->
+  <div class="noae-container">
+    <div class="noae-checkout-layout">
+
+      <div>
+        <section class="noae-checkout-step" aria-labelledby="checkoutStep1Title">
+          <p class="noae-checkout-step__title" id="checkoutStep1Title"><span class="noae-checkout-step__num">1</span> Contact</p>
+          <div class="noae-form-grid">
+            <div class="noae-form-field">
+              <label for="checkoutEmail">Email address</label>
+              <input type="email" id="checkoutEmail" name="email" placeholder="you@email.com" autocomplete="email">
+            </div>
+            <div class="noae-form-field">
+              <label for="checkoutPhone">Phone number</label>
+              <input type="tel" id="checkoutPhone" name="phone" placeholder="98765 43210" autocomplete="tel">
+            </div>
+          </div>
+        </section>
+
+        <section class="noae-checkout-step" aria-labelledby="checkoutStep2Title">
+          <p class="noae-checkout-step__title" id="checkoutStep2Title"><span class="noae-checkout-step__num">2</span> Shipping Address</p>
+          <div class="noae-form-grid">
+            <div class="noae-form-field noae-form-field--full">
+              <label for="checkoutFullName">Full name</label>
+              <input type="text" id="checkoutFullName" name="fullName" placeholder="Ananya Rao" autocomplete="name">
+            </div>
+            <div class="noae-form-field noae-form-field--full">
+              <label for="checkoutAddress">Address</label>
+              <input type="text" id="checkoutAddress" name="address" placeholder="Flat / House no., street, locality" autocomplete="street-address">
+            </div>
+            <div class="noae-form-field">
+              <label for="checkoutCity">City</label>
+              <input type="text" id="checkoutCity" name="city" placeholder="Mumbai" autocomplete="address-level2">
+            </div>
+            <div class="noae-form-field">
+              <label for="checkoutState">State</label>
+              <input type="text" id="checkoutState" name="state" placeholder="Maharashtra" autocomplete="address-level1">
+            </div>
+            <div class="noae-form-field">
+              <label for="checkoutPincode">Pincode</label>
+              <input type="text" id="checkoutPincode" name="pincode" placeholder="400001" autocomplete="postal-code" inputmode="numeric">
+            </div>
+          </div>
+        </section>
+
+        <section class="noae-checkout-step" aria-labelledby="checkoutStep3Title">
+          <p class="noae-checkout-step__title" id="checkoutStep3Title"><span class="noae-checkout-step__num">3</span> Delivery Method</p>
+          <label class="noae-radio-card is-selected">
+            <input type="radio" name="delivery" value="standard" checked>
+            <span>
+              <span class="noae-radio-card__title">Standard Delivery — ₹99</span>
+              <span class="noae-radio-card__desc">Arrives in 3-6 business days. Free on orders over ₹1,999.</span>
+            </span>
+          </label>
+          <label class="noae-radio-card">
+            <input type="radio" name="delivery" value="express">
+            <span>
+              <span class="noae-radio-card__title">Express Delivery — ₹249</span>
+              <span class="noae-radio-card__desc">Arrives in 1-2 business days.</span>
+            </span>
+          </label>
+        </section>
+
+        <section class="noae-checkout-step" aria-labelledby="checkoutStep4Title">
+          <p class="noae-checkout-step__title" id="checkoutStep4Title"><span class="noae-checkout-step__num">4</span> Payment</p>
+          <label class="noae-radio-card is-selected">
+            <input type="radio" name="payment" value="card" id="paymentCard" checked>
+            <span>
+              <span class="noae-radio-card__title">Credit / Debit Card</span>
+              <span class="noae-radio-card__desc">Visa, Mastercard and RuPay accepted.</span>
+            </span>
+          </label>
+          <div id="cardDetailsFields" class="noae-form-grid">
+            <div class="noae-form-field noae-form-field--full">
+              <label for="checkoutCardNumber">Card number</label>
+              <input type="text" id="checkoutCardNumber" placeholder="1234 5678 9012 3456" inputmode="numeric" autocomplete="cc-number">
+            </div>
+            <div class="noae-form-field">
+              <label for="checkoutCardExpiry">Expiry date</label>
+              <input type="text" id="checkoutCardExpiry" placeholder="MM / YY" autocomplete="cc-exp">
+            </div>
+            <div class="noae-form-field">
+              <label for="checkoutCardCvv">CVV</label>
+              <input type="text" id="checkoutCardCvv" placeholder="123" inputmode="numeric" autocomplete="cc-csc">
+            </div>
+          </div>
+          <label class="noae-radio-card">
+            <input type="radio" name="payment" value="upi" id="paymentUpi">
+            <span>
+              <span class="noae-radio-card__title">UPI</span>
+              <span class="noae-radio-card__desc">Pay instantly via any UPI app.</span>
+            </span>
+          </label>
+          <label class="noae-radio-card">
+            <input type="radio" name="payment" value="cod" id="paymentCod">
+            <span>
+              <span class="noae-radio-card__title">Cash on Delivery</span>
+              <span class="noae-radio-card__desc">Pay in cash when your order arrives.</span>
+            </span>
+          </label>
+        </section>
+      </div>
+
+      <aside class="noae-summary-card">
+        <p class="noae-checkout-step__title" style="margin-bottom:var(--space-4);">Order Summary</p>
+
+        <div id="checkoutItemsList">
+          <div class="noae-summary-row"><span>Renewal Hydrating Serum (30ml) × 1</span><span>₹1,899</span></div>
+          <div class="noae-summary-row"><span>Cloud Cream Moisturizer (50ml) × 1</span><span>₹1,649</span></div>
+        </div>
+
+        <div class="noae-summary-row" style="margin-top:var(--space-4);border-top:1px solid var(--color-border);padding-top:var(--space-4);"><span>Subtotal</span><span id="summarySubtotal">₹3,548</span></div>
+        <div class="noae-summary-row"><span>Shipping</span><span id="summaryShipping">FREE</span></div>
+        <div class="noae-summary-row noae-summary-row--total"><span>Total</span><span id="summaryTotal">₹3,548</span></div>
+
+        <button type="button" id="placeOrderBtn" class="noae-btn noae-btn--dark noae-btn--full noae-mt-6">Place Order</button>
+
+        <div class="noae-security-badges">
+          <span>🔒 SSL Secure Checkout</span>
+          <span>✅ Money-Back Guarantee</span>
+          <span>💳 Verified Payments</span>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="noae-footer">
+  <div class="noae-container">
+    <div class="noae-footer__grid">
+      <div>
+        <p class="noae-footer__logo">NO<span style="color:var(--color-rose)">AÉ</span></p>
+        <p class="noae-footer__desc">Modern rituals for skin, hair, and mind — formulated with ingredient-forward honesty and a whole lot of softness.</p>
+        <div class="noae-footer__social">
+          <a href="#" aria-label="NOAÉ on Instagram">IG</a>
+          <a href="#" aria-label="NOAÉ on Pinterest">PN</a>
+          <a href="#" aria-label="NOAÉ on Facebook">FB</a>
+        </div>
+      </div>
+      <div>
+        <p class="noae-footer__heading">Shop</p>
+        <ul class="noae-footer__list">
+          <li><a href="category.html?cat=skincare">Skincare</a></li>
+          <li><a href="category.html?cat=haircare">Haircare</a></li>
+          <li><a href="category.html?cat=wellness">Wellness</a></li>
+          <li><a href="category.html?cat=body">Body</a></li>
+          <li><a href="shop.html">All Products</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="noae-footer__heading">Company</p>
+        <ul class="noae-footer__list">
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="wishlist.html">Wishlist</a></li>
+          <li><a href="cart.html">Bag</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="noae-footer__heading">Help</p>
+        <ul class="noae-footer__list">
+          <li><a href="contact.html">Shipping &amp; Returns</a></li>
+          <li><a href="contact.html">FAQs</a></li>
+          <li><a href="contact.html">Track Order</a></li>
+          <li><a href="contact.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="noae-footer__bottom">
+      <p>© <span class="js-current-year">2026</span> NOAÉ. All rights reserved.</p>
+      <p class="noae-footer__payments">Visa · Mastercard · UPI · Cash on Delivery</p>
+    </div>
+  </div>
+</footer>
+
+<div class="noae-drawer-overlay" id="navOverlay"></div>
+<div class="noae-drawer noae-drawer--left" id="mobileNavDrawer" role="dialog" aria-modal="true" aria-label="Site menu">
+  <div class="noae-drawer__header">
+    <p class="noae-drawer__title">Menu</p>
+    <button type="button" class="noae-drawer__close" id="mobileNavClose" aria-label="Close menu">✕</button>
+  </div>
+  <div class="noae-drawer__body">
+    <nav aria-label="Mobile">
+      <ul class="noae-mobile-nav__list">
+        <li><a href="shop.html" class="noae-mobile-nav__link">Shop</a></li>
+        <li><a href="category.html?cat=skincare" class="noae-mobile-nav__link">Skincare</a></li>
+        <li><a href="category.html?cat=haircare" class="noae-mobile-nav__link">Haircare</a></li>
+        <li><a href="category.html?cat=wellness" class="noae-mobile-nav__link">Wellness</a></li>
+        <li><a href="category.html?cat=body" class="noae-mobile-nav__link">Body</a></li>
+        <li><a href="about.html" class="noae-mobile-nav__link">Our Story</a></li>
+        <li><a href="contact.html" class="noae-mobile-nav__link">Contact</a></li>
+        <li><a href="wishlist.html" class="noae-mobile-nav__link">Wishlist</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<div class="noae-drawer-overlay" id="cartOverlay"></div>
+<div class="noae-drawer noae-drawer--right noae-cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping bag">
+  <div class="noae-drawer__header">
+    <p class="noae-drawer__title">Your Bag</p>
+    <button type="button" class="noae-drawer__close" id="cartDrawerClose" aria-label="Close bag">✕</button>
+  </div>
+  <div class="noae-drawer__body">
+    <div id="cartDrawerProgress"></div>
+    <div id="cartDrawerItems"></div>
+  </div>
+  <div class="noae-cart-drawer__footer" id="cartDrawerFooter"></div>
+</div>
+
+<div class="noae-search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="noae-search-panel">
+    <form id="searchForm" class="noae-search-input-row" role="search">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><line x1="16.6" y1="16.6" x2="21" y2="21" stroke="currentColor" stroke-width="2"/></svg>
+      <label for="searchInput" class="noae-visually-hidden">Search products</label>
+      <input type="search" id="searchInput" placeholder="Search serums, cleansers, rituals...">
+      <button type="button" id="searchClose" aria-label="Close search" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">✕</button>
+    </form>
+    <div id="searchSuggestions" class="noae-search-suggestions">
+      <p style="color:var(--color-plum-soft);font-size:0.9rem;">Start typing to discover serums, cleansers, and rituals.</p>
+    </div>
+  </div>
+</div>
+
+<div id="toastRegion" class="noae-toast-region" role="status" aria-live="polite"></div>
+
+<script src="js/products.js" defer></script>
+<script src="js/cart.js" defer></script>
+<script src="js/wishlist.js" defer></script>
+<script src="js/search.js" defer></script>
+<script defer>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Visual-only prototype: radio card highlighting and card-field show/hide, no real validation or processing.
+    document.querySelectorAll('input[name="delivery"], input[name="payment"]').forEach(function (input) {
+      input.addEventListener("change", function () {
+        var group = document.getElementsByName(input.name);
+        group.forEach(function (sibling) {
+          sibling.closest(".noae-radio-card").classList.toggle("is-selected", sibling.checked);
+        });
+        var cardFields = document.getElementById("cardDetailsFields");
+        if (input.name === "payment" && cardFields) {
+          cardFields.style.display = document.getElementById("paymentCard").checked ? "grid" : "none";
+        }
+      });
+    });
+
+    var placeOrderBtn = document.getElementById("placeOrderBtn");
+    if (placeOrderBtn) {
+      placeOrderBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (window.NoaeToast) {
+          window.NoaeToast.show("This is a demo checkout — no order was placed.", "default");
+        }
+      });
+    }
+  });
+</script>
+<script src="js/app.js" defer></script>
+</body>
+</html>

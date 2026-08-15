@@ -1,0 +1,34 @@
+{%- comment -%}
+  snippets/css-variables.liquid
+  Rendered inline in layout/theme.liquid <head>, AFTER assets/theme.css is
+  linked. Overrides the static token defaults in theme.css with the
+  merchant's live theme-editor settings (Colors / Typography), so
+  config/settings_schema.json controls are real without theme.css needing to
+  be a Liquid asset itself. Token names match assets/theme.css exactly (ported
+  1:1 from the demo's css/style.css :root block).
+{%- endcomment -%}
+<style>
+  :root{
+    --color-cream: {{ settings.color_cream | default: '#FBF7F4' }};
+    --color-cream-soft: {{ settings.color_cream_soft | default: '#F5EDE7' }};
+    --color-rose: {{ settings.color_rose | default: '#D9A9A0' }};
+    --color-rose-dark: {{ settings.color_rose_dark | default: '#C68F85' }};
+    --color-rose-light: {{ settings.color_rose_light | default: '#EFDFD8' }};
+    --color-sage: {{ settings.color_sage | default: '#A9B6A1' }};
+    --color-sage-dark: {{ settings.color_sage_dark | default: '#8DA084' }};
+    --color-sage-light: {{ settings.color_sage_light | default: '#DCE4D8' }};
+    --color-plum: {{ settings.color_plum | default: '#3A2E30' }};
+    --color-plum-soft: {{ settings.color_plum_soft | default: '#6B5A5C' }};
+    --color-gold: {{ settings.color_gold | default: '#C9A66B' }};
+    --color-gold-light: {{ settings.color_gold_light | default: '#E4D9CC' }};
+    --color-white: #FFFFFF;
+    --color-border: {{ settings.color_border | default: '#E8DED7' }};
+    --color-success: {{ settings.color_success | default: '#7A9471' }};
+    --color-error: {{ settings.color_error | default: '#B4635A' }};
+    --font-heading: {{ settings.font_heading.family | default: 'Cormorant Garamond' }}, Georgia, 'Times New Roman', serif;
+    --font-body: {{ settings.font_body.family | default: 'Nunito Sans' }}, 'Segoe UI', Tahoma, sans-serif;
+    --container-max: {{ settings.page_width | default: 1320 }}px;
+  }
+</style>
+{{ settings.font_heading | font_face: font_display: 'swap' }}
+{{ settings.font_body | font_face: font_display: 'swap' }}

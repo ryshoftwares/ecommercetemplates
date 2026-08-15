@@ -1,0 +1,92 @@
+{%- comment -%}
+  sections/hero.liquid
+  Ported 1:1 from the demo's index.html .noae-hero markup: organic rose/sage
+  blobs, eyebrow, italic serif H1, description, primary + secondary CTA, and
+  the hero product image. The hero image is the page's LCP element, so it is
+  NOT lazy-loaded.
+{%- endcomment -%}
+<section class="noae-hero">
+  <div class="noae-blob noae-blob--rose noae-hero__blob-1"></div>
+  <div class="noae-blob noae-blob--sage noae-hero__blob-2"></div>
+  <div class="noae-container noae-hero__inner">
+    <div>
+      <p class="noae-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="noae-hero__title">{{ section.settings.heading }}</h1>
+      <p class="noae-hero__desc">{{ section.settings.subheading }}</p>
+      <div class="noae-hero__ctas">
+        {%- if section.settings.primary_cta_text != blank -%}
+          <a href="{{ section.settings.primary_cta_url }}" class="noae-btn noae-btn--primary">{{ section.settings.primary_cta_text }}</a>
+        {%- endif -%}
+        {%- if section.settings.secondary_cta_text != blank -%}
+          <a href="{{ section.settings.secondary_cta_url }}" class="noae-btn noae-btn--outline">{{ section.settings.secondary_cta_text }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="noae-hero__media">
+      {%- if section.settings.image -%}
+        <img src="{{ section.settings.image | image_url: width: 1600 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" width="800" height="550">
+      {%- else -%}
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'noae-hero__media-placeholder' }}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Ingredient-Forward Beauty"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "YOUR DAILY RITUAL"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Skin-first formulas with visible-ingredient honesty, built into a five-minute morning and night ritual you'll actually look forward to."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Primary button label",
+      "default": "Shop Bestsellers"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_url",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary button label",
+      "default": "Take the Skin Quiz"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_url",
+      "label": "Secondary button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,62 @@
+{%- comment -%}
+  sections/featured-collection.liquid
+  Used for both "New Arrivals" and "Best Sellers" on the homepage (and can be
+  reused anywhere), ported from the demo's .product-grid[data-home-grid]
+  pattern. Renders real {% for product in collection.products %} via
+  snippets/product-card.liquid — never hardcoded products. Point "New
+  Arrivals" at a collection sorted by "Date, new to old" and "Best Sellers"
+  at one sorted by "Best selling" in Shopify Admin > Collections.
+{%- endcomment -%}
+<section class="section{% if section.settings.alt_background %} section--alt{% endif %}" data-reveal>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-header__text">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+      {%- if section.settings.collection != blank -%}
+        <a href="{{ section.settings.collection.url }}" class="section-link">{{ section.settings.view_all_text }} {%- render 'icon', icon: 'arrow-right', width: 16, height: 16 -%}</a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.collection != blank -%}
+      <div class="product-grid">
+        {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="empty-state">
+        <p>Select a collection in the theme editor to show products here.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Just Landed" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "New Arrivals" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "The latest additions to the Modix lineup, fresh from engineering." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "text", "id": "view_all_text", "label": "\"View all\" link text", "default": "View All New" },
+    { "type": "checkbox", "id": "alt_background", "label": "Use off-white (alt) background", "default": false }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection",
+      "settings": {
+        "eyebrow": "Just Landed",
+        "heading": "New Arrivals",
+        "subheading": "The latest additions to the Modix lineup, fresh from engineering.",
+        "products_to_show": 4,
+        "view_all_text": "View All New"
+      }
+    }
+  ]
+}
+{% endschema %}

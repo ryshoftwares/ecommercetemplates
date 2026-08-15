@@ -1,0 +1,162 @@
+{%- comment -%}
+  sections/hero.liquid
+  Ported 1:1 from the demo's .hero / .hero__grid / .hero__text / .hero__media
+  markup: eyebrow dot, two-line heading, lead paragraph, primary/secondary
+  CTA, stat row, and the floating .hero__badge price/spec card. The hero
+  image is the LCP element: no loading="lazy", fetchpriority="high".
+{%- endcomment -%}
+<section class="hero" data-reveal>
+  <div class="hero__glow"></div>
+  <div class="container hero__grid">
+    <div class="hero__text">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="hero__eyebrow"><span class="dot"></span><span>{{ section.settings.eyebrow }}</span></div>
+      {%- endif -%}
+      <h1>{{ section.settings.heading_line_1 }}<br>{{ section.settings.heading_line_2 }}</h1>
+      {%- if section.settings.lead != blank -%}
+        <p class="hero__lead">{{ section.settings.lead }}</p>
+      {%- endif -%}
+      <div class="hero__actions">
+        {%- if section.settings.primary_cta_text != blank -%}
+          <a href="{{ section.settings.primary_cta_url }}" class="btn btn-primary btn-lg">{{ section.settings.primary_cta_text }}</a>
+        {%- endif -%}
+        {%- if section.settings.secondary_cta_text != blank -%}
+          <a href="{{ section.settings.secondary_cta_url }}" class="btn btn-secondary btn-lg">{{ section.settings.secondary_cta_text }}</a>
+        {%- endif -%}
+      </div>
+      {%- if section.blocks.size > 0 -%}
+        <div class="hero__stats">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'stat' -%}
+              <div class="hero__stat" {{ block.shopify_attributes }}><strong>{{ block.settings.value }}</strong><span>{{ block.settings.label }}</span></div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="hero__media">
+      {%- if section.settings.image -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 700 }}"
+          srcset="{{ section.settings.image | image_url: width: 520 }} 520w, {{ section.settings.image | image_url: width: 700 }} 700w, {{ section.settings.image | image_url: width: 1000 }} 1000w"
+          sizes="(max-width: 1024px) 90vw, 520px"
+          alt="{{ section.settings.image.alt | default: section.settings.heading_line_1 | escape }}"
+          width="700" height="700" fetchpriority="high">
+      {%- endif -%}
+      {%- if section.settings.badge_heading != blank -%}
+        <div class="hero__badge">
+          <div>
+            <strong>{{ section.settings.badge_heading }}</strong>
+            <span>{{ section.settings.badge_body }}</span>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Modix Lineup 2026"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading — line 1",
+      "default": "TECHNOLOGY,"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading — line 2",
+      "default": "REFINED."
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead paragraph",
+      "default": "Precision-engineered smartphones, laptops, audio and smart home devices — built around real specs, not marketing gloss. Every product ships with a published warranty and a full spec sheet."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Primary button label",
+      "default": "Shop Latest"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_url",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary button label",
+      "default": "Compare Models"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_url",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Floating spec badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_heading",
+      "label": "Badge heading",
+      "default": "5,000mAh"
+    },
+    {
+      "type": "text",
+      "id": "badge_body",
+      "label": "Badge body",
+      "default": "Phone 12 Pro battery"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "16" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Products Engineered" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Hero",
+      "settings": {
+        "eyebrow": "Modix Lineup 2026",
+        "heading_line_1": "TECHNOLOGY,",
+        "heading_line_2": "REFINED.",
+        "lead": "Precision-engineered smartphones, laptops, audio and smart home devices — built around real specs, not marketing gloss. Every product ships with a published warranty and a full spec sheet.",
+        "primary_cta_text": "Shop Latest",
+        "secondary_cta_text": "Compare Models",
+        "badge_heading": "5,000mAh",
+        "badge_body": "Phone 12 Pro battery"
+      },
+      "blocks": [
+        { "type": "stat", "settings": { "value": "16", "label": "Products Engineered" } },
+        { "type": "stat", "settings": { "value": "4.6★", "label": "Average Rating" } },
+        { "type": "stat", "settings": { "value": "1-2 Yr", "label": "Warranty Standard" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

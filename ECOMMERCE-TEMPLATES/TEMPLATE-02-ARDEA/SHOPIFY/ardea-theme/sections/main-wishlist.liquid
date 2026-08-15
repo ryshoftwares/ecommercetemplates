@@ -1,0 +1,40 @@
+{%- comment -%}
+  sections/main-wishlist.liquid
+  Wishlist page, ported from the demo's wishlist.html
+  (.wishlist-empty / .product-grid[data-wishlist-grid] markup). Shopify has
+  no native wishlist object, so this page ships an empty shell plus a
+  loading state; assets/theme.js (ArdeaWishlist) reads the saved product
+  handles from localStorage ("ardea_wishlist_v1" — same key/format already
+  used by snippets/product-card.liquid and sections/header.liquid's heart
+  toggles) and fetches each product's real data from Shopify's native
+  /products/{handle}.js JSON endpoint to render cards client-side — no
+  product content is ever hardcoded here.
+{%- endcomment -%}
+<nav class="breadcrumbs container" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ 'sections.wishlist.title' | t }}</li>
+  </ol>
+</nav>
+
+<section class="page-hero container">
+  <h1 class="page-hero__title">{{ 'sections.wishlist.title' | t }}</h1>
+  <p class="page-hero__lead lead" data-wishlist-page-count>0 items</p>
+</section>
+
+<section class="container section--tight">
+  <div class="wishlist-empty" data-wishlist-empty style="display:none;">
+    {%- render 'icon', icon: 'wishlist', width: 64, height: 64 -%}
+    <h2>{{ 'sections.wishlist.empty_title' | t }}</h2>
+    <p class="lead" style="margin-top:0.5rem;">{{ 'sections.wishlist.empty_body' | t }}</p>
+    <a href="{{ routes.all_products_collection_url }}" class="btn btn--dark" style="margin-top:1.5rem;">{{ 'sections.wishlist.discover' | t }}</a>
+  </div>
+  <div class="product-grid" data-wishlist-grid></div>
+</section>
+
+{% schema %}
+{
+  "name": "Wishlist page",
+  "settings": []
+}
+{% endschema %}

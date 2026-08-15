@@ -1,0 +1,104 @@
+{%- comment -%}
+  snippets/product-card.liquid
+  Ported 1:1 from the demo's js/products.js -> productCardHTML().
+  Accepts: product (required), quick_actions (optional bool, default true)
+
+  RATING METAFIELDS (documented convention — no reviews app assumed):
+    product.metafields.custom.rating        (number, e.g. 4.8)
+    product.metafields.custom.rating_count   (number, e.g. 126)
+  If a reviews app (Judge.me / Loox / etc.) is installed, point these two
+  lines at that app's namespace instead. When absent, the star row is not
+  rendered.
+
+  BADGE LOGIC (computed, never hardcoded):
+    - "Sale"       when compare_at_price > price on the card's variant
+    - "New"        when the product was published within the last 21 days
+    - "Bestseller" when the product has the tag "bestseller"
+    - "Limited"    when the product has the tag "limited"
+  (Priority mirrors the demo: Sale + one status badge can co-exist.)
+{%- endcomment -%}
+{%- liquid
+  assign card_variant = product.selected_or_first_available_variant
+  assign on_sale = false
+  if card_variant.compare_at_price > card_variant.price
+    assign on_sale = true
+    assign discount_pct = card_variant.compare_at_price | minus: card_variant.price | times: 100.0 | divided_by: card_variant.compare_at_price | round
+  endif
+
+  assign is_new = false
+  assign created_seconds = product.created_at | date: '%s'
+  assign now_seconds = 'now' | date: '%s'
+  assign age_seconds = now_seconds | minus: created_seconds
+  assign age_days = age_seconds | divided_by: 86400
+  if age_days <= 21
+    assign is_new = true
+  endif
+
+  assign is_bestseller = false
+  if product.tags contains 'bestseller'
+    assign is_bestseller = true
+  endif
+  assign is_limited = false
+  if product.tags contains 'limited'
+    assign is_limited = true
+  endif
+
+  assign badge_label = ''
+  assign badge_class = ''
+  if is_bestseller
+    assign badge_label = 'Bestseller'
+    assign badge_class = 'badge--bestseller'
+  elsif is_limited
+    assign badge_label = 'Limited'
+    assign badge_class = 'badge--limited'
+  elsif is_new
+    assign badge_label = 'New'
+    assign badge_class = 'badge--new'
+  endif
+
+  assign show_quick_actions = quick_actions | default: true
+  assign secondary_image = product.media[1] | default: product.featured_media
+
+  assign rating = product.metafields.custom.rating.value
+  assign rating_count = product.metafields.custom.rating_count.value
+-%}
+<article class="product-card" data-product-id="{{ product.id }}" data-product-handle="{{ product.handle }}" data-category="{{ product.type | handle }}">
+  <div class="product-card__media">
+    <a href="{{ product.url }}" class="product-card__link" aria-label="View {{ product.title | escape }}">
+      {%- if product.featured_media -%}
+        <img class="product-card__img product-card__img--primary" src="{{ product.featured_media | image_url: width: 600 }}" srcset="{{ product.featured_media | image_url: width: 600 }} 1x, {{ product.featured_media | image_url: width: 1200 }} 2x" alt="{{ product.featured_media.alt | default: product.title | escape }}" width="600" height="750" loading="lazy">
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'product-card__img product-card__img--primary placeholder-svg' }}
+      {%- endif -%}
+      {%- if secondary_image -%}
+        <img class="product-card__img product-card__img--hover" src="{{ secondary_image | image_url: width: 600 }}" alt="" width="600" height="750" loading="lazy" aria-hidden="true">
+      {%- endif -%}
+    </a>
+    <div class="product-card__badges">
+      {%- if badge_label != '' -%}<span class="badge {{ badge_class }}">{{ badge_label }}</span>{%- endif -%}
+      {%- if on_sale -%}<span class="badge badge--sale">-{{ discount_pct }}%</span>{%- endif -%}
+    </div>
+    {%- if settings.enable_wishlist -%}
+      <button type="button" class="icon-btn product-card__wishlist" data-wishlist-toggle data-handle="{{ product.handle }}" aria-label="Add {{ product.title | escape }} to wishlist" aria-pressed="false">
+        {%- render 'icon', icon: 'wishlist', width: 18, height: 18 -%}
+      </button>
+    {%- endif -%}
+    {%- if show_quick_actions -%}
+      <div class="product-card__actions">
+        <button type="button" class="btn btn--dark btn--sm product-card__quickadd" data-quickadd data-variant-id="{{ card_variant.id }}"{% unless card_variant.available %} disabled{% endunless %}>{% if card_variant.available %}{{ 'sections.product.quick_add' | t }}{% else %}{{ 'sections.product.sold_out' | t }}{% endif %}</button>
+        <button type="button" class="btn btn--outline btn--sm product-card__quickview" data-quickview data-handle="{{ product.handle }}">{{ 'sections.product.quick_view' | t }}</button>
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="product-card__body">
+    <p class="product-card__category">{{ product.type | default: product.collections.first.title }}</p>
+    <h3 class="product-card__name"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {%- if rating -%}
+      <div class="product-card__rating" aria-label="Rated {{ rating }} out of 5">
+        <span class="stars">{% for i in (1..5) %}<svg class="star{% if i <= rating %} star--full{% endif %}" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.7 5.9 6.3.6-4.8 4.3 1.4 6.2L10 15.6l-5.6 2.9 1.4-6.2L1 8l6.3-.6z"/></svg>{% endfor %}</span>
+        <span class="rating-count">({{ rating_count | default: 0 }})</span>
+      </div>
+    {%- endif -%}
+    {%- render 'price', product: product, variant: card_variant -%}
+  </div>
+</article>

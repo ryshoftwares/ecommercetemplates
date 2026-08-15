@@ -1,0 +1,115 @@
+<!doctype html>
+{%- comment -%}
+  layout/theme.liquid
+  Root HTML shell. Wires together: announcement-bar + header sections,
+  {{ content_for_header }} (Shopify's own required head injection),
+  {{ content_for_layout }} (the active template's rendered sections),
+  the footer section, snippets/meta-tags + snippets/json-ld-organization,
+  and the shared overlays (cart drawer / search overlay / quick view modal)
+  that assets/theme.js and assets/cart.js expect to find on every page.
+
+  FONTS: snippets/css-variables.liquid already emits
+  {{ settings.font_heading | font_face: font_display: 'swap' }} and the
+  matching Manrope line — that is Shopify's native font_picker mechanism
+  (Theme Editor > Typography), which serves Fraunces/Manrope from Shopify's
+  own font CDN with font-display: swap already applied, mirroring the
+  demo's <link rel="preconnect"> + Google Fonts @swap pattern without
+  fighting the merchant-editable font settings. We still add the two
+  preconnect hints below (harmless, matches the demo's intent) and rely on
+  css-variables.liquid for the actual @font-face + custom-property output,
+  so the font rule bodies are never duplicated in two places.
+{%- endcomment -%}
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {{ page_title }}{% if page_title != shop.name %} | {{ shop.name }}{% endif %}
+  </title>
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- else -%}
+    <meta name="description" content="{{ settings.default_meta_description | escape }}">
+  {%- endif -%}
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="robots" content="{% if template.name == 'search' or template.name == 'cart' or template.name == '404' or template.suffix == 'wishlist' %}noindex, follow{% else %}index, follow{% endif %}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  {%- render 'meta-tags' -%}
+
+  {%- if settings.favicon -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  {{ content_for_header }}
+
+  <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+  {%- render 'css-variables' -%}
+
+  {%- render 'json-ld-organization' -%}
+  {%- if template.name == 'index' -%}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | append: '/' | json }} }
+      ]
+    }
+    </script>
+  {%- endif -%}
+</head>
+<body class="template-{{ template.name }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  {%- section 'announcement-bar' -%}
+  {%- section 'header' -%}
+
+  <main id="main">
+    {{ content_for_layout }}
+  </main>
+
+  {%- section 'footer' -%}
+
+  {%- comment -%}
+    Shared overlays present on every page, matching the demo's shared markup
+    at the bottom of every .html file. NOTE: the mobile nav drawer itself is
+    rendered by sections/header.liquid (id="mobileDrawer") — not duplicated
+    here — since it needs that section's own menu setting.
+  {%- endcomment -%}
+  {%- render 'cart-drawer' -%}
+  {%- render 'quick-view-modal' -%}
+  {%- render 'search-overlay' -%}
+
+  <div class="scrim" data-scrim></div>
+
+  {%- comment -%}
+    Settings bridge: the only values assets/*.js need from Liquid settings
+    that Shopify's AJAX endpoints (/cart.js etc.) don't already return.
+    Read by assets/cart.js for the free-shipping progress bar.
+  {%- endcomment -%}
+  <script>
+    window.ArdeaSettings = {
+      cartFreeShippingThreshold: {{ settings.cart_free_shipping_threshold | default: 0 }},
+      moneyFormat: {{ shop.money_format | json }},
+      routes: {
+        cartUrl: {{ routes.cart_url | json }},
+        cartAddUrl: {{ routes.cart_add_url | json }},
+        cartChangeUrl: {{ routes.cart_change_url | json }},
+        cartUpdateUrl: {{ routes.cart_update_url | json }},
+        predictiveSearchUrl: {{ routes.predictive_search_url | json }},
+        searchUrl: {{ routes.search_url | json }}
+      }
+    };
+  </script>
+
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  <script src="{{ 'cart.js' | asset_url }}" defer></script>
+  <script src="{{ 'search.js' | asset_url }}" defer></script>
+  {%- if template.name == 'product' -%}
+    <script src="{{ 'product.js' | asset_url }}" defer></script>
+  {%- endif -%}
+</body>
+</html>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="t8">
+<title id="t8">Three-seat linen sofa with rolled arms shown as warm abstract line art</title>
+<defs>
+<linearGradient id="p2-bg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#FAF7F2"/>
+<stop offset="100%" stop-color="#E3D8C4"/>
+</linearGradient>
+<radialGradient id="p2-glow" cx="25%" cy="18%" r="55%">
+<stop offset="0%" stop-color="#4B5A45" stop-opacity="0.26"/>
+<stop offset="100%" stop-color="#4B5A45" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#p2-bg)"/>
+<ellipse cx="240" cy="220" rx="280" ry="230" fill="url(#p2-glow)"/>
+<ellipse cx="400" cy="820" rx="300" ry="40" fill="#2E2A26" opacity="0.10"/>
+<g stroke="#2E2A26" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+<path d="M140 560 L140 500 Q140 460 190 460 L610 460 Q660 460 660 500 L660 560"/>
+<path d="M140 560 L660 560 L660 700 L140 700 Z"/>
+<circle cx="200" cy="440" r="40"/>
+<circle cx="600" cy="440" r="40"/>
+<line x1="280" y1="510" x2="280" y2="700"/>
+<line x1="520" y1="510" x2="520" y2="700"/>
+<line x1="170" y1="700" x2="150" y2="770"/>
+<line x1="630" y1="700" x2="650" y2="770"/>
+</g>
+</svg>

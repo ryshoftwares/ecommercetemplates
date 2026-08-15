@@ -1,0 +1,76 @@
+{%- comment -%}
+  sections/main-search.liquid
+  Full search results page, referenced by templates/search.json. Ported from
+  the demo's search.html — uses Shopify's native `search` object (real
+  server-rendered results, {{ search.terms }}, search.results) rather than
+  the demo's client-side filter, with an empty state matching the design.
+  Live predictive suggestions in the header overlay are handled separately by
+  assets/search.js against Shopify's Predictive Search API.
+{%- endcomment -%}
+<section class="noae-page-header">
+  <div class="noae-container">
+    {%- render 'breadcrumb' -%}
+    <h1 id="searchQueryHeading">{% if search.performed %}{{ 'general.search.results_for' | t: terms: search.terms }}{% else %}{{ section.settings.heading }}{% endif %}</h1>
+  </div>
+</section>
+
+<div class="noae-container" style="padding-bottom:var(--space-9);" data-search-page>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="noae-search-input-row" style="max-width:640px;margin:0 auto var(--space-7);border-bottom:2px solid var(--color-border);padding-bottom:var(--space-4);" id="searchPageForm" data-search-page-form>
+    {%- render 'icon', icon: 'search', width: 20, height: 20 -%}
+    <input type="text" name="q" id="searchPageInput" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}" data-search-page-input>
+    <input type="hidden" name="type" value="product">
+  </form>
+
+  {%- if search.performed and search.results_count > 0 -%}
+    <p class="noae-shop-toolbar__count" id="searchResultCount" data-search-count>{{ 'general.search.results_count' | t: count: search.results_count }}</p>
+    <div class="noae-product-grid" id="searchResultsGrid" data-search-grid>
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}
+          {%- render 'product-card', product: item -%}
+        {%- else -%}
+          <article class="noae-product-card">
+            <div class="noae-product-card__body">
+              <h3 class="noae-product-card__name"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+              <p style="color:var(--color-plum-soft);">{{ item.content | strip_html | truncate: 120 }}</p>
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+      <div class="noae-pagination" id="shopPagination" data-pagination>
+        {%- paginate search.results by 24 -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}<a href="{{ part.url }}" class="noae-pagination__btn">{{ part.title }}</a>{%- else -%}<span class="noae-pagination__btn is-active">{{ part.title }}</span>{%- endif -%}
+          {%- endfor -%}
+        {%- endpaginate -%}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="noae-empty-state" id="searchEmptyState" data-search-empty>
+      <h3>{%- if search.performed -%}{{ 'general.search.no_results' | t: terms: search.terms }}{%- else -%}{{ section.settings.empty_heading }}{%- endif -%}</h3>
+      {%- unless search.performed -%}<p>{{ 'general.search.enter_term' | t }}</p>{%- endunless -%}
+      <a href="{{ routes.all_products_collection_url }}" class="noae-btn noae-btn--outline">{{ 'general.back_to_shop' | t }}</a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Default heading (no query yet)",
+      "default": "Search NOAÉ"
+    },
+    {
+      "type": "text",
+      "id": "empty_heading",
+      "label": "Empty-state heading (no query yet)",
+      "default": "Search for serums, cleansers, and rituals"
+    }
+  ]
+}
+{% endschema %}

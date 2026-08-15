@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="t12">
+<title id="t12">Arc floor lamp with a marble base shown as warm abstract line art</title>
+<defs>
+<linearGradient id="p6-bg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#FAF7F2"/>
+<stop offset="100%" stop-color="#E3D8C4"/>
+</linearGradient>
+<radialGradient id="p6-glow" cx="60%" cy="15%" r="55%">
+<stop offset="0%" stop-color="#A9603E" stop-opacity="0.30"/>
+<stop offset="100%" stop-color="#A9603E" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#p6-bg)"/>
+<ellipse cx="480" cy="220" rx="260" ry="220" fill="url(#p6-glow)"/>
+<ellipse cx="360" cy="860" rx="120" ry="24" fill="#2E2A26" opacity="0.10"/>
+<g stroke="#2E2A26" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+<ellipse cx="360" cy="850" rx="70" ry="18"/>
+<line x1="360" y1="840" x2="360" y2="380"/>
+<path d="M360 380 Q360 220 520 220 Q600 220 600 300"/>
+<path d="M540 300 L600 300 L580 370 Z"/>
+</g>
+</svg>

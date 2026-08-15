@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Line illustration of the Modix Pulse Wireless Headphones">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#2F5DFF" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#2F5DFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cup" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F0F1F5"/>
+    </linearGradient>
+  </defs>
+  <rect width="500" height="500" fill="#F5F6F8"/>
+  <circle cx="250" cy="220" r="190" fill="url(#glow)"/>
+  <path d="M140 230 C140 130 190 70 250 70 C310 70 360 130 360 230" fill="none" stroke="#17181C" stroke-width="6" stroke-linecap="round"/>
+  <path d="M150 230 C150 145 194 90 250 90 C306 90 350 145 350 230" fill="none" stroke="#2F5DFF" stroke-width="2" stroke-dasharray="4 6" opacity="0.5"/>
+  <rect x="110" y="220" width="66" height="110" rx="28" fill="url(#cup)" stroke="#17181C" stroke-width="6"/>
+  <rect x="324" y="220" width="66" height="110" rx="28" fill="url(#cup)" stroke="#17181C" stroke-width="6"/>
+  <circle cx="143" cy="275" r="14" fill="none" stroke="#2F5DFF" stroke-width="3"/>
+  <circle cx="357" cy="275" r="14" fill="none" stroke="#2F5DFF" stroke-width="3"/>
+  <line x1="176" y1="330" x2="220" y2="358" stroke="#17181C" stroke-width="4" stroke-linecap="round"/>
+</svg>

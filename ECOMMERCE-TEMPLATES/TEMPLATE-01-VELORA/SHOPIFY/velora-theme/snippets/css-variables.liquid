@@ -1,0 +1,24 @@
+{%- comment -%}
+  snippets/css-variables.liquid
+  Rendered inline in layout/theme.liquid <head>, AFTER assets/theme.css is
+  linked. Overrides the static token defaults in theme.css with the
+  merchant's live theme-editor settings (Colors / Typography / Layout), so
+  settings_schema.json controls are real — without theme.css needing to be a
+  Liquid asset itself.
+{%- endcomment -%}
+<style>
+  :root{
+    --color-black: {{ settings.color_black | default: '#0A0A0A' }};
+    --color-ivory: {{ settings.color_ivory | default: '#F7F3EC' }};
+    --color-beige: {{ settings.color_beige | default: '#C9B79C' }};
+    --color-charcoal: {{ settings.color_charcoal | default: '#2B2B2B' }};
+    --color-burgundy: {{ settings.color_accent | default: '#6E2A33' }};
+    --color-success: {{ settings.color_success | default: '#3E6E4B' }};
+    --color-error: {{ settings.color_error | default: '#A13A3A' }};
+    --font-display: {{ settings.font_heading.family | default: 'Playfair Display' }}, Georgia, 'Times New Roman', serif;
+    --font-body: {{ settings.font_body.family | default: 'Jost' }}, 'Helvetica Neue', Arial, sans-serif;
+    --container-max: {{ settings.page_width | default: 1400 }}px;
+  }
+</style>
+{{ settings.font_heading | font_face: font_display: 'swap' }}
+{{ settings.font_body | font_face: font_display: 'swap' }}

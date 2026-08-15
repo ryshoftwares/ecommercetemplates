@@ -1,0 +1,25 @@
+{%- comment -%}
+  snippets/color-swatch.liquid
+  Maps a "Finish & Color" filter value to a hex swatch, mirroring the
+  demo's shop.html hardcoded filter-swatch style="background:#..." values.
+  Used only by the round color-dot facet in sections/main-collection.liquid
+  (collection.filters). The PDP's own Finish option renders as text pills
+  instead — see snippets/product-form.liquid — because Ardea finish values
+  are compound strings like "Natural Oak / Sand Linen" rather than single
+  colors, so a single dot could not represent them meaningfully.
+  Usage: {% render 'color-swatch', name: value %} -> outputs a bare hex string
+{%- endcomment -%}
+{%- case name | downcase -%}
+  {%- when 'oak', 'natural oak' -%}#C9A876
+  {%- when 'smoked oak' -%}#8C7355
+  {%- when 'walnut', 'natural walnut' -%}#6B4A35
+  {%- when 'linen', 'sand' -%}#EDE6DA
+  {%- when 'olive', 'deep olive' -%}#4B5A45
+  {%- when 'charcoal' -%}#2E2A26
+  {%- when 'terracotta' -%}#A9603E
+  {%- when 'rattan', 'natural rattan', 'cane', 'natural cane' -%}#D8C9A3
+  {%- when 'marble', 'carrara', 'white marble' -%}#F2F2F0
+  {%- when 'black marble' -%}#2B2B2B
+  {%- when 'brass', 'brushed brass' -%}#B08A5C
+  {%- else -%}#E3D8C4
+{%- endcase -%}

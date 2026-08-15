@@ -1,0 +1,128 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Search phones, laptops, headphones…",
+      "open": "Open search",
+      "close": "Close search",
+      "popular": "Popular Right Now",
+      "no_matches": "No matches yet — press Enter to see full results",
+      "results_for": "Search results for \"{{ terms }}\"",
+      "no_results": "No results for \"{{ terms }}\". Try a different term or browse a category below.",
+      "enter_term": "Enter a search term above to find smartphones, laptops, audio and smart home devices.",
+      "results_count": "{{ count }} results"
+    },
+    "continue_shopping": "Continue Shopping"
+  },
+  "sections": {
+    "header": {
+      "open_menu": "Open menu",
+      "close_menu": "Close menu",
+      "account": "Account",
+      "account_message": "Not enabled in this static demo — production build wires this to real customer accounts.",
+      "wishlist": "Wishlist",
+      "cart": "Open cart",
+      "support": "Support",
+      "track_order": "Track Order",
+      "our_story": "Our Story"
+    },
+    "footer": {
+      "copyright": "All rights reserved."
+    },
+    "cart": {
+      "title": "Your Cart",
+      "subtotal": "Subtotal",
+      "discount": "Coupon Discount",
+      "shipping": "Shipping",
+      "total": "Total",
+      "free": "FREE",
+      "view_cart": "View Cart",
+      "checkout": "Checkout",
+      "empty": "Your cart is empty",
+      "empty_body": "Looks like you haven't added anything yet. Browse our smartphones, laptops, audio and smart home devices to get started.",
+      "remove": "Remove",
+      "quantity": "Quantity",
+      "free_shipping_unlocked": "You've unlocked FREE SHIPPING",
+      "free_shipping_remaining": "Add {{ amount }} more to unlock FREE SHIPPING",
+      "order_summary": "Order Summary",
+      "discount_code_placeholder": "Enter coupon code",
+      "apply": "Apply",
+      "discount_note": "Shopify validates and applies discount codes only at checkout — we've saved this code to your order note so our team can see it, but enter it again on the checkout step.",
+      "secure_checkout": "Secure Checkout",
+      "buyer_protection": "Buyer Protection",
+      "continue_shopping": "← Continue Shopping"
+    },
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "buy_now": "Buy Now",
+      "sold_out": "Sold Out",
+      "in_stock": "In Stock — ships in 1-2 business days",
+      "low_stock": "Only {{ count }} left in stock",
+      "out_of_stock": "Currently out of stock",
+      "quantity": "Quantity",
+      "sku": "SKU",
+      "quick_view": "Quick View",
+      "quick_add": "Quick Add",
+      "add_to_wishlist": "Add to Wishlist",
+      "overview": "Overview",
+      "features": "Key Features",
+      "specifications": "Specifications",
+      "box_contents": "What's in the Box",
+      "warranty": "Warranty",
+      "shipping_returns": "Shipping & Returns",
+      "faqs": "Frequently Asked Questions",
+      "related": "You May Also Like",
+      "recently_viewed": "Recently Viewed",
+      "compare_heading": "Compare Specs",
+      "this_product": "This Product",
+      "compare_model": "Compare",
+      "new": "New",
+      "sale": "Sale",
+      "best_seller": "Best Seller",
+      "editors_pick": "Editor's Pick",
+      "free_shipping_trust": "Free shipping over {{ amount }}",
+      "warranty_trust": "Manufacturer warranty",
+      "returns_trust": "7-day easy returns",
+      "shipping_returns_body_1": "Orders over {{ amount }} ship free; orders below that threshold carry a flat shipping fee. Most in-stock items leave our warehouse within 1-2 business days and arrive within 3-6 business days depending on your location.",
+      "shipping_returns_body_2": "Not the right fit? Unused products in original packaging can be returned within 7 days of delivery for a full refund."
+    },
+    "wishlist": {
+      "title": "Your Wishlist",
+      "intro": "Products you've saved for later, kept in this browser. Move an item straight into your cart, or remove it if you've changed your mind — nothing here is shared or synced to an account.",
+      "saved_count": "{{ count }} saved products",
+      "empty_title": "Your wishlist is empty",
+      "empty_body": "Tap the heart icon on any product to save it here for later — it'll stay in this browser until you move it to your cart or remove it.",
+      "discover": "Discover Products",
+      "move_to_cart": "Move to Cart"
+    },
+    "collection": {
+      "filter_title": "Filters",
+      "clear_all": "Clear All",
+      "sort_by": "Sort products",
+      "sort_featured": "Featured",
+      "sort_newest": "Newest",
+      "sort_price_asc": "Price: Low to High",
+      "sort_price_desc": "Price: High to Low",
+      "sort_rating": "Highest Rated",
+      "clear_filters": "Clear All Filters",
+      "show_results": "Show Results",
+      "no_products": "No products match those filters",
+      "no_products_body": "Try removing a filter or clearing all filters to see more results.",
+      "result_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "in_stock_only": "In Stock Only",
+      "category": "Category",
+      "price": "Price",
+      "color": "Color",
+      "rating": "Rating",
+      "compatibility": "Compatibility",
+      "availability": "Availability",
+      "not_found_title": "Category not found",
+      "not_found_body": "The category you're looking for doesn't exist or may have been renamed. Browse everything we carry instead."
+    },
+    "search": {
+      "title": "Search Results"
+    }
+  }
+}

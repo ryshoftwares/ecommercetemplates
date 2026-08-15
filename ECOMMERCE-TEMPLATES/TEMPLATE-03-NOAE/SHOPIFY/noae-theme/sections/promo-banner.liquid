@@ -1,0 +1,53 @@
+{%- comment -%}
+  sections/promo-banner.liquid
+  Ported 1:1 from the demo's "THE RITUAL EDIT" dark banner (.noae-promo).
+  Reused verbatim (different copy) on about.html and contact.html as a
+  generic CTA banner.
+{%- endcomment -%}
+<section class="noae-section noae-reveal">
+  <div class="noae-container">
+    <div class="noae-promo">
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.body }}</p>
+      {%- if section.settings.cta_text != blank -%}
+        <a href="{{ section.settings.cta_url }}" class="noae-btn noae-btn--primary">{{ section.settings.cta_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Ritual Edit"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Save 15% when you build your own three-step routine — mix and match any cleanser, serum, and moisturizer."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Shop The Edit"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo banner"
+    }
+  ]
+}
+{% endschema %}

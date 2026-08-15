@@ -1,0 +1,51 @@
+{%- comment -%}
+  sections/announcement-bar.liquid
+  Rotating rose-tinted announcement strip, ported 1:1 from the demo's
+  .noae-announcement / .noae-announcement__track markup. Messages are
+  block-based so merchants can add/remove/reorder without touching code.
+  Rotation handled by assets/theme.js (initAnnouncement).
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+<div class="noae-announcement">
+  <div class="noae-container">
+    <div class="noae-announcement__track">
+      {%- for block in section.blocks -%}
+        <p class="noae-announcement__item{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Message text",
+          "default": "Free shipping on orders over ₹1,999"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "message", "settings": { "text": "Free shipping on orders over ₹1,999" } },
+      { "type": "message", "settings": { "text": "New arrival: Vitamin C Brightening Drops" } },
+      { "type": "message", "settings": { "text": "Use code NOAE10 for 10% off your first ritual" } }
+    ]
+  },
+  "presets": [
+    {
+      "name": "Announcement bar"
+    }
+  ]
+}
+{% endschema %}

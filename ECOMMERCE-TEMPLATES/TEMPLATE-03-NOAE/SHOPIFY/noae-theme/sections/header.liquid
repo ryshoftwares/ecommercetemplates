@@ -1,0 +1,141 @@
+{%- comment -%}
+  sections/header.liquid
+  Italic-serif logo left / centered nav / rounded search pill + icon group
+  right, ported 1:1 from the demo's .noae-header / .noae-header__inner
+  markup, plus the mobile hamburger drawer (.noae-drawer--left). Main menu is
+  Shopify-native: linklists.<handle>.links, rendered via snippets/menu-list.
+
+  WISHLIST: Shopify has no native wishlist object/API. The heart icon + count
+  badge below are driven entirely client-side by assets/theme.js
+  (window.Noae.wishlist), which stores an array of product handles in
+  localStorage ("noae_wishlist_v1") — see config/settings_schema.json >
+  Wishlist for the merchant-facing note on this limitation.
+{%- endcomment -%}
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+-%}
+<header class="noae-header" data-site-header>
+  <div class="noae-container noae-header__inner">
+    <button class="noae-hamburger" type="button" data-drawer-open aria-label="{{ 'sections.header.open_menu' | t }}" aria-controls="mobileNavDrawer" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <a href="{{ routes.root_url }}" class="noae-logo">
+      {%- if section.settings.logo != blank or settings.logo != blank -%}
+        {%- assign header_logo = section.settings.logo | default: settings.logo -%}
+        <img src="{{ header_logo | image_url: width: 300 }}" alt="{{ shop.name }}" width="{{ section.settings.logo_width | default: 140 }}" style="width:{{ section.settings.logo_width | default: 140 }}px;height:auto;">
+      {%- else -%}
+        NO<span>AÉ</span>
+      {%- endif -%}
+    </a>
+
+    {%- if menu.links.size > 0 -%}
+      <nav class="noae-nav" aria-label="Primary">
+        {%- render 'menu-list', links: menu.links -%}
+      </nav>
+    {%- endif -%}
+
+    <div class="noae-header__actions">
+      {%- if section.settings.show_search -%}
+        <button type="button" class="noae-search-trigger" data-search-open aria-haspopup="dialog" aria-label="{{ 'general.search.open' | t }}">
+          {%- render 'icon', icon: 'search', width: 16, height: 16 -%}
+          <span>{{ 'general.search.open' | t }}</span>
+        </button>
+      {%- endif -%}
+      <div class="noae-header__icon-group">
+        {%- if section.settings.show_account -%}
+          <a class="noae-icon-btn" href="{{ routes.account_url }}" aria-label="{{ 'sections.header.account' | t }}">
+            {%- render 'icon', icon: 'account', width: 18, height: 18 -%}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.show_wishlist and settings.enable_wishlist -%}
+          <a href="{{ pages[section.settings.wishlist_page].url | default: '/pages/wishlist' }}" class="noae-icon-btn noae-icon-wrap" data-wishlist-link aria-label="{{ 'sections.header.wishlist' | t }}">
+            {%- render 'icon', icon: 'wishlist', width: 18, height: 18 -%}
+            <span class="noae-badge--count" data-wishlist-count style="display:none">0</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.show_cart -%}
+          <button type="button" class="noae-icon-btn noae-icon-wrap" data-cart-open aria-label="{{ 'sections.header.cart' | t }}">
+            {%- render 'icon', icon: 'cart', width: 18, height: 18 -%}
+            <span class="noae-badge--count" data-cart-count{% if cart.item_count == 0 %} style="display:none"{% endif %}>{{ cart.item_count }}</span>
+          </button>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="noae-drawer-overlay" data-drawer-backdrop id="navOverlay"></div>
+<div class="noae-drawer noae-drawer--left" data-mobile-drawer id="mobileNavDrawer" role="dialog" aria-modal="true" aria-label="Site menu">
+  <div class="noae-drawer__header">
+    <p class="noae-drawer__title">Menu</p>
+    <button type="button" class="noae-drawer__close" data-drawer-close aria-label="{{ 'sections.header.close_menu' | t }}">✕</button>
+  </div>
+  <div class="noae-drawer__body">
+    <nav aria-label="Mobile">
+      {%- if menu.links.size > 0 -%}
+        {%- render 'menu-list', links: menu.links, mobile: true -%}
+      {%- endif -%}
+    </nav>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image",
+      "info": "Optional — falls back to the italic NO/AÉ wordmark, matching the NOAÉ demo."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search pill",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show wishlist icon",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "wishlist_page",
+      "label": "Wishlist page handle",
+      "default": "wishlist"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart icon",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

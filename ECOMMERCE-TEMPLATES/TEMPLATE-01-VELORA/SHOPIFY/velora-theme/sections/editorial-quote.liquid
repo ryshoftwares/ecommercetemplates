@@ -1,0 +1,41 @@
+{%- comment -%}
+  sections/editorial-quote.liquid
+  Ported from the demo's .editorial-quote full-bleed black band, used
+  between the hero and "Shop by Category" on the homepage, and again on the
+  About page.
+{%- endcomment -%}
+<section class="editorial-quote reveal">
+  <div class="container">
+    <blockquote>&ldquo;{{ section.settings.quote }}&rdquo;</blockquote>
+    {%- if section.settings.citation != blank -%}<cite>{{ section.settings.citation }}</cite>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial quote",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "We don't design for a season. We design pieces you'll still be reaching for in five years."
+    },
+    {
+      "type": "text",
+      "id": "citation",
+      "label": "Citation",
+      "default": "Anaïs Moreau, Creative Director, Velora"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial quote",
+      "settings": {
+        "quote": "We don't design for a season. We design pieces you'll still be reaching for in five years.",
+        "citation": "Anaïs Moreau, Creative Director, Velora"
+      }
+    }
+  ]
+}
+{% endschema %}

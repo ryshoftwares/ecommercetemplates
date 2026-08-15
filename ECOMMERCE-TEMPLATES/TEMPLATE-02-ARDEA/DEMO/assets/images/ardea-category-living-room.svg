@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="t2">
+<title id="t2">Living room seating arrangement shown as warm abstract line art</title>
+<defs>
+<linearGradient id="c1-bg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#FAF7F2"/>
+<stop offset="100%" stop-color="#EDE6DA"/>
+</linearGradient>
+<radialGradient id="c1-glow" cx="80%" cy="15%" r="55%">
+<stop offset="0%" stop-color="#A9603E" stop-opacity="0.30"/>
+<stop offset="100%" stop-color="#A9603E" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#c1-bg)"/>
+<ellipse cx="620" cy="200" rx="300" ry="260" fill="url(#c1-glow)"/>
+<ellipse cx="400" cy="820" rx="300" ry="44" fill="#2E2A26" opacity="0.09"/>
+<g stroke="#2E2A26" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.82">
+<path d="M140 620 L140 540 Q140 500 190 500 L610 500 Q660 500 660 540 L660 620"/>
+<path d="M140 620 L660 620 L660 720 L140 720 Z"/>
+<path d="M190 500 L190 420 Q190 380 230 380 L270 380 Q310 380 310 420 L310 500"/>
+<path d="M490 500 L490 420 Q490 380 530 380 L570 380 Q610 380 610 420 L610 500"/>
+<line x1="220" y1="560" x2="220" y2="720"/>
+<line x1="580" y1="560" x2="580" y2="720"/>
+</g>
+<g stroke="#4B5A45" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+<circle cx="140" cy="800" r="60"/>
+<line x1="140" y1="860" x2="140" y2="900"/>
+<line x1="100" y1="900" x2="180" y2="900"/>
+</g>
+</svg>

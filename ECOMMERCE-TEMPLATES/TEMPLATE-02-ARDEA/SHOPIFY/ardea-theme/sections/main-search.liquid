@@ -1,0 +1,95 @@
+{%- comment -%}
+  sections/main-search.liquid
+  Search results page, ported from the demo's search.html
+  (.search-empty / .product-grid[data-search-results] markup), rebuilt on
+  Shopify's native {% paginate search.results %} against the real
+  `search` object (search.performed, search.results, search.results_count)
+  rather than the demo's client-side js/search.js array filter. Live
+  suggestions-as-you-type are handled separately by
+  snippets/search-overlay.liquid + assets/search.js against
+  /search/suggest.json.
+{%- endcomment -%}
+<section class="page-hero container">
+  <h1 class="page-hero__title">
+    {%- if search.performed -%}
+      {{ 'general.search.results_for' | t: terms: search.terms }}
+    {%- else -%}
+      Search Results
+    {%- endif -%}
+  </h1>
+  <form action="{{ routes.search_url }}" method="get" role="search" style="max-width:520px;margin-top:1.5rem;display:flex;gap:0.75rem;">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}" style="flex:1;">
+    <input type="hidden" name="type" value="product">
+    <button type="submit" class="btn btn--dark">Search</button>
+  </form>
+  {%- if search.performed -%}
+    <p class="lead" style="margin-top:1rem;">{{ 'general.search.results_count' | t: count: search.results_count }}</p>
+  {%- endif -%}
+</section>
+
+<section class="container section--tight">
+  {%- if search.performed == false -%}
+    <div class="search-empty">
+      {%- render 'icon', icon: 'empty-search', width: 64, height: 64 -%}
+      <h2>Search Ardea</h2>
+      <p class="lead" style="margin-top:0.5rem;">{{ 'general.search.enter_term' | t }}</p>
+    </div>
+  {%- elsif search.results_count == 0 -%}
+    <div class="search-empty">
+      {%- render 'icon', icon: 'empty-search', width: 64, height: 64 -%}
+      <h2>{{ 'general.search.no_results' | t: terms: search.terms }}</h2>
+    </div>
+  {%- else -%}
+    {%- paginate search.results by section.settings.results_per_page -%}
+      <div class="product-grid">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {%- render 'product-card', product: item -%}
+          {%- else -%}
+            <article class="product-card">
+              <div class="product-card__media">
+                <a href="{{ item.url }}" class="product-card__link">
+                  {%- if item.featured_image or item.image -%}
+                    <img class="product-card__img product-card__img--primary" src="{{ item.featured_image | default: item.image | image_url: width: 600 }}" alt="{{ item.title | escape }}" width="600" height="750" loading="lazy">
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'product-card__img product-card__img--primary placeholder-svg' }}
+                  {%- endif -%}
+                </a>
+              </div>
+              <div class="product-card__body">
+                <p class="product-card__category">{{ item.object_type | capitalize }}</p>
+                <h3 class="product-card__name"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+              </div>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Pagination">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" aria-label="Previous page">{%- render 'icon', icon: 'chevron', width: 12, height: 12 -%}</a>{%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}<a class="page-num" href="{{ part.url }}">{{ part.title }}</a>{%- else -%}<span class="page-num{% if part.title == paginate.current_page %} is-active{% endif %}">{{ part.title }}</span>{%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}" aria-label="Next page">{%- render 'icon', icon: 'chevron', width: 12, height: 12 -%}</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "label": "Results per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,38 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-page"
+    },
+    "story": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Since 2014",
+        "heading": "Two people, one sewing table, and a refusal to compromise on fabric",
+        "body": "<p>Velora began in a single room above a fabric wholesaler in Bengaluru, where our founder Anaïs Moreau and a pattern-cutter friend produced their first run of twelve silk dresses. The brief hasn't changed since: use real materials, cut with real tailoring, and sell fewer, better pieces rather than chasing every trend cycle.</p><p>Twelve years on, Velora works with a small number of European mills for wool and cashmere, and Indian ateliers for cutting, sewing and finishing.</p>",
+        "cta_text": "",
+        "cta_url": ""
+      },
+      "blocks": {
+        "stat-1": { "type": "stat", "settings": { "value": "2014", "label": "Founded" } },
+        "stat-2": { "type": "stat", "settings": { "value": "40+", "label": "Countries Shipped To" } },
+        "stat-3": { "type": "stat", "settings": { "value": "92%", "label": "Natural Fibres" } }
+      },
+      "block_order": ["stat-1", "stat-2", "stat-3"]
+    },
+    "quote": {
+      "type": "editorial-quote",
+      "settings": {
+        "quote": "We don't design for a season. We design pieces you'll still be reaching for in five years.",
+        "citation": "Anaïs Moreau, Creative Director, Velora"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Join the Velora List",
+        "body": "Be first to hear about new collections, private sales and styling notes from our design team."
+      }
+    }
+  },
+  "order": ["banner", "story", "quote", "newsletter"]
+}

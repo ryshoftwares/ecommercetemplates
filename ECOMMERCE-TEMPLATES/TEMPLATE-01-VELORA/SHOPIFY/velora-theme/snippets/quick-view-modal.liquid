@@ -1,0 +1,16 @@
+{%- comment -%}
+  snippets/quick-view-modal.liquid
+  Empty modal shell (ported from the demo's .modal-backdrop / .quick-view-modal).
+  assets/theme.js fetches the target product's live JSON from Shopify's native
+  `{{ '/products/{handle}.js' }}` endpoint (Product JSON) and renders the
+  qv-grid markup client-side from that response, so quick view always reflects
+  real, current product/variant data without a second full page render.
+{%- endcomment -%}
+<div class="modal-backdrop" data-quickview-modal>
+  <div class="quick-view-modal" role="dialog" aria-modal="true" aria-label="Quick view">
+    <button class="modal-close" data-qv-close aria-label="Close quick view">
+      {%- render 'icon', icon: 'close', width: 18, height: 18 -%}
+    </button>
+    <div class="qv-grid" data-qv-body></div>
+  </div>
+</div>

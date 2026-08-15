@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="t13">
+<title id="t13">Handwoven rattan pendant light hanging above a dining table shown as warm abstract line art</title>
+<defs>
+<linearGradient id="p7-bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#FAF7F2"/>
+<stop offset="100%" stop-color="#EDE6DA"/>
+</linearGradient>
+<radialGradient id="p7-glow" cx="50%" cy="15%" r="50%">
+<stop offset="0%" stop-color="#4B5A45" stop-opacity="0.26"/>
+<stop offset="100%" stop-color="#4B5A45" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#p7-bg)"/>
+<ellipse cx="400" cy="180" rx="280" ry="180" fill="url(#p7-glow)"/>
+<ellipse cx="400" cy="880" rx="240" ry="30" fill="#2E2A26" opacity="0.09"/>
+<g stroke="#2E2A26" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+<line x1="400" y1="60" x2="400" y2="300"/>
+<path d="M280 300 Q280 480 400 500 Q520 480 520 300 Z"/>
+<line x1="300" y1="340" x2="300" y2="440"/>
+<line x1="350" y1="360" x2="350" y2="470"/>
+<line x1="450" y1="360" x2="450" y2="470"/>
+<line x1="500" y1="340" x2="500" y2="440"/>
+</g>
+<g stroke="#A9603E" stroke-width="3.5" fill="none" opacity="0.6">
+<line x1="140" y1="740" x2="660" y2="740"/>
+<line x1="200" y1="740" x2="180" y2="860"/>
+<line x1="600" y1="740" x2="620" y2="860"/>
+</g>
+</svg>

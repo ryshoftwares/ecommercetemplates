@@ -1,0 +1,33 @@
+{%- comment -%}
+  snippets/cart-drawer.liquid
+  Slide-in bag drawer shell, ported from the demo's #cartDrawer /
+  .noae-cart-drawer markup. Rendered once in layout/theme.liquid. Contents are
+  driven live by assets/cart.js against Shopify's AJAX Cart API (/cart.js,
+  /cart/add.js, /cart/change.js) — the Liquid below renders the current
+  server-side cart on first paint so there is no flash of an empty drawer
+  before JS runs.
+{%- endcomment -%}
+<div class="noae-drawer-overlay" data-cart-drawer-backdrop id="cartOverlay"></div>
+<aside class="noae-drawer noae-drawer--right noae-cart-drawer" data-cart-drawer id="cartDrawer" role="dialog" aria-modal="true" aria-label="{{ 'sections.cart.title' | t }}" aria-hidden="true">
+  <div class="noae-drawer__header">
+    <p class="noae-drawer__title">{{ 'sections.cart.title' | t }}</p>
+    <button type="button" class="noae-drawer__close" data-cart-close aria-label="{{ 'sections.header.close_menu' | t }}">✕</button>
+  </div>
+  <div class="noae-drawer__body">
+    <div id="cartDrawerProgress" data-freeship-bar></div>
+    <div id="cartDrawerItems" data-cart-drawer-items>
+      {%- if cart.item_count == 0 -%}
+        <div class="noae-cart-drawer__empty" data-cart-empty-template>
+          <h3>{{ 'sections.cart.empty' | t }}</h3>
+          <p>{{ 'sections.cart.empty_body' | t }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="noae-btn noae-btn--dark noae-mt-6">{{ 'general.continue_shopping' | t }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="noae-cart-drawer__footer" id="cartDrawerFooter" data-cart-drawer-foot{% if cart.item_count == 0 %} style="display:none"{% endif %}>
+    <div class="noae-cart-subtotal-row"><span>{{ 'sections.cart.subtotal' | t }}</span><span data-subtotal>{{ cart.total_price | money }}</span></div>
+    <a href="{{ routes.cart_url }}" class="noae-btn noae-btn--outline noae-btn--full noae-mt-6">{{ 'sections.cart.view_cart' | t }}</a>
+    <a href="{{ routes.cart_url }}/checkout" class="noae-btn noae-btn--dark noae-btn--full noae-mt-6">{{ 'sections.cart.checkout' | t }}</a>
+  </div>
+</aside>

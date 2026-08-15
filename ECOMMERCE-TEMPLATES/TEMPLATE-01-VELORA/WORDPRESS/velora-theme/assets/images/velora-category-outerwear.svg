@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" role="img" aria-labelledby="t3">
+  <title id="t3">Abstract editorial imagery representing the VELORA Outerwear collection</title>
+  <defs>
+    <linearGradient id="co1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#B08A5C"/>
+      <stop offset="100%" stop-color="#6E4A2E"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="700" fill="url(#co1)"/>
+  <path d="M450 140 L 340 220 L 360 640 L 540 640 L 560 220 Z" fill="#0A0A0A" opacity="0.18"/>
+  <path d="M450 140 L 390 190 L 420 260 L 450 220 L 480 260 L 510 190 Z" fill="#F7F3EC" opacity="0.3"/>
+  <line x1="450" y1="260" x2="450" y2="620" stroke="#0A0A0A" opacity="0.25" stroke-width="2"/>
+  <text x="450" y="380" font-family="Georgia, 'Playfair Display', serif" font-size="26" fill="#0A0A0A" opacity="0.45" text-anchor="middle" letter-spacing="6">OUTERWEAR</text>
+</svg>

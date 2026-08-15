@@ -1,0 +1,182 @@
+/* =========================================================================
+   NOAÉ — Responsive Overrides
+   Dedicated media queries for 1440 / 1280 / 1024 / 768 / 480 / 390 / 375.
+   Mobile-first adjustments layered on top of css/style.css.
+   ========================================================================= */
+
+/* -------------------------- 1440px and below -------------------------- */
+@media (max-width: 1440px) {
+  :root { --container-max: 1200px; }
+  .noae-product-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* -------------------------- 1280px and below -------------------------- */
+@media (max-width: 1280px) {
+  :root { --container-max: 1080px; }
+  .noae-hero__inner { gap: var(--space-6); }
+  .noae-shop-layout { grid-template-columns: 240px 1fr; }
+  .noae-cart-page { grid-template-columns: 1fr 340px; }
+  .noae-checkout-layout { grid-template-columns: 1fr 360px; }
+}
+
+/* -------------------------- 1024px and below (tablet) -------------------------- */
+@media (max-width: 1024px) {
+  :root { --container-max: 100%; --header-h: 118px; }
+  .noae-container { padding: 0 var(--space-5); }
+
+  /* Header: keep 3-col grid but tighten spacing; nav still visible on tablet landscape */
+  .noae-nav__list { gap: var(--space-5); }
+  .noae-logo { font-size: 1.7rem; }
+
+  .noae-hero__inner { grid-template-columns: 1fr; text-align: center; }
+  .noae-hero__desc { margin-left: auto; margin-right: auto; }
+  .noae-hero__ctas { justify-content: center; }
+  .noae-hero__media { order: -1; }
+  .noae-hero__eyebrow { justify-content: center; }
+
+  .noae-concern-grid { grid-template-columns: repeat(2, 1fr); }
+  .noae-product-grid { grid-template-columns: repeat(3, 1fr); }
+  .noae-wishlist-grid { grid-template-columns: repeat(3, 1fr); }
+  .noae-scroll-row { grid-template-columns: repeat(3, 1fr); }
+
+  .noae-editorial, .noae-ethos, .noae-about-hero { grid-template-columns: 1fr; }
+  .noae-editorial__media, .noae-ethos__media { order: -1; }
+  .noae-ethos__list { grid-template-columns: 1fr; }
+
+  .noae-reviews-grid { grid-template-columns: repeat(2, 1fr); }
+  .noae-values-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .noae-shop-layout { grid-template-columns: 1fr; }
+  .noae-filters {
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+    width: min(340px, 88vw);
+    z-index: 320;
+    border-radius: 0;
+    transform: translateX(-100%);
+    transition: transform var(--transition-base);
+    overflow-y: auto;
+  }
+  .noae-filters.is-open { transform: translateX(0); }
+  .noae-filter-trigger { display: inline-flex; }
+
+  .noae-pdp { grid-template-columns: 1fr; }
+  .noae-pdp__gallery { position: static; }
+
+  .noae-cart-page { grid-template-columns: 1fr; }
+  .noae-summary-card { position: static; }
+
+  .noae-checkout-layout { grid-template-columns: 1fr; }
+  .noae-contact-layout { grid-template-columns: 1fr; }
+
+  .noae-footer__grid { grid-template-columns: 1fr 1fr; gap: var(--space-6) var(--space-5); }
+}
+
+/* -------------------------- 768px and below (large mobile / small tablet) -------------------------- */
+@media (max-width: 768px) {
+  :root { --header-h: 60px; }
+  body { font-size: 15px; }
+
+  .noae-announcement { font-size: 0.74rem; padding: var(--space-2) var(--space-3); }
+
+  /* Header: hamburger left, logo center, cart right */
+  .noae-header__inner { grid-template-columns: auto 1fr auto; padding: var(--space-3) 0; }
+  .noae-hamburger { display: flex; }
+  .noae-nav { display: none; }
+  .noae-logo { justify-self: center; font-size: 1.5rem; }
+  .noae-search-trigger span { display: none; }
+  .noae-search-trigger { padding: 9px; }
+  .noae-header__actions { gap: var(--space-1); }
+  .noae-icon-btn { width: 40px; height: 40px; }
+
+  .noae-hero { padding: var(--space-6) 0 var(--space-7); }
+  .noae-hero__blob-1 { width: 260px; height: 260px; }
+  .noae-hero__blob-2 { width: 200px; height: 200px; }
+
+  .noae-section { padding: var(--space-7) 0; }
+  .noae-concern-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+  .noae-product-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-4); }
+  .noae-wishlist-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-4); }
+  .noae-scroll-row { grid-template-columns: repeat(2, 1fr); }
+  .noae-reviews-grid { grid-template-columns: 1fr; }
+  .noae-values-grid { grid-template-columns: 1fr; }
+
+  .noae-btn--quickview { display: none; }
+
+  .noae-newsletter__form { flex-direction: column; }
+  .noae-newsletter, .noae-promo { padding: var(--space-6) var(--space-4); }
+
+  .noae-footer__grid { grid-template-columns: 1fr 1fr; }
+  .noae-footer__bottom { flex-direction: column; text-align: center; }
+
+  .noae-modal__grid { grid-template-columns: 1fr; padding: var(--space-5); }
+
+  .noae-form-grid { grid-template-columns: 1fr; }
+
+  .noae-cart-item { grid-template-columns: 60px 1fr; }
+  .noae-cart-table thead { display: none; }
+  .noae-cart-table, .noae-cart-table tbody, .noae-cart-table tr, .noae-cart-table td { display: block; width: 100%; }
+  .noae-cart-table tr { padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+  .noae-cart-table td { border-bottom: none; padding: var(--space-1) 0; }
+
+  .noae-pagination__btn { width: 36px; height: 36px; }
+}
+
+/* -------------------------- 480px and below (mobile) -------------------------- */
+@media (max-width: 480px) {
+  .noae-container { padding: 0 var(--space-4); }
+  h1 { font-size: clamp(2rem, 8vw, 2.6rem); }
+  h2 { font-size: clamp(1.6rem, 6vw, 2rem); }
+
+  .noae-hero__ctas { flex-direction: column; width: 100%; }
+  .noae-hero__ctas .noae-btn { width: 100%; }
+
+  .noae-concern-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+  .noae-concern-pill { padding: var(--space-3); }
+  .noae-concern-pill__name { font-size: 1.05rem; }
+
+  .noae-product-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-4) var(--space-3); }
+  .noae-wishlist-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-4) var(--space-3); }
+  .noae-scroll-row { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+
+  .noae-drawer { width: 92vw; }
+  .noae-search-overlay { padding-top: 56px; }
+  .noae-search-panel { padding: var(--space-4); width: 94vw; }
+
+  .noae-pdp__actions { flex-direction: column; }
+  .noae-pdp__actions .noae-btn { width: 100%; }
+  .noae-tabs__list { gap: var(--space-4); overflow-x: auto; }
+
+  .noae-summary-card, .noae-checkout-step, .noae-filters { padding: var(--space-4); }
+  .noae-coupon-row { flex-direction: column; }
+  .noae-coupon-row .noae-btn { width: 100%; }
+
+  .noae-footer__grid { grid-template-columns: 1fr; gap: var(--space-6); }
+  .noae-about-hero, .noae-editorial, .noae-ethos { gap: var(--space-5); }
+
+  .noae-toast-region { left: var(--space-3); right: var(--space-3); bottom: var(--space-3); }
+  .noae-toast { width: 100%; justify-content: center; }
+}
+
+/* -------------------------- 390px (common modern phone width) -------------------------- */
+@media (max-width: 390px) {
+  .noae-logo { font-size: 1.35rem; }
+  .noae-announcement { font-size: 0.7rem; }
+  .noae-hero__title { font-size: clamp(1.9rem, 9vw, 2.3rem); }
+  .noae-btn { padding: 13px 22px; font-size: 0.85rem; }
+  .noae-404__code { font-size: 4.4rem; }
+}
+
+/* -------------------------- 375px (smallest supported) -------------------------- */
+@media (max-width: 375px) {
+  .noae-container { padding: 0 var(--space-3); }
+  .noae-product-card__name { font-size: 1.02rem; }
+  .noae-price { font-size: 0.95rem; }
+  .noae-variant-chip { padding: 8px 14px; font-size: 0.78rem; }
+  .noae-cart-item__img, .noae-cart-table__product img { width: 60px; height: 60px; }
+}
+
+/* -------------------------- Print safety net -------------------------- */
+@media print {
+  .noae-header, .noae-footer, .noae-toast-region, .noae-drawer, .noae-modal-overlay, .noae-search-overlay { display: none !important; }
+}

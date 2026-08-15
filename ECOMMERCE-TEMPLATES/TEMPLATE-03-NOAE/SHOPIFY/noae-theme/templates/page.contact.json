@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Get In Touch",
+        "intro": "Questions about an order, an ingredient, or a ritual that's right for you? Our team typically replies within 1-2 business days.",
+        "form_title": "Send Us A Message",
+        "submit_button_text": "Send Message"
+      },
+      "blocks": {
+        "info-1": { "type": "info_card", "settings": { "icon": "📍", "title": "Studio Address", "body": "<p>NOAÉ Formulation Studio, 14th Floor, Otters Business Park, Lower Parel, Mumbai 400013, Maharashtra, India</p>" } },
+        "info-2": { "type": "info_card", "settings": { "icon": "📞", "title": "Phone", "body": "<p>+91 98765 43210<br>Mon–Sat, 10am–7pm IST</p>" } },
+        "info-3": { "type": "info_card", "settings": { "icon": "✉️", "title": "Email", "body": "<p>support@noae-demo.com<br>For order &amp; ritual support</p>" } }
+      },
+      "block_order": ["info-1", "info-2", "info-3"]
+    },
+    "cta": {
+      "type": "promo-banner",
+      "settings": {
+        "heading": "Prefer To Shop Right Away?",
+        "body": "Skip the wait and browse the full range — bestsellers, new arrivals, and everything in between.",
+        "cta_text": "Shop All Products",
+        "cta_url": "/collections/all"
+      }
+    }
+  },
+  "order": ["form", "cta"]
+}

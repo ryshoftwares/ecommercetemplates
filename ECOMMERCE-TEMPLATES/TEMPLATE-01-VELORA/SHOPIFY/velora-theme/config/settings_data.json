@@ -1,0 +1,43 @@
+{
+  "current": {
+    "logo_width": 140,
+    "color_black": "#0A0A0A",
+    "color_ivory": "#F7F3EC",
+    "color_beige": "#C9B79C",
+    "color_charcoal": "#2B2B2B",
+    "color_accent": "#6E2A33",
+    "color_success": "#3E6E4B",
+    "color_error": "#A13A3A",
+    "font_heading": "playfair_display_n6",
+    "font_body": "jost_n4",
+    "page_width": 1400,
+    "social_instagram_link": "https://instagram.com/velora",
+    "social_facebook_link": "https://facebook.com/velora",
+    "social_pinterest_link": "https://pinterest.com/velora",
+    "social_twitter_link": "",
+    "cart_free_shipping_threshold": 4000,
+    "cart_type_drawer": true,
+    "default_meta_description": "Velora is a premium fashion house crafting tailored dresses, outerwear, knitwear and accessories from responsibly sourced natural fibres. Shop the New Season collection.",
+    "enable_wishlist": true
+  },
+  "presets": {
+    "Velora Default": {
+      "logo_width": 140,
+      "color_black": "#0A0A0A",
+      "color_ivory": "#F7F3EC",
+      "color_beige": "#C9B79C",
+      "color_charcoal": "#2B2B2B",
+      "color_accent": "#6E2A33",
+      "font_heading": "playfair_display_n6",
+      "font_body": "jost_n4",
+      "page_width": 1400,
+      "social_instagram_link": "https://instagram.com/velora",
+      "social_facebook_link": "https://facebook.com/velora",
+      "social_pinterest_link": "https://pinterest.com/velora",
+      "cart_free_shipping_threshold": 4000,
+      "cart_type_drawer": true,
+      "default_meta_description": "Velora is a premium fashion house crafting tailored dresses, outerwear, knitwear and accessories from responsibly sourced natural fibres. Shop the New Season collection.",
+      "enable_wishlist": true
+    }
+  }
+}

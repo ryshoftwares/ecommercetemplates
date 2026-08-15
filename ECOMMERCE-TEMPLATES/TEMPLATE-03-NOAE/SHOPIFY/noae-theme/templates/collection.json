@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "default_intro": "Every NOAÉ ritual lives here — hydrating skincare, repairing haircare, calming wellness essentials, and softening body care, formulated with the same ingredient-forward honesty across every category.",
+        "products_per_page": 8,
+        "show_aeo_block": true,
+        "aeo_heading": "About Shopping the Full Collection",
+        "aeo_col1_heading": "How to choose by skin type",
+        "aeo_col1_body": "Filter by Skin Type to narrow to formulas suited for Dry, Oily, Combination or All skin types. Most NOAÉ serums and creams work across skin types; masks and clarifying formulas are more targeted.",
+        "aeo_col2_heading": "Shipping & Returns",
+        "aeo_col2_body": "Orders over ₹1,999 ship free across India in 3-6 business days. Unopened products can be returned within 14 days of delivery for a full refund."
+      }
+    }
+  },
+  "order": ["main"]
+}

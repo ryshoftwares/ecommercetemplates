@@ -1,0 +1,16 @@
+# Velora — robots.txt
+# Demo/documentation-quality file for a static template. In production this
+# would be served from the site root by the hosting platform.
+
+User-agent: *
+Allow: /
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+
+Disallow: /cart.html
+Disallow: /checkout.html
+Disallow: /wishlist.html
+Disallow: /search.html
+
+Sitemap: sitemap.xml

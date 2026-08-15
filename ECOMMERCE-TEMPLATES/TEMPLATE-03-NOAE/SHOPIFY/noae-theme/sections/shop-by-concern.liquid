@@ -1,0 +1,103 @@
+{%- comment -%}
+  sections/shop-by-concern.liquid
+  Ported 1:1 from the demo's "SHOP BY CONCERN" grid (.noae-concern-grid /
+  .noae-concern-pill): one block per category pill, each linking to a real
+  Shopify collection.
+{%- endcomment -%}
+<section class="noae-section noae-reveal">
+  <div class="noae-container">
+    <div class="noae-section__head">
+      <span class="noae-section__eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+      <p class="noae-section__desc">{{ section.settings.description }}</p>
+    </div>
+    <div class="noae-concern-grid">
+      {%- for block in section.blocks -%}
+        {%- assign concern_collection = collections[block.settings.collection] -%}
+        <a href="{{ concern_collection.url | default: '#' }}" class="noae-concern-pill" {{ block.shopify_attributes }}>
+          <span class="noae-concern-pill__media">
+            {%- if block.settings.image -%}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.image.alt | default: block.settings.name | escape }}" width="300" height="300" loading="lazy">
+            {%- elsif concern_collection.image -%}
+              <img src="{{ concern_collection.image | image_url: width: 600 }}" alt="{{ block.settings.name | escape }}" width="300" height="300" loading="lazy">
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'noae-concern-pill__placeholder' }}
+            {%- endif -%}
+          </span>
+          <span class="noae-concern-pill__name">{{ block.settings.name }}</span>
+          <span class="noae-concern-pill__count">{{ block.settings.description }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop by concern",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop By Concern"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find Your Category"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Whichever ritual you're building, start with the category that fits your routine today."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "concern",
+      "name": "Category pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Category name",
+          "default": "Skincare"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Short description",
+          "default": "Serums, creams & masks for visible results"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Linked collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Falls back to the collection's own image when left blank."
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "concern", "settings": { "name": "Skincare", "description": "Serums, creams & masks for visible results" } },
+      { "type": "concern", "settings": { "name": "Haircare", "description": "Nourishing washes and oils for stronger strands" } },
+      { "type": "concern", "settings": { "name": "Wellness", "description": "Rituals for calm, sleep, and everyday balance" } },
+      { "type": "concern", "settings": { "name": "Body", "description": "Whipped butters and oils for soft, cared-for skin" } }
+    ]
+  },
+  "presets": [
+    {
+      "name": "Shop by concern"
+    }
+  ]
+}
+{% endschema %}

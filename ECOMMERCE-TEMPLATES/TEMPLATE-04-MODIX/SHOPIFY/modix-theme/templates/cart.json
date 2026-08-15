@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {
+        "intro_text": "Review your items, apply a coupon code and check shipping before you check out. Cart contents are saved to your account or this browser, so they'll be waiting for you if you come back later."
+      }
+    }
+  },
+  "order": ["main"]
+}

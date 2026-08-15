@@ -1,0 +1,18 @@
+# NOAÉ — robots.txt
+# Demo static site. Adjust the Sitemap host below to the real production domain
+# before launch; https://www.noae-demo.com/ is a placeholder used throughout
+# this demo's canonical URLs and JSON-LD.
+
+User-agent: *
+Allow: /
+
+# Utility / transactional pages carry no unique indexable content and are
+# intentionally excluded from crawling (they also carry <meta name="robots"
+# content="noindex, follow"> at the page level as a second line of defense).
+Disallow: /cart.html
+Disallow: /checkout.html
+Disallow: /wishlist.html
+Disallow: /search.html
+Disallow: /404.html
+
+Sitemap: https://www.noae-demo.com/sitemap.xml

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page_title }}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}</title>
+{%- if page_description -%}
+<meta name="description" content="{{ page_description | escape }}">
+{%- else -%}
+<meta name="description" content="{{ settings.default_meta_description | escape }}">
+{%- endif -%}
+<meta name="robots" content="{% if template.name == 'cart' or template.name == 'wishlist' %}noindex, follow{% else %}index, follow{% endif %}">
+<link rel="canonical" href="{{ canonical_url }}">
+
+{%- render 'meta-tags' -%}
+
+{%- if settings.favicon -%}
+<link rel="icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}" type="image/png">
+{%- else -%}
+<link rel="icon" href="{{ 'favicon.svg' | asset_url }}" type="image/svg+xml">
+{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+
+{{ 'theme.css' | asset_url | stylesheet_tag }}
+{%- render 'css-variables' -%}
+
+<script>
+  window.Modix = window.Modix || {};
+  window.ModixSettings = {
+    routes: {
+      rootUrl: {{ routes.root_url | json }},
+      cartUrl: {{ routes.cart_url | json }},
+      cartAddUrl: {{ routes.cart_add_url | json }},
+      cartChangeUrl: {{ routes.cart_change_url | json }},
+      cartUpdateUrl: {{ routes.cart_update_url | json }},
+      predictiveSearchUrl: {{ routes.predictive_search_url | json }},
+      searchUrl: {{ routes.search_url | json }},
+      allProductsCollectionUrl: {{ routes.all_products_collection_url | json }}
+    },
+    moneyFormat: {{ shop.money_format | json }},
+    cartFreeShippingThreshold: {{ settings.cart_free_shipping_threshold | default: 2999 }},
+    cartTypeDrawer: {{ settings.cart_type_drawer | json }},
+    enableWishlist: {{ settings.enable_wishlist | json }}
+  };
+</script>
+
+<script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+{%- if template.name == 'product' -%}
+<script src="{{ 'product.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'search.js' | asset_url }}" defer="defer"></script>
+
+{{ content_for_header }}
+
+{%- render 'json-ld-organization' -%}
+</head>
+<body class="template-{{ template.name }}">
+<a class="skip-link" href="#main">Skip to content</a>
+
+{% section 'announcement-bar' %}
+{% section 'header' %}
+
+<main id="main">
+  {{ content_for_layout }}
+</main>
+
+{% section 'footer' %}
+
+{%- render 'cart-drawer' -%}
+{%- render 'search-overlay' -%}
+{%- render 'quick-view-modal' -%}
+<div class="toast-container" role="status" aria-live="polite" data-toast-container></div>
+</body>
+</html>

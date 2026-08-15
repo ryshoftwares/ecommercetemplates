@@ -1,0 +1,50 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "layout": "contact",
+        "intro_text": "Questions about an order, a warranty claim, or which Modix product is right for you? Send us a message or reach out directly — our support team replies within one business day.",
+        "form_button_text": "Send Message",
+        "form_success_message": "Our support team will reply within one business day.",
+        "subject_options": "Order status / tracking, Warranty claim, Returns & exchanges, Product question, Something else"
+      },
+      "blocks": {
+        "info-1": {
+          "type": "contact_info",
+          "settings": {
+            "icon": "account",
+            "heading": "Email Support",
+            "body": "<p><a href=\"mailto:support@modix-demo.com\">support@modix-demo.com</a></p><p>Replies within 1 business day.</p>"
+          }
+        },
+        "info-2": {
+          "type": "contact_info",
+          "settings": {
+            "icon": "phone",
+            "heading": "Phone Support",
+            "body": "<p><a href=\"tel:+918045678901\">+91 80 4567 8901</a></p><p>Mon–Sat, 9:00 AM – 7:00 PM IST</p>"
+          }
+        },
+        "info-3": {
+          "type": "contact_info",
+          "settings": {
+            "icon": "home",
+            "heading": "Studio Address",
+            "body": "<p>Modix Technologies, 4th Floor, Indiranagar 100ft Road, Bengaluru, Karnataka 560038, India</p>"
+          }
+        },
+        "info-4": {
+          "type": "contact_info",
+          "settings": {
+            "icon": "info-circle",
+            "heading": "Support Hours",
+            "body": "<p>Monday–Saturday, 9:00 AM–7:00 PM IST. Warranty and return requests submitted outside these hours are answered the next business day.</p>"
+          }
+        }
+      },
+      "block_order": ["info-1", "info-2", "info-3", "info-4"]
+    }
+  },
+  "order": ["main"]
+}

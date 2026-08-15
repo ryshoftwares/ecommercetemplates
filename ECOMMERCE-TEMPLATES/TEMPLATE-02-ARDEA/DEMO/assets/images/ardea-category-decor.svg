@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="t6">
+<title id="t6">Terracotta vases and a handwoven mirror styled on a console shown as warm abstract line art</title>
+<defs>
+<linearGradient id="c5-bg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#FAF7F2"/>
+<stop offset="100%" stop-color="#EDE6DA"/>
+</linearGradient>
+<radialGradient id="c5-glow" cx="70%" cy="25%" r="55%">
+<stop offset="0%" stop-color="#4B5A45" stop-opacity="0.26"/>
+<stop offset="100%" stop-color="#4B5A45" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#c5-bg)"/>
+<ellipse cx="560" cy="220" rx="280" ry="240" fill="url(#c5-glow)"/>
+<ellipse cx="400" cy="800" rx="260" ry="36" fill="#2E2A26" opacity="0.09"/>
+<g stroke="#2E2A26" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.8">
+<line x1="180" y1="720" x2="620" y2="720"/>
+<line x1="220" y1="720" x2="220" y2="800"/>
+<line x1="580" y1="720" x2="580" y2="800"/>
+<ellipse cx="600" cy="500" rx="120" ry="150"/>
+</g>
+<g stroke="#A9603E" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.78">
+<path d="M300 720 Q290 600 320 560 Q350 520 320 480 L340 480 Q380 540 340 600 Q320 650 340 720 Z"/>
+<path d="M420 720 Q410 640 440 600 L455 600 Q470 660 440 720 Z"/>
+</g>
+</svg>

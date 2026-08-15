@@ -1,0 +1,141 @@
+{%- comment -%}
+  sections/main-cart.liquid
+  Cart page, ported from the demo's cart.html (.checkout-layout /
+  .order-summary / .cart-line markup), built entirely on the real Shopify
+  cart object — line items, subtotal, shipping and total all come from
+  cart.items / cart.total_price / cart.total_discount, never computed
+  client-side against fake numbers.
+
+  FREE SHIPPING PROGRESS BAR: driven by settings.cart_free_shipping_threshold
+  (config/settings_schema.json > Cart), compared against the real
+  cart.total_price. assets/cart.js re-renders this same markup after every
+  AJAX cart change so it never goes stale.
+
+  DISCOUNT / COUPON: Shopify only validates and applies discount codes at
+  checkout (or via a /discount/CODE link) — there is no reliable client-side
+  discount API on the cart page itself. Rather than fake a percentage
+  off, the coupon field below writes the shopper's code to a cart attribute
+  (attributes[requested_discount_code]) that appears in Shopify Admin, and
+  cart.total_discount / cart.cart_level_discount_applications are shown
+  whenever a real discount is already active on the cart (e.g. the shopper
+  arrived via a /discount/CODE link or an automatic discount applies).
+{%- endcomment -%}
+<nav class="breadcrumbs container" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ 'sections.cart.title' | t }}</li>
+  </ol>
+</nav>
+
+<section class="page-hero container">
+  <h1 class="page-hero__title">{{ 'sections.cart.title' | t }}</h1>
+</section>
+
+{%- liquid
+  assign free_ship_threshold_cents = settings.cart_free_shipping_threshold | times: 100
+  assign remaining_cents = free_ship_threshold_cents | minus: cart.total_price
+  if remaining_cents < 0
+    assign remaining_cents = 0
+  endif
+  assign shipping_pct = 100
+  if free_ship_threshold_cents > 0
+    assign shipping_pct = free_ship_threshold_cents | minus: remaining_cents | times: 100 | divided_by: free_ship_threshold_cents
+  endif
+  if shipping_pct > 100
+    assign shipping_pct = 100
+  endif
+  assign remaining_money = remaining_cents | money
+-%}
+<section class="container section--tight">
+  <div data-cart-page-progress>
+    {%- if cart.item_count > 0 -%}
+      <div class="cart-progress">
+        <p class="cart-progress__label{% if remaining_cents == 0 %} is-met{% endif %}">
+          {%- if remaining_cents > 0 -%}
+            {{ 'sections.cart.free_shipping_remaining' | t: amount: remaining_money }}
+          {%- else -%}
+            {{ 'sections.cart.free_shipping_unlocked' | t }}
+          {%- endif -%}
+        </p>
+        <div class="cart-progress__track"><div class="cart-progress__bar" style="width:{{ shipping_pct }}%"></div></div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-empty" data-cart-page-empty>
+      {%- render 'icon', icon: 'empty-cart', width: 64, height: 64 -%}
+      <h2>{{ 'sections.cart.empty' | t }}</h2>
+      <p class="lead" style="margin-top:0.5rem;">{{ 'sections.cart.empty_body' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--dark" style="margin-top:1.5rem;">{{ 'general.continue_shopping' | t }}</a>
+    </div>
+  {%- else -%}
+    <div class="checkout-layout" data-cart-page-layout>
+      <div>
+        {%- form 'cart', cart, class: 'cart-form', data-cart-form: '' -%}
+          <div data-cart-page-items>
+            {%- for item in cart.items -%}
+              <div class="cart-line" data-line data-cart-key="{{ item.key }}">
+                <a href="{{ item.url }}">
+                  {%- if item.image -%}
+                    <img class="cart-line__img" src="{{ item.image | image_url: width: 168 }}" alt="{{ item.image.alt | default: item.product.title | escape }}" width="84" height="100">
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'cart-line__img placeholder-svg' }}
+                  {%- endif -%}
+                </a>
+                <div class="cart-line__body">
+                  <h4 class="cart-line__name"><a href="{{ item.url }}">{{ item.product.title }}</a></h4>
+                  <p class="cart-line__meta">
+                    {%- if item.variant.title != 'Default Title' -%}{{ item.variant.title }}{%- endif -%}
+                    {%- if item.product.type != blank %} · {{ item.product.type }}{%- endif -%}
+                  </p>
+                  <div class="cart-line__price">{{ item.final_line_price | money }}</div>
+                  <div class="qty-stepper" data-qty-stepper data-cart-key="{{ item.key }}">
+                    <button type="button" data-qty-dec aria-label="Decrease quantity">−</button>
+                    <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" aria-label="{{ 'sections.cart.quantity' | t }} for {{ item.product.title | escape }}" data-qty-input>
+                    <button type="button" data-qty-inc aria-label="Increase quantity">+</button>
+                  </div>
+                  <button type="button" class="cart-line__remove" data-remove-line data-cart-key="{{ item.key }}">{{ 'sections.cart.remove' | t }}</button>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+          <noscript><button type="submit" class="btn btn--outline" style="margin-top:1rem;">Update Cart</button></noscript>
+        {%- endform -%}
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--outline" style="margin-top:1.5rem;">← {{ 'general.continue_shopping' | t }}</a>
+      </div>
+
+      <aside class="order-summary">
+        <h2 style="font-size:1.2rem;margin-bottom:1.25rem;">{{ 'sections.cart.order_summary' | t }}</h2>
+        <div data-cart-page-summary>
+          <div class="summary-row"><span>{{ 'sections.cart.subtotal' | t }}</span><span>{{ cart.original_total_price | money }}</span></div>
+          {%- if cart.total_discount > 0 -%}
+            <div class="summary-row"><span>{{ 'sections.cart.discount' | t }}{% if cart.cart_level_discount_applications.size > 0 %} ({{ cart.cart_level_discount_applications.first.title }}){% endif %}</span><span class="value--accent">-{{ cart.total_discount | money }}</span></div>
+          {%- endif -%}
+          <div class="summary-row"><span>{{ 'sections.cart.shipping' | t }}</span><span>Calculated at checkout</span></div>
+          <div class="summary-row summary-row--total"><span>{{ 'sections.cart.total' | t }}</span><span>{{ cart.total_price | money }}</span></div>
+        </div>
+
+        {%- form 'cart', cart, class: 'coupon-row', data-coupon-form: '' -%}
+          <input type="text" name="attributes[requested_discount_code]" placeholder="{{ 'sections.cart.discount_code_placeholder' | t }}" aria-label="Coupon code" data-coupon-input value="{{ cart.attributes.requested_discount_code }}">
+          <button type="submit" class="btn btn--outline btn--sm">{{ 'sections.cart.apply' | t }}</button>
+        {%- endform -%}
+        <p class="coupon-note" data-coupon-note>{{ 'sections.cart.discount_note' | t }}</p>
+
+        <a href="{{ routes.cart_url }}/checkout" class="btn btn--primary btn--full" style="margin-top:1.5rem;" data-cart-checkout>{{ 'sections.cart.checkout' | t }}</a>
+        <div class="security-badges">
+          <span>{%- render 'icon', icon: 'shield', width: 14, height: 14 -%} {{ 'sections.cart.secure_checkout' | t }}</span>
+          <span>{%- render 'icon', icon: 'returns', width: 14, height: 14 -%} {{ 'sections.cart.easy_returns' | t }}</span>
+          <span>{%- render 'icon', icon: 'truck', width: 14, height: 14 -%} {{ 'sections.cart.fast_shipping' | t }}</span>
+        </div>
+      </aside>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,28 @@
+{
+  "settings_schema": {
+    "logo": {
+      "name": "Logo"
+    },
+    "colors": {
+      "name": "Colors"
+    },
+    "typography": {
+      "name": "Typography"
+    },
+    "layout": {
+      "name": "Layout"
+    },
+    "social_media": {
+      "name": "Social media"
+    },
+    "cart": {
+      "name": "Cart"
+    },
+    "seo": {
+      "name": "SEO & sharing"
+    },
+    "wishlist": {
+      "name": "Wishlist"
+    }
+  }
+}

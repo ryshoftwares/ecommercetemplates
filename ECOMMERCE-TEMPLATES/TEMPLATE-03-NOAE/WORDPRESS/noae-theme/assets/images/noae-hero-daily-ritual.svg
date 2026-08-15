@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" role="img" aria-labelledby="t d">
+  <title id="t">NOAÉ daily ritual hero image</title>
+  <desc id="d">Soft cream and dusty rose gradient backdrop with organic blob shapes surrounding an abstract serum bottle and dropper, evoking a calm morning skincare ritual.</desc>
+  <defs>
+    <radialGradient id="bg" cx="35%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#FBF7F4"/>
+      <stop offset="55%" stop-color="#F5EDE7"/>
+      <stop offset="100%" stop-color="#EFDFD8"/>
+    </radialGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D9A9A0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#D9A9A0" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#A9B6A1" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#A9B6A1" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="bottleG" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4A3B3D"/>
+      <stop offset="100%" stop-color="#3A2E30"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1100" fill="url(#bg)"/>
+  <path d="M1250 -50 C1480 60 1560 320 1460 560 C1360 800 1080 900 900 760 C720 620 760 300 940 120 C1060 -20 1150 -80 1250 -50Z" fill="url(#blob1)"/>
+  <path d="M-60 700 C120 560 380 600 460 800 C540 1000 380 1160 140 1140 C-60 1120 -160 880 -60 700Z" fill="url(#blob2)"/>
+  <circle cx="1180" cy="230" r="4" fill="#C9A66B" opacity="0.8"/>
+  <circle cx="1230" cy="300" r="3" fill="#C9A66B" opacity="0.6"/>
+  <circle cx="1120" cy="340" r="2.5" fill="#C9A66B" opacity="0.7"/>
+  <g transform="translate(820,300)">
+    <ellipse cx="80" cy="560" rx="150" ry="26" fill="#3A2E30" opacity="0.08"/>
+    <rect x="0" y="60" width="160" height="440" rx="34" fill="url(#bottleG)"/>
+    <rect x="14" y="80" width="132" height="380" rx="24" fill="#3A2E30" opacity="0.15"/>
+    <rect x="30" y="0" width="100" height="80" rx="14" fill="#C9A66B"/>
+    <rect x="46" y="-46" width="68" height="60" rx="10" fill="#C9A66B" opacity="0.85"/>
+    <rect x="30" y="220" width="100" height="6" fill="#FBF7F4" opacity="0.5"/>
+  </g>
+  <g transform="translate(430,520)">
+    <ellipse cx="60" cy="330" rx="110" ry="20" fill="#3A2E30" opacity="0.07"/>
+    <rect x="0" y="40" width="120" height="300" rx="60" fill="#D9A9A0"/>
+    <rect x="24" y="0" width="72" height="60" rx="12" fill="#C9A66B"/>
+    <rect x="36" y="-40" width="48" height="50" rx="8" fill="#C9A66B" opacity="0.85"/>
+  </g>
+</svg>

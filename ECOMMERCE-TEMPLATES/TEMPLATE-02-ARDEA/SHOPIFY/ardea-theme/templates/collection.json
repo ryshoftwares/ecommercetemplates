@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "products_per_page": 24,
+        "columns": 4,
+        "fallback_intro": "Every Ardea piece in one place — filter by finish, price or availability to find the right fit. Each listing includes full dimensions, materials and delivery details so there are no surprises at checkout."
+      }
+    }
+  },
+  "order": ["main"]
+}

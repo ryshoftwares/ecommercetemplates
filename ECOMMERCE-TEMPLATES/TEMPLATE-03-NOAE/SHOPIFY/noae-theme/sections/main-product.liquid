@@ -1,0 +1,212 @@
+{%- comment -%}
+  sections/main-product.liquid
+  Full PDP, referenced by templates/product.json. Ported 1:1 from the demo's
+  product.html .noae-pdp / .noae-tabs / .noae-faq / .noae-related /
+  #pdpRecentlyViewed markup.
+
+  METAFIELD NAMESPACE/KEYS used below (all namespace "custom", all optional —
+  every one has a sensible fallback so the page never looks broken without
+  them configured in Settings > Custom data > Products):
+    custom.key_ingredients   (list of single line text)  -> Key Ingredients tab
+    custom.how_to_use        (multi-line text)           -> How to Use tab
+    custom.skin_type         (list of single line text)  -> Skin Type tab
+    custom.storage           (multi-line text)           -> Storage tab
+    custom.faqs              (JSON: [{ "q": "...", "a": "..." }, ...])
+                                -> FAQ accordion + FAQPage JSON-LD
+                                (only rendered when present, so the JSON-LD
+                                 always matches what's visibly on the page)
+    custom.rating / custom.rating_count  -> see snippets/product-card.liquid
+
+  RELATED PRODUCTS: product.metafields.custom.related_products (a Shopify
+  "list of products" reference metafield) when present, else falls back to
+  "same collection, excluding current" (product.collections.first.products).
+
+  RECENTLY VIEWED: localStorage, mirrors the demo's js/product.js — see
+  assets/product.js (NoaeRecentlyViewed).
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign key_ingredients = product.metafields.custom.key_ingredients.value
+  assign how_to_use = product.metafields.custom.how_to_use.value
+  assign skin_type = product.metafields.custom.skin_type.value
+  assign storage = product.metafields.custom.storage.value
+  assign faqs = product.metafields.custom.faqs.value
+  assign rating = product.metafields.custom.rating.value
+  assign rating_count = product.metafields.custom.rating_count.value
+
+  assign related_products = product.metafields.custom.related_products.value
+  if related_products == blank
+    assign related_products = product.collections.first.products | where_exp: 'p', 'p.id != product.id'
+  endif
+-%}
+<div id="pdpMain" data-pdp data-product-handle="{{ product.handle }}">
+  {%- render 'breadcrumb' -%}
+
+  <div class="noae-container noae-pdp">
+    <div class="noae-pdp__gallery">
+      <div class="noae-pdp__main-image" data-pdp-main-media aria-label="Product image, hover to zoom">
+        {%- if product.featured_media -%}
+          <img id="pdpMainImg" src="{{ product.featured_media | image_url: width: 900 }}" alt="{{ product.featured_media.alt | default: product.title | escape }}" width="600" height="750" data-pdp-main-img>
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      <div class="noae-pdp__thumbs" id="pdpThumbs" data-pdp-thumbs>
+        {%- for media in product.media -%}
+          <button type="button" class="noae-pdp__thumb{% if forloop.first %} is-active{% endif %}" data-src="{{ media | image_url: width: 900 }}" aria-label="View image {{ forloop.index }}">
+            <img src="{{ media | image_url: width: 120, height: 120, crop: 'center' }}" alt="{{ media.alt | default: product.title | escape }}" width="76" height="76" loading="lazy">
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="noae-pdp__info">
+      <p class="noae-pdp__category js-pdp-category">{{ product.type | default: product.collections.first.title }}</p>
+      <h1 class="noae-pdp__title js-pdp-name">{{ product.title }}</h1>
+      {%- if rating -%}
+        <div class="noae-pdp__rating" id="pdpRating">
+          {%- for i in (1..5) -%}{% if i <= rating %}★{% else %}☆{% endif %}{%- endfor -%}
+          <span>({{ rating_count | default: 0 }} reviews)</span>
+        </div>
+      {%- endif -%}
+      {%- render 'price', product: product, variant: current_variant, wrapper_class: 'noae-pdp__price-row' -%}
+      <p class="noae-pdp__desc" id="pdpDescription">{{ product.description | strip_html }}</p>
+
+      <p class="noae-pdp__stock" id="pdpStock">
+        {%- if current_variant.available -%}
+          {%- if current_variant.inventory_management != null and current_variant.inventory_quantity <= 10 and current_variant.inventory_quantity > 0 -%}
+            {{ 'sections.product.low_stock' | t: count: current_variant.inventory_quantity }}
+          {%- else -%}
+            {{ 'sections.product.in_stock' | t }}
+          {%- endif -%}
+        {%- else -%}
+          {{ 'sections.product.out_of_stock' | t }}
+        {%- endif -%}
+      </p>
+
+      {%- render 'product-form', product: product -%}
+
+      <ul class="noae-pdp__meta-list" id="pdpMetaList">
+        <li><span>SKU</span><span>{{ current_variant.sku | default: '—' }}</span></li>
+        <li><span>Brand</span><span>{{ product.vendor | default: shop.name }}</span></li>
+        <li><span>Category</span><span>{{ product.type | default: product.collections.first.title }}</span></li>
+        {%- if skin_type != blank -%}
+          <li><span>Skin Type</span><span>{{ skin_type | join: ', ' }}</span></li>
+        {%- endif -%}
+      </ul>
+    </div>
+  </div>
+
+  <div class="noae-container noae-tabs">
+    <div class="noae-tabs__list" id="pdpTabList" role="tablist">
+      <button type="button" class="noae-tabs__btn is-active" data-tab="overview" role="tab" aria-selected="true">{{ 'sections.product.overview' | t }}</button>
+      {%- if key_ingredients != blank -%}<button type="button" class="noae-tabs__btn" data-tab="ingredients" role="tab" aria-selected="false">{{ 'sections.product.key_ingredients' | t }}</button>{%- endif -%}
+      {%- if how_to_use != blank -%}<button type="button" class="noae-tabs__btn" data-tab="how-to-use" role="tab" aria-selected="false">{{ 'sections.product.how_to_use' | t }}</button>{%- endif -%}
+      {%- if skin_type != blank -%}<button type="button" class="noae-tabs__btn" data-tab="skin-type" role="tab" aria-selected="false">{{ 'sections.product.skin_type' | t }}</button>{%- endif -%}
+      <button type="button" class="noae-tabs__btn" data-tab="shipping" role="tab" aria-selected="false">{{ 'sections.product.shipping' | t }}</button>
+      {%- if storage != blank -%}<button type="button" class="noae-tabs__btn" data-tab="storage" role="tab" aria-selected="false">{{ 'sections.product.storage' | t }}</button>{%- endif -%}
+    </div>
+    <div id="pdpTabPanels">
+      <div class="noae-tabs__panel is-active" id="tab-overview" role="tabpanel">
+        <p>{{ product.description }}</p>
+      </div>
+
+      {%- if key_ingredients != blank -%}
+        <div class="noae-tabs__panel" id="tab-ingredients" role="tabpanel">
+          <ul>{%- for ingredient in key_ingredients -%}<li>{{ ingredient }}</li>{%- endfor -%}</ul>
+        </div>
+      {%- endif -%}
+
+      {%- if how_to_use != blank -%}
+        <div class="noae-tabs__panel" id="tab-how-to-use" role="tabpanel">
+          <p>{{ how_to_use }}</p>
+        </div>
+      {%- endif -%}
+
+      {%- if skin_type != blank -%}
+        <div class="noae-tabs__panel" id="tab-skin-type" role="tabpanel">
+          <p>Formulated for: <strong>{{ skin_type | join: ', ' }}</strong> skin types.</p>
+        </div>
+      {%- endif -%}
+
+      <div class="noae-tabs__panel" id="tab-shipping" role="tabpanel">
+        {{ section.settings.shipping_tab_content }}
+      </div>
+
+      {%- if storage != blank -%}
+        <div class="noae-tabs__panel" id="tab-storage" role="tabpanel">
+          <p>{{ storage }}</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if faqs != blank -%}
+    <section class="noae-container noae-section">
+      <div class="noae-section__head">
+        <h2>{{ 'sections.product.faqs' | t }}</h2>
+      </div>
+      <div class="noae-faq" id="pdpFaq">
+        {%- for faq in faqs -%}
+          <div class="noae-faq__item" data-faq-item>
+            <button type="button" class="noae-faq__question" aria-expanded="false"><span>{{ faq.q }}</span><span class="noae-faq__icon">+</span></button>
+            <div class="noae-faq__answer"><p class="noae-faq__answer-inner">{{ faq.a }}</p></div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </section>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for faq in faqs -%}
+        { "@type": "Question", "name": {{ faq.q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq.a | json }} } }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+    </script>
+  {%- endif -%}
+
+  {%- if related_products.size > 0 -%}
+    <section class="noae-related" data-related-section>
+      <div class="noae-container">
+        <div class="noae-section__head">
+          <h2>{{ 'sections.product.related' | t }}</h2>
+        </div>
+        <div class="noae-product-grid" id="pdpRelated" data-related-grid>
+          {%- for related in related_products limit: 4 -%}
+            {%- unless related.id == product.id -%}
+              {%- render 'product-card', product: related -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  <section id="pdpRecentlyViewedSection" class="noae-related noae-hide" data-recent-section>
+    <div class="noae-container">
+      <div class="noae-section__head">
+        <h2>{{ 'sections.product.recently_viewed' | t }}</h2>
+      </div>
+      <div class="noae-product-grid" id="pdpRecentlyViewed" data-recent-grid></div>
+    </div>
+  </section>
+</div>
+
+{%- render 'json-ld-product', product: product -%}
+
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "shipping_tab_content",
+      "label": "Shipping tab content",
+      "default": "<p>Free shipping on orders over ₹1,999. Orders below this threshold ship for a flat ₹99. Most orders dispatch within 1-2 business days and arrive within 3-6 business days depending on location. Unopened products may be returned within 14 days of delivery for a full refund.</p>"
+    }
+  ]
+}
+{% endschema %}

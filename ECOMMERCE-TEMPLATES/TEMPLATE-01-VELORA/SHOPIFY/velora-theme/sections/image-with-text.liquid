@@ -1,0 +1,97 @@
+{%- comment -%}
+  sections/image-with-text.liquid
+  Reusable editorial/brand-story section, ported from the demo's .story-strip
+  markup (used on index.html "Our Story" and about.html hero-story block).
+  Includes up to 3 stat blocks (.story-stat), matching the demo's founded /
+  countries / natural-fibres row.
+{%- endcomment -%}
+<section class="story-strip reveal">
+  <div class="story-media">
+    {%- if section.settings.image -%}
+      <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" width="900" height="1100" loading="lazy">
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+  <div class="story-content">
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h2>{{ section.settings.heading }}</h2>
+    <div class="story-body">{{ section.settings.body }}</div>
+
+    {%- assign stat_blocks = section.blocks | where: 'type', 'stat' -%}
+    {%- if stat_blocks.size > 0 -%}
+      <div class="story-stats">
+        {%- for block in stat_blocks -%}
+          <div class="story-stat" {{ block.shopify_attributes }}><strong>{{ block.settings.value }}</strong><span>{{ block.settings.label }}</span></div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_text != blank -%}
+      <a href="{{ section.settings.cta_url }}" class="btn btn-outline">{{ section.settings.cta_text }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with text",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Our Story"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Crafted in small batches, built to last seasons"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text",
+      "default": "<p>Founded in 2014, Velora began as a two-person atelier focused on a single idea: clothing should be made from real materials, cut with real tailoring, and sold without the churn of fast fashion. Today we work with a small number of European mills and Indian ateliers to produce considered collections twice a year.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button label",
+      "default": "Read Our Story"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "2014" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Founded" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Image with text",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "2014", "label": "Founded" } },
+        { "type": "stat", "settings": { "value": "40+", "label": "Countries Shipped To" } },
+        { "type": "stat", "settings": { "value": "92%", "label": "Natural Fibres" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

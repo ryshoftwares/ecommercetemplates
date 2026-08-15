@@ -1,0 +1,40 @@
+{%- comment -%}
+  sections/main-wishlist.liquid
+  Wishlist page, ported from the demo's wishlist.html (.empty-state /
+  .wishlist-grid[data-wishlist-grid] markup). Shopify has no native wishlist
+  object, so this page ships an empty shell plus a loading state;
+  assets/theme.js (window.Modix.wishlist) reads the saved product handles
+  from localStorage ("modix_wishlist_v1" — same key/format already used by
+  snippets/product-card.liquid and sections/header.liquid's heart toggles)
+  and fetches each product's real data from Shopify's native
+  /products/{handle}.js JSON endpoint to render cards client-side — no
+  product content is ever hardcoded here.
+{%- endcomment -%}
+{%- render 'breadcrumb' -%}
+
+<div class="page-header">
+  <div class="container">
+    <h1>{{ 'sections.wishlist.title' | t }}</h1>
+    <p class="page-header__intro">{{ 'sections.wishlist.intro' | t }}</p>
+  </div>
+</div>
+
+<div class="container section" data-wishlist-page>
+  <div class="grid-toolbar">
+    <span class="grid-toolbar__count"><span data-wishlist-page-count>0</span> saved products</span>
+  </div>
+  <div class="wishlist-grid" data-wishlist-grid></div>
+  <div class="empty-state" data-wishlist-empty style="display:none;">
+    {%- render 'icon', icon: 'wishlist', width: 64, height: 64 -%}
+    <h3>{{ 'sections.wishlist.empty_title' | t }}</h3>
+    <p>{{ 'sections.wishlist.empty_body' | t }}</p>
+    <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">{{ 'sections.wishlist.discover' | t }}</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wishlist page",
+  "settings": []
+}
+{% endschema %}

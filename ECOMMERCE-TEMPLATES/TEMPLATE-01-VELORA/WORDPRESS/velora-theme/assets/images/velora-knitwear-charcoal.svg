@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="t12">
+  <title id="t12">Editorial silhouette study of a charcoal ribbed VELORA knit against a beige backdrop</title>
+  <defs>
+    <linearGradient id="kn2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C9B79C"/>
+      <stop offset="100%" stop-color="#B08A5C"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#kn2)"/>
+  <ellipse cx="450" cy="1120" rx="380" ry="60" fill="#0A0A0A" opacity="0.1"/>
+  <path d="M450 260 L 355 320 L 330 460 L 380 480 L 390 900 L 510 900 L 520 480 L 570 460 L 545 320 Z" fill="#2B2B2B"/>
+  <path d="M420 260 Q 450 300 480 260" stroke="#0A0A0A" stroke-width="10" fill="none" opacity="0.6"/>
+  <g stroke="#0A0A0A" stroke-width="2" opacity="0.35" fill="none">
+    <path d="M410 520 q16 16 0 32 q-16 16 0 32 q16 16 0 32 q-16 16 0 32"/>
+    <path d="M450 520 q16 16 0 32 q-16 16 0 32 q16 16 0 32 q-16 16 0 32"/>
+    <path d="M490 520 q16 16 0 32 q-16 16 0 32 q16 16 0 32 q-16 16 0 32"/>
+  </g>
+  <text x="450" y="1130" font-family="Georgia, 'Playfair Display', serif" font-size="20" fill="#0A0A0A" opacity="0.55" text-anchor="middle" letter-spacing="5">VELORA — RIBBED KNIT</text>
+</svg>

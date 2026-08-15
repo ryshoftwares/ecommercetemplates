@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "trust_badge_1": "15-Year Structural Warranty",
+        "trust_badge_2": "Free Delivery on Eligible Orders",
+        "trust_badge_3": "30-Day Returns",
+        "delivery_text": "<p>Most Ardea pieces are made to order and ship within 2–4 weeks. Small items are sent by standard courier; larger furniture ships via our delivery partner with room-of-choice placement, and sofas, beds and case goods include two-person white-glove delivery.</p>",
+        "default_care_text": "Dust regularly with a dry, soft cloth and keep out of direct, prolonged sunlight to avoid uneven fading. Refer to the specific materials used for this piece for any deeper cleaning guidance."
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-wishlist",
+      "settings": {
+        "intro": "Every ritual you've saved, gathered in one place. Come back whenever you're ready to add them to your bag."
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,31 @@
+{%- comment -%}
+  snippets/css-variables.liquid
+  Rendered inline in layout/theme.liquid <head>, AFTER assets/theme.css is
+  linked. Overrides the static token defaults in theme.css with the
+  merchant's live theme-editor settings (Colors / Typography / Layout), so
+  settings_schema.json controls are real — without theme.css needing to be a
+  Liquid asset itself. Token names mirror the ARDEA demo's css/style.css
+  :root block (--sand, --terracotta, --olive, --charcoal, --cream, etc).
+{%- endcomment -%}
+<style>
+  :root{
+    --sand: {{ settings.color_sand | default: '#EDE6DA' }};
+    --sand-dark: {{ settings.color_sand_dark | default: '#E3D8C4' }};
+    --terracotta: {{ settings.color_terracotta | default: '#A9603E' }};
+    --terracotta-dark: {{ settings.color_terracotta_dark | default: '#8A4C32' }};
+    --terracotta-light: #C98860;
+    --olive: {{ settings.color_olive | default: '#4B5A45' }};
+    --olive-light: #6B7A63;
+    --olive-dark: #3A4636;
+    --charcoal: {{ settings.color_charcoal | default: '#2E2A26' }};
+    --charcoal-light: #4A433C;
+    --cream: {{ settings.color_cream | default: '#FAF7F2' }};
+    --white: #FFFFFF;
+    --color-error: {{ settings.color_error | default: '#A13E2B' }};
+    --font-serif: {{ settings.font_heading.family | default: 'Fraunces' }}, 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+    --font-sans: {{ settings.font_body.family | default: 'Manrope' }}, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --container-max: {{ settings.page_width | default: 1360 }}px;
+  }
+</style>
+{{ settings.font_heading | font_face: font_display: 'swap' }}
+{{ settings.font_body | font_face: font_display: 'swap' }}

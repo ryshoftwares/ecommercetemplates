@@ -1,0 +1,245 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Modix",
+    "theme_version": "1.0.0",
+    "theme_author": "Modix Technologies",
+    "theme_documentation_url": "https://modix-demo.example.com/theme-docs",
+    "theme_support_url": "https://modix-demo.example.com/support"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image",
+        "info": "Optional — falls back to the shop name rendered as a bold wordmark (\"MODIX.\"), matching the master demo."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Logo width",
+        "min": 80,
+        "max": 260,
+        "step": 10,
+        "unit": "px",
+        "default": 130
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Scaled down to 32 x 32px."
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand palette"
+      },
+      {
+        "type": "paragraph",
+        "content": "Defaults to the fixed MODIX brand tokens (White / Off-white / Charcoal / Slate / Electric Blue) used throughout the master design. Adjust only if departing from brand guidelines."
+      },
+      {
+        "type": "color",
+        "id": "color_white",
+        "label": "White (page background)",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_offwhite",
+        "label": "Off-white (alt sections, cards)",
+        "default": "#F5F6F8"
+      },
+      {
+        "type": "color",
+        "id": "color_charcoal",
+        "label": "Charcoal (headings, dark sections, utility strip)",
+        "default": "#17181C"
+      },
+      {
+        "type": "color",
+        "id": "color_slate",
+        "label": "Slate (body text)",
+        "default": "#4B5563"
+      },
+      {
+        "type": "color",
+        "id": "color_slate_light",
+        "label": "Slate — light (muted text)",
+        "default": "#8A93A3"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Electric blue (primary accent, CTAs, links)",
+        "default": "#2F5DFF"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_dark",
+        "label": "Electric blue — dark (hover state)",
+        "default": "#2148D6"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border",
+        "default": "#E3E6EC"
+      },
+      {
+        "type": "color",
+        "id": "color_success",
+        "label": "Success",
+        "default": "#1E9E63"
+      },
+      {
+        "type": "color",
+        "id": "color_danger",
+        "label": "Danger / sale",
+        "default": "#E0453C"
+      },
+      {
+        "type": "color",
+        "id": "color_star",
+        "label": "Rating star",
+        "default": "#F5A623"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "info": "Defaults to Space Grotesk, matching the MODIX demo.",
+        "default": "space_grotesk_n6"
+      },
+      {
+        "type": "header",
+        "content": "Body"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body / UI font",
+        "info": "Defaults to Inter, matching the MODIX demo.",
+        "default": "inter_n4"
+      },
+      {
+        "type": "header",
+        "content": "Mono accents"
+      },
+      {
+        "type": "paragraph",
+        "content": "Prices, SKUs, spec chips and mono labels use JetBrains Mono, loaded directly from Google Fonts in layout/theme.liquid (Shopify's font_picker only covers the two settings above)."
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Container max width",
+        "min": 1080,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1320
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "default": "https://www.instagram.com/"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "X (Twitter)",
+        "default": "https://twitter.com/"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube",
+        "default": "https://www.youtube.com/"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free shipping threshold",
+        "info": "Amount (in your shop's currency major units) at which the free-shipping progress bar in the cart drawer/cart page reaches 100%. The MODIX demo uses ₹2,999. Shopify's own shipping settings (Settings > Shipping and delivery) govern what's actually charged at checkout; this setting only drives the visual progress bar.",
+        "default": 2999
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_type_drawer",
+        "label": "Use cart drawer",
+        "default": true,
+        "info": "When enabled, adding a product opens the slide-in cart drawer, matching the demo. The dedicated cart page (/cart) is always available."
+      }
+    ]
+  },
+  {
+    "name": "SEO & sharing",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "default_meta_description",
+        "label": "Default meta description",
+        "default": "Shop Modix smartphones, laptops, wireless audio, smart home devices and wearables — precision engineering, real specs, and a 1-2 year warranty on every product.",
+        "info": "Used as a fallback on any page that has no page-specific description (product/collection descriptions are preferred automatically when present)."
+      },
+      {
+        "type": "image_picker",
+        "id": "social_sharing_image",
+        "label": "Default social sharing image",
+        "info": "Used for Open Graph / Twitter previews when a page has no more specific image (e.g. no product/collection image)."
+      }
+    ]
+  },
+  {
+    "name": "Wishlist",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Shopify has no native wishlist object. Wishlist state is stored client-side in the shopper's browser via localStorage, keyed by product handle and exposed as window.Modix.wishlist (see assets/theme.js). It is per-browser, not synced to the customer account."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_wishlist",
+        "label": "Enable wishlist icon + heart toggles",
+        "default": true
+      }
+    ]
+  }
+]

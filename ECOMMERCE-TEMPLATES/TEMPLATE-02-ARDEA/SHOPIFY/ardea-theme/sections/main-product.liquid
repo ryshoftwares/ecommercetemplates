@@ -1,0 +1,354 @@
+{%- comment -%}
+  sections/main-product.liquid
+  Full PDP, ported from the demo's product.html (.pdp / .pdp-tabs /
+  .faq-accordion / .related-section / .recently-viewed-section markup).
+
+  Reuses snippets/product-form.liquid for the entire native
+  {% form 'product' %} (variant pills, qty, Add to Cart, Buy Now dynamic
+  checkout button, wishlist toggle) and snippets/price.liquid for the price
+  row, so variant logic lives in exactly one place.
+
+  METAFIELD CONVENTIONS (all optional; every one falls back to
+  product.description or is hidden when absent — nothing is fabricated):
+    product.metafields.custom.dimensions          single line text
+    product.metafields.custom.materials            multi-line text / rich text
+    product.metafields.custom.assembly_required     single line text
+    product.metafields.custom.care_instructions     multi-line text / rich text
+    product.metafields.custom.features              rich text (bullet list for the
+      "Features" tab; falls back to product.description, same as "Overview")
+    product.metafields.custom.faqs                  JSON metafield, e.g.
+      [{"question":"...","answer":"..."}, ...]
+      (visible FAQ accordion below renders this; FAQPage JSON-LD is only
+      emitted when this metafield is present, so it can never drift from
+      what's on the page)
+    product.metafields.custom.rating / rating_count  see snippets/product-card.liquid
+
+  RELATED PRODUCTS: uses Shopify's native product recommendations endpoint
+  (routes.product_recommendations_url) as a progressive enhancement over an
+  SSR fallback built from the product's own first collection — so the grid
+  is always real data, with or without JS.
+
+  RECENTLY VIEWED: client-side only (assets/product.js), reading/writing an
+  array of product handles in localStorage ("ardea_recently_viewed"), then
+  fetching each product's real data from Shopify's native
+  /products/{handle}.js JSON endpoint to render cards — never hardcoded.
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign on_sale = false
+  if current_variant.compare_at_price > current_variant.price
+    assign on_sale = true
+    assign discount_pct = current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round
+  endif
+
+  assign is_bestseller = false
+  if product.tags contains 'bestseller'
+    assign is_bestseller = true
+  endif
+  assign is_limited = false
+  if product.tags contains 'limited'
+    assign is_limited = true
+  endif
+
+  assign rating = product.metafields.custom.rating.value
+  assign rating_count = product.metafields.custom.rating_count.value
+
+  assign dimensions = product.metafields.custom.dimensions.value
+  assign materials = product.metafields.custom.materials.value
+  assign assembly_required = product.metafields.custom.assembly_required.value
+  assign care_instructions = product.metafields.custom.care_instructions.value
+
+  assign faqs_json = product.metafields.custom.faqs.value
+  assign faqs = blank
+  if faqs_json != blank
+    assign faqs = faqs_json | parse_json
+  endif
+
+  assign related_collection = product.collections.first
+-%}
+
+<nav class="breadcrumbs container" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li><a href="{{ routes.all_products_collection_url }}">Shop</a></li>
+    {%- if related_collection -%}
+      <li><a href="{{ related_collection.url }}">{{ related_collection.title }}</a></li>
+    {%- endif -%}
+    <li aria-current="page">{{ product.title }}</li>
+  </ol>
+</nav>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | append: '/' | json }} },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": {{ shop.url | append: routes.all_products_collection_url | json }} }
+    {%- if related_collection -%}
+    ,{ "@type": "ListItem", "position": 3, "name": {{ related_collection.title | json }}, "item": {{ shop.url | append: related_collection.url | json }} }
+    {%- endif -%}
+    ,{ "@type": "ListItem", "position": {% if related_collection %}4{% else %}3{% endif %}, "name": {{ product.title | json }}, "item": {{ shop.url | append: product.url | json }} }
+  ]
+}
+</script>
+
+{%- render 'json-ld-product', product: product -%}
+
+<section class="container section--tight">
+  <div class="pdp" data-pdp data-product-handle="{{ product.handle }}">
+    <div class="pdp__gallery">
+      <div class="pdp__thumbs" data-pdp-thumbs>
+        {%- for media in product.media -%}
+          <button type="button" class="pdp__thumb{% if forloop.first %} is-active{% endif %}" data-thumb-index="{{ forloop.index0 }}" aria-label="View image {{ forloop.index }}">
+            <img src="{{ media | image_url: width: 176 }}" alt="" width="88" height="88" loading="lazy">
+          </button>
+        {%- endfor -%}
+      </div>
+      <div class="pdp__main-image" data-pdp-main-image>
+        <div class="pdp__badges" data-pdp-badges>
+          {%- if is_bestseller -%}<span class="badge badge--bestseller">{{ 'sections.product.bestseller' | t }}</span>{%- endif -%}
+          {%- if is_limited -%}<span class="badge badge--limited">{{ 'sections.product.limited' | t }}</span>{%- endif -%}
+          {%- if on_sale -%}<span class="badge badge--sale">-{{ discount_pct }}%</span>{%- endif -%}
+        </div>
+        {%- if product.featured_media -%}
+          <img
+            src="{{ product.featured_media | image_url: width: 700 }}"
+            srcset="{{ product.featured_media | image_url: width: 700 }} 700w, {{ product.featured_media | image_url: width: 1200 }} 1200w"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            alt="{{ product.featured_media.alt | default: product.title | escape }}"
+            width="700" height="875" fetchpriority="high" data-pdp-image data-media-id="{{ product.featured_media.id }}">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="pdp__info" data-pdp-info>
+      <p class="pdp__info__category">{{ product.type | default: related_collection.title }}</p>
+      <h1>{{ product.title }}</h1>
+      {%- if rating -%}
+        <div class="pdp__rating-row">
+          <span class="stars" aria-hidden="true">{% for i in (1..5) %}<svg class="star{% if i <= rating %} star--full{% endif %}" viewBox="0 0 20 20"><path d="M10 1.5l2.7 5.9 6.3.6-4.8 4.3 1.4 6.2L10 15.6l-5.6 2.9 1.4-6.2L1 8l6.3-.6z"/></svg>{% endfor %}</span>
+          <a href="#reviews-faq">({{ rating_count | default: 0 }} reviews)</a>
+        </div>
+      {%- endif -%}
+      <div class="pdp__price-row">
+        {%- render 'price', product: product, variant: current_variant -%}
+      </div>
+      <p class="pdp__desc">{{ product.description | strip_html | truncate: 220 }}</p>
+
+      <p class="stock-note">
+        {%- if current_variant.available -%}
+          {%- if current_variant.inventory_management and current_variant.inventory_quantity <= 5 and current_variant.inventory_quantity > 0 -%}
+            {{ 'sections.product.low_stock' | t: count: current_variant.inventory_quantity }}
+          {%- else -%}
+            {{ 'sections.product.in_stock' | t }}
+          {%- endif -%}
+        {%- else -%}
+          {{ 'sections.product.out_of_stock' | t }}
+        {%- endif -%}
+      </p>
+
+      {%- render 'product-form', product: product -%}
+
+      <div class="trust-badges">
+        <div>{%- render 'icon', icon: 'warranty', width: 26, height: 26 -%}{{ section.settings.trust_badge_1 }}</div>
+        <div>{%- render 'icon', icon: 'truck', width: 26, height: 26 -%}{{ section.settings.trust_badge_2 }}</div>
+        <div>{%- render 'icon', icon: 'returns', width: 26, height: 26 -%}{{ section.settings.trust_badge_3 }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pdp-tabs" id="reviews-faq">
+    <div class="pdp-tabs__nav" role="tablist">
+      <button type="button" class="pdp-tabs__btn is-active" data-tab="overview" role="tab">{{ 'sections.product.overview' | t }}</button>
+      <button type="button" class="pdp-tabs__btn" data-tab="features" role="tab">{{ 'sections.product.features' | t }}</button>
+      <button type="button" class="pdp-tabs__btn" data-tab="materials" role="tab">{{ 'sections.product.materials' | t }}</button>
+      <button type="button" class="pdp-tabs__btn" data-tab="dimensions" role="tab">{{ 'sections.product.dimensions' | t }}</button>
+      <button type="button" class="pdp-tabs__btn" data-tab="delivery" role="tab">{{ 'sections.product.delivery' | t }}</button>
+      <button type="button" class="pdp-tabs__btn" data-tab="care" role="tab">{{ 'sections.product.care' | t }}</button>
+    </div>
+
+    <div class="pdp-tabs__panel is-active" data-tab-panel="overview">
+      <div class="rte">{{ product.description }}</div>
+    </div>
+
+    <div class="pdp-tabs__panel" data-tab-panel="features">
+      {%- if product.metafields.custom.features.value != blank -%}
+        <div class="rte">{{ product.metafields.custom.features.value }}</div>
+      {%- else -%}
+        <div class="rte">{{ product.description }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="pdp-tabs__panel" data-tab-panel="materials">
+      {%- if materials != blank -%}
+        <p>{{ materials }}</p>
+      {%- else -%}
+        <p>{{ product.description | strip_html }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="pdp-tabs__panel" data-tab-panel="dimensions">
+      {%- if dimensions != blank -%}
+        <p style="margin-bottom:1.5rem;">Overall dimensions: {{ dimensions }}. Please allow up to 1–2 cm of natural variation, typical of handmade and solid-wood construction.</p>
+      {%- endif -%}
+      <table class="spec-table">
+        <tr><th>{{ 'sections.product.sku' | t }}</th><td>{{ current_variant.sku | default: '—' }}</td></tr>
+        <tr><th>{{ 'sections.product.brand' | t }}</th><td>{{ product.vendor | default: shop.name }}</td></tr>
+        {%- if dimensions != blank -%}<tr><th>{{ 'sections.product.dimensions' | t }}</th><td>{{ dimensions }}</td></tr>{%- endif -%}
+        {%- if materials != blank -%}<tr><th>{{ 'sections.product.materials' | t }}</th><td>{{ materials }}</td></tr>{%- endif -%}
+        {%- for option in product.options_with_values -%}
+          <tr><th>{{ option.name }}</th><td>{{ option.values | join: ', ' }}</td></tr>
+        {%- endfor -%}
+        <tr>
+          <th>Availability</th>
+          <td>
+            {%- if current_variant.available -%}
+              {%- if current_variant.inventory_management and current_variant.inventory_quantity > 0 -%}
+                In stock ({{ current_variant.inventory_quantity }} units)
+              {%- else -%}
+                In stock
+              {%- endif -%}
+            {%- else -%}
+              Out of stock
+            {%- endif -%}
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="pdp-tabs__panel" data-tab-panel="delivery">
+      <div class="rte">
+        {%- if section.settings.delivery_text != blank -%}
+          {{ section.settings.delivery_text }}
+        {%- endif -%}
+      </div>
+      {%- if assembly_required != blank -%}
+        <p style="margin-top:1rem;"><strong>Assembly:</strong> {{ assembly_required }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="pdp-tabs__panel" data-tab-panel="care">
+      {%- if care_instructions != blank -%}
+        <p>{{ care_instructions }}</p>
+      {%- else -%}
+        <p>{{ section.settings.default_care_text }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if faqs.size > 0 -%}
+    <div class="divider"></div>
+    <div>
+      <div class="section-head">
+        <div class="section-head__text"><p class="eyebrow">Common Questions</p><h2>{{ 'sections.product.faqs' | t }}</h2></div>
+      </div>
+      <div class="faq-accordion" data-pdp-faq>
+        {%- for faq in faqs -%}
+          <div class="faq-item{% if forloop.first %} is-open{% endif %}">
+            <button type="button" class="faq-item__q" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+              {{ faq.question }}
+              {%- render 'icon', icon: 'chevron', width: 14, height: 14 -%}
+            </button>
+            <div class="faq-item__a"><p>{{ faq.answer }}</p></div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for faq in faqs -%}
+        {
+          "@type": "Question",
+          "name": {{ faq.question | json }},
+          "acceptedAnswer": { "@type": "Answer", "text": {{ faq.answer | json }} }
+        }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+    </script>
+  {%- endif -%}
+
+  <div class="related-section" id="related-products" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4&intent=related">
+    <div class="section-head">
+      <div class="section-head__text"><p class="eyebrow">You May Also Like</p><h2>{{ 'sections.product.related' | t }}</h2></div>
+    </div>
+    <div class="product-grid" data-related-grid>
+      {%- if recommendations.performed -%}
+        {%- for recommended_product in recommendations.products -%}
+          {%- render 'product-card', product: recommended_product -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign related_count = 0 -%}
+        {%- for related_product in related_collection.products -%}
+          {%- if related_product.id != product.id and related_count < 4 -%}
+            {%- render 'product-card', product: related_product -%}
+            {%- assign related_count = related_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="recently-viewed-section" data-recently-viewed-section style="display:none;">
+    <div class="section-head">
+      <div class="section-head__text"><p class="eyebrow">Your History</p><h2>{{ 'sections.product.recently_viewed' | t }}</h2></div>
+    </div>
+    <div class="product-grid" data-recently-viewed-grid></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Trust badges"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_1",
+      "label": "Badge 1",
+      "default": "15-Year Structural Warranty"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_2",
+      "label": "Badge 2",
+      "default": "Free Delivery on Eligible Orders"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_3",
+      "label": "Badge 3",
+      "default": "30-Day Returns"
+    },
+    {
+      "type": "header",
+      "content": "Delivery & Assembly tab"
+    },
+    {
+      "type": "richtext",
+      "id": "delivery_text",
+      "label": "Default delivery & assembly copy",
+      "default": "<p>Most Ardea pieces are made to order and ship within 2–4 weeks. Small items are sent by standard courier; larger furniture ships via our delivery partner with room-of-choice placement, and sofas, beds and case goods include two-person white-glove delivery.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Care tab fallback"
+    },
+    {
+      "type": "textarea",
+      "id": "default_care_text",
+      "label": "Default care copy",
+      "info": "Shown only when a product has no custom.care_instructions metafield.",
+      "default": "Dust regularly with a dry, soft cloth and keep out of direct, prolonged sunlight to avoid uneven fading. Refer to the specific materials used for this piece for any deeper cleaning guidance."
+    }
+  ]
+}
+{% endschema %}

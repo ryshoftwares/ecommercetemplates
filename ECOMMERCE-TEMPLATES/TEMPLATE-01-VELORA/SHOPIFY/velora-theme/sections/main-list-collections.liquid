@@ -1,0 +1,47 @@
+{%- comment -%}
+  sections/main-list-collections.liquid
+  All-collections index, styled to match the demo's .cat-grid category tiles
+  (reused visually as a simple responsive grid of real collections.list).
+{%- endcomment -%}
+<div class="page-band">
+  <div class="container">
+    {%- render 'breadcrumb' -%}
+    <h1>{{ section.settings.heading }}</h1>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+</div>
+
+<div class="container" style="padding:var(--sp-8) 0">
+  <div class="product-grid" style="grid-template-columns:repeat(4,1fr)">
+    {%- for collection in collections -%}
+      <a class="cat-card" href="{{ collection.url }}" style="aspect-ratio:3/4;position:relative;display:block">
+        {%- if collection.featured_image -%}
+          <img src="{{ collection.featured_image | image_url: width: 600 }}" alt="{{ collection.featured_image.alt | default: collection.title | escape }}" width="600" height="800" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+        <span class="cat-card-label"><span class="eyebrow">Category</span><h3>{{ collection.title }}</h3><span class="link">Shop {{ collection.title }}</span></span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Every Velora collection in one place."
+    }
+  ]
+}
+{% endschema %}

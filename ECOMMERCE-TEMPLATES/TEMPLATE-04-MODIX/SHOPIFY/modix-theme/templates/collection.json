@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "products_per_page": 24,
+        "columns": 4,
+        "fallback_intro": "Every current Modix product in one place. Use the filters to narrow by category, price, color, rating or device compatibility — every listed spec comes straight from our product data sheets."
+      }
+    }
+  },
+  "order": ["main"]
+}

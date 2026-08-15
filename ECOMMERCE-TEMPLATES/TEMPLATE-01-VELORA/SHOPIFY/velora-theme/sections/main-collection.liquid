@@ -1,0 +1,251 @@
+{%- comment -%}
+  sections/main-collection.liquid
+  Referenced by templates/collection.json (Shopify auto-injects this section
+  into every collection page, including the "All products" collection used
+  for the demo's Shop All / category pages).
+
+  Ported from the demo's .page-band / .shop-layout / .filters-aside /
+  .shop-toolbar / .product-grid / .pagination / .aeo-block markup.
+
+  FILTERS: uses Shopify's native Storefront Filtering API
+  (collection.filters) — real facets (price range, size, colour,
+  availability) configured by the merchant in Settings > Search & Discovery.
+  A "Rating" facet only appears if the merchant creates a metafield-based
+  filter on a numeric rating metafield (see snippets/product-card.liquid for
+  the documented custom.rating convention) — Shopify does not ship a rating
+  facet out of the box.
+
+  SORT: native ?sort_by= param via collection.sort_options + a <select> that
+  submits the facet form (so sort + filters share one GET request).
+{%- endcomment -%}
+<div class="page-band" data-scroll-top>
+  <div class="container">
+    {%- render 'breadcrumb' -%}
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p>{{ collection.description | strip_html }}</p>
+    {%- else -%}
+      <p>{{ section.settings.default_intro }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+<div class="filter-drawer-backdrop mobile-drawer-backdrop" data-filter-drawer-backdrop></div>
+
+<div class="container" data-shop-page>
+  {%- paginate collection.products by section.settings.products_per_page -%}
+  <div class="shop-layout">
+    <aside class="filters-aside" aria-label="Product filters" data-filters-aside>
+      <form method="get" action="{{ collection.url }}" data-facets-form>
+        {%- if collection.sort_by -%}<input type="hidden" name="sort_by" value="{{ collection.sort_by }}">{%- endif -%}
+        <div class="aside-drawer-head">
+          <h3 style="font-size:1.1rem">{{ 'sections.collection.filter_title' | t }}</h3>
+          <button type="button" class="drawer-close" data-filter-drawer-close aria-label="Close filters">
+            {%- render 'icon', icon: 'close', width: 22, height: 22 -%}
+          </button>
+        </div>
+
+        {%- for filter in collection.filters -%}
+          <div class="filter-group" data-filter-group>
+            <h4 data-filter-toggle>{{ filter.label }} <span class="chevron">▾</span></h4>
+            <div class="filter-body">
+              {%- case filter.type -%}
+
+                {%- when 'list' -%}
+                  {%- assign label_down = filter.label | downcase -%}
+                  {%- if label_down contains 'colour' or label_down contains 'color' -%}
+                    <div class="filter-swatches">
+                      {%- for value in filter.values -%}
+                        {%- capture swatch_hex -%}{% render 'color-swatch', name: value.label %}{%- endcapture -%}
+                        <label class="visually-hidden-label">
+                          <input type="checkbox" class="visually-hidden" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                          <span class="filter-swatch{% if value.active %} is-selected{% endif %}" style="background:{{ swatch_hex | strip }};" title="{{ value.label }} ({{ value.count }})"></span>
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                  {%- elsif label_down contains 'size' -%}
+                    <div class="swatch-row">
+                      {%- for value in filter.values -%}
+                        <label class="swatch-size-label">
+                          <input type="checkbox" class="visually-hidden" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}>
+                          <span class="swatch-size{% if value.active %} is-selected{% endif %}{% if value.count == 0 and value.active == false %} is-disabled{% endif %}">{{ value.label }}</span>
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                  {%- else -%}
+                    {%- for value in filter.values -%}
+                      <label class="checkbox-row">
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}>
+                        {{ value.label }} ({{ value.count }})
+                      </label>
+                    {%- endfor -%}
+                  {%- endif -%}
+
+                {%- when 'price_range' -%}
+                  <div class="filter-price-range">
+                    <span>{{ filter.min_value.value | default: 0 | money }}</span>
+                    <input type="range" min="{{ filter.range_min }}" max="{{ filter.range_max }}" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | default: filter.range_min }}" data-price-range-min>
+                    <input type="range" min="{{ filter.range_min }}" max="{{ filter.range_max }}" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | default: filter.range_max }}" data-price-range-max>
+                    <span data-price-output>{{ filter.max_value.value | default: filter.range_max | money }}</span>
+                  </div>
+
+                {%- when 'boolean' -%}
+                  {%- for value in filter.values -%}
+                    <label class="checkbox-row">
+                      <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}>
+                      {{ filter.label }}
+                    </label>
+                  {%- endfor -%}
+
+              {%- endcase -%}
+            </div>
+          </div>
+        {%- endfor -%}
+
+        {%- if collection.filters.size == 0 -%}
+          <p class="text-muted" style="font-size:var(--fs-small)">Configure facets in Settings &gt; Search &amp; Discovery to show category, price, size and colour filters here.</p>
+        {%- endif -%}
+
+        <a href="{{ collection.url }}" class="filter-clear" data-clear-filters>{{ 'sections.collection.clear_filters' | t }}</a>
+        <div class="aside-drawer-foot"><button type="submit" class="btn btn-primary btn-block" data-filter-drawer-apply>{{ 'sections.collection.show_results' | t }}</button></div>
+      </form>
+    </aside>
+
+    <div>
+      <div class="shop-toolbar">
+        <span class="result-count" data-result-count>
+          {%- if collection.products_count == 1 -%}
+            {{ 'sections.collection.result_count.one' | t: count: collection.products_count }}
+          {%- else -%}
+            {{ 'sections.collection.result_count.other' | t: count: collection.products_count }}
+          {%- endif -%}
+        </span>
+        <div class="toolbar-right">
+          <button type="button" class="btn btn-outline btn-sm filter-drawer-trigger" data-filter-drawer-open>{{ 'sections.collection.filter_title' | t }}</button>
+          <div class="select-wrap">
+            <select data-sort-select aria-label="{{ 'sections.collection.sort_by' | t }}" onchange="location.href=this.value">
+              {%- for option in collection.sort_options -%}
+                <option value="{{ collection.url }}?sort_by={{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+              {%- endfor -%}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="active-filter-chips" data-active-chips>
+        {%- for filter in collection.filters -%}
+          {%- for value in filter.active_values -%}
+            <span class="chip">{{ value.label }} <a href="{{ value.url_to_remove }}" aria-label="Remove {{ value.label }}">&times;</a></span>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if collection.products.size > 0 -%}
+        <div class="product-grid" data-product-grid>
+          {%- for product in collection.products -%}
+            {%- render 'product-card', product: product -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" stroke-width="1.2" fill="none" stroke="currentColor" width="64" height="64"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+          <h3>{{ 'sections.collection.no_products' | t }}</h3>
+          <p class="text-muted">{{ 'sections.collection.no_products_body' | t }}</p>
+        </div>
+      {%- endif -%}
+
+      {%- if paginate.pages > 1 -%}
+        <div class="pagination" data-pagination>
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">&larr;</a>{%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}">{{ part.title }}</a>
+            {%- else -%}
+              <span class="{% if part.title == paginate.current_page %}is-active{% endif %}">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}">&rarr;</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+  {%- endpaginate -%}
+</div>
+
+{%- if section.settings.show_aeo_block -%}
+<section class="aeo-block">
+  <div class="container">
+    <h2>{{ section.settings.aeo_heading }}</h2>
+    <div class="aeo-grid">
+      <div>
+        <h3>{{ section.settings.aeo_col1_heading }}</h3>
+        <p>{{ section.settings.aeo_col1_body }}</p>
+      </div>
+      <div>
+        <h3>{{ section.settings.aeo_col2_heading }}</h3>
+        <p>{{ section.settings.aeo_col2_body }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection pages",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "default_intro",
+      "label": "Fallback intro text",
+      "info": "Shown only when the collection has no description set.",
+      "default": "Every Velora piece currently in season — dresses, outerwear, knitwear and accessories — in one place."
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "show_aeo_block",
+      "label": "Show guide / AEO content block",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "aeo_heading",
+      "label": "Guide block heading",
+      "default": "About Shopping the Full Collection"
+    },
+    {
+      "type": "text",
+      "id": "aeo_col1_heading",
+      "label": "Column 1 heading",
+      "default": "How sizing works across categories"
+    },
+    {
+      "type": "textarea",
+      "id": "aeo_col1_body",
+      "label": "Column 1 body",
+      "default": "All Velora garments use consistent UK sizing from XS to XL. Knitwear and outerwear are cut with slightly more ease than dresses — check each product's Size Guide tab for exact measurements before ordering."
+    },
+    {
+      "type": "text",
+      "id": "aeo_col2_heading",
+      "label": "Column 2 heading",
+      "default": "Shipping & Returns"
+    },
+    {
+      "type": "textarea",
+      "id": "aeo_col2_body",
+      "label": "Column 2 body",
+      "default": "Orders over ₹4,000 ship free across India in 3-5 business days. Unworn items with tags attached can be returned or exchanged within 30 days of delivery."
+    }
+  ]
+}
+{% endschema %}

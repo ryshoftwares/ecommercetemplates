@@ -1,0 +1,82 @@
+{%- comment -%}
+  sections/announcement-bar.liquid
+  Rotating announcement bar, ported from the demo's .announce-bar /
+  .announce-track / .announce-item markup and js/app.js initAnnouncementBar().
+{%- endcomment -%}
+<div class="announce-bar" style="background:{{ section.settings.background_color }}; color:{{ section.settings.text_color }};">
+  <div class="announce-track" data-announcement-track>
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'message' -%}
+          {%- if block.settings.link != blank -%}
+            <a class="announce-item" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</a>
+          {%- else -%}
+            <p class="announce-item" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+          {%- endif -%}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#0A0A0A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#F7F3EC"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Message",
+          "info": "Plain text, or HTML such as <strong>bold</strong> for emphasis — matches the demo's amount/code highlighting.",
+          "default": "Free shipping on orders over <strong>&#8377;4,000</strong>"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "default": {
+    "blocks": [
+      {
+        "type": "message",
+        "settings": {
+          "text": "Free shipping on orders over <strong>&#8377;4,000</strong>"
+        }
+      },
+      {
+        "type": "message",
+        "settings": {
+          "text": "The New Season collection is now live"
+        }
+      },
+      {
+        "type": "message",
+        "settings": {
+          "text": "Use code <strong>VELORA10</strong> for 10% off your first order"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

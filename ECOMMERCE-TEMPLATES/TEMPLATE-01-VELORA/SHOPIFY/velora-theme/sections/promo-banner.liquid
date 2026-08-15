@@ -1,0 +1,73 @@
+{%- comment -%}
+  sections/promo-banner.liquid
+  Ported from the demo's .promo-banner campaign section — full-bleed image
+  with a dark gradient overlay and left-aligned copy + CTA.
+{%- endcomment -%}
+<section class="promo-banner reveal">
+  {%- if section.settings.image -%}
+    <img src="{{ section.settings.image | image_url: width: 1600 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" width="1600" height="900" loading="lazy">
+  {%- else -%}
+    {{ 'lifestyle-3' | placeholder_svg_tag: 'placeholder-svg' }}
+  {%- endif -%}
+  <div class="promo-content">
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.body != blank -%}<p>{{ section.settings.body }}</p>{%- endif -%}
+    {%- if section.settings.cta_text != blank -%}
+      <a href="{{ section.settings.cta_url }}" class="btn btn-ivory">{{ section.settings.cta_text }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Limited Time"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "End of Season Sale — Up to 30% Off"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Selected dresses, outerwear and knitwear are reduced for a limited time. Use code VELORA10 at checkout for an extra 10% off your order."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button label",
+      "default": "Shop the Sale"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo banner",
+      "settings": {
+        "eyebrow": "Limited Time",
+        "heading": "End of Season Sale — Up to 30% Off",
+        "body": "Selected dresses, outerwear and knitwear are reduced for a limited time. Use code VELORA10 at checkout for an extra 10% off your order.",
+        "cta_text": "Shop the Sale"
+      }
+    }
+  ]
+}
+{% endschema %}

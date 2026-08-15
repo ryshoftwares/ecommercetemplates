@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "heading": "Shop by Category",
+        "subheading": "Every Velora collection in one place."
+      }
+    }
+  },
+  "order": ["main"]
+}

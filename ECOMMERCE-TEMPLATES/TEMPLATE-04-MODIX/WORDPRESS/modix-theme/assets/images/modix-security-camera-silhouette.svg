@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Line illustration of the Modix Cam indoor security camera on its swivel base">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#2F5DFF" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#2F5DFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="500" fill="#F5F6F8"/>
+  <circle cx="250" cy="240" r="195" fill="url(#glow)"/>
+  <rect x="180" y="330" width="140" height="26" rx="10" fill="#FFFFFF" stroke="#17181C" stroke-width="5"/>
+  <path d="M225 330 L225 300 C225 285 235 278 250 278 C265 278 275 285 275 300 L275 330" fill="none" stroke="#17181C" stroke-width="5"/>
+  <circle cx="250" cy="215" r="80" fill="#FFFFFF" stroke="#17181C" stroke-width="6"/>
+  <circle cx="250" cy="215" r="50" fill="none" stroke="#17181C" stroke-width="4"/>
+  <circle cx="250" cy="215" r="28" fill="none" stroke="#2F5DFF" stroke-width="4"/>
+  <circle cx="250" cy="215" r="10" fill="#2F5DFF"/>
+  <circle cx="305" cy="165" r="6" fill="#2F5DFF"/>
+</svg>

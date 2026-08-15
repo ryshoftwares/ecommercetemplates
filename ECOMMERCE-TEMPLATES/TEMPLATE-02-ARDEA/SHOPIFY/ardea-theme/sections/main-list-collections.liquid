@@ -1,0 +1,78 @@
+{%- comment -%}
+  sections/main-list-collections.liquid
+  All-collections listing page, styled with the demo's .room-card /
+  .room-grid tile pattern (sections/featured-categories.liquid), driven by
+  the real `collections` object (every collection in the store) rather than
+  a fixed room list — so a merchant adding a new collection in Shopify
+  Admin sees it appear here automatically.
+{%- endcomment -%}
+<nav class="breadcrumbs container" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">Collections</li>
+  </ol>
+</nav>
+
+<section class="page-hero container">
+  <h1 class="page-hero__title">{{ section.settings.heading }}</h1>
+  {%- if section.settings.subheading != blank -%}
+    <p class="page-hero__lead lead">{{ section.settings.subheading }}</p>
+  {%- endif -%}
+</section>
+
+<section class="container section--tight">
+  {%- liquid
+    assign sorted_collections = collections | sort: 'title'
+    if section.settings.sort_by == 'manual'
+      assign sorted_collections = collections
+    endif
+  -%}
+  <div class="room-grid" style="grid-template-rows:repeat(2, minmax(220px, auto));">
+    {%- for collection in sorted_collections -%}
+      <a class="room-card" href="{{ collection.url }}">
+        {%- if collection.featured_image -%}
+          <img class="room-card__img" src="{{ collection.featured_image | image_url: width: 800 }}" alt="{{ collection.title | escape }}" width="800" height="600" loading="lazy">
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag: 'room-card__img placeholder-svg' }}
+        {%- endif -%}
+        <div class="room-card__overlay">
+          <h3>{{ collection.title }}</h3>
+          {%- if collection.description != blank -%}
+            <p>{{ collection.description | strip_html | truncate: 90 }}</p>
+          {%- endif -%}
+          <span class="room-card__cta">Shop {{ collection.title }}</span>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "All collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by Room"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Browse every Ardea collection, from full rooms to individual finishes."
+    },
+    {
+      "type": "select",
+      "id": "sort_by",
+      "label": "Sort collections by",
+      "options": [
+        { "value": "alphabetical", "label": "Alphabetical" },
+        { "value": "manual", "label": "Store's default order" }
+      ],
+      "default": "alphabetical"
+    }
+  ]
+}
+{% endschema %}

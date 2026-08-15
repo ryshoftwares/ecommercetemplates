@@ -1,0 +1,106 @@
+{%- comment -%}
+  sections/hero.liquid
+  Ported 1:1 from the demo's .hero / .hero-content / .hero-media markup.
+  The hero image is the LCP element: no loading="lazy", fetchpriority="high".
+  Entrance animation uses the same .reveal utility as the rest of the theme,
+  but is skipped here (no .reveal class) because it is above-the-fold and the
+  demo renders the hero fully visible on load.
+{%- endcomment -%}
+<section class="hero">
+  <div class="hero-content">
+    {%- if section.settings.badge != blank -%}
+      <p class="eyebrow">{{ section.settings.badge }}</p>
+    {%- endif -%}
+    <h1>{{ section.settings.heading }}</h1>
+    {%- if section.settings.subheading != blank -%}
+      <p class="lede">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+    <div class="hero-cta-group">
+      {%- if section.settings.primary_cta_text != blank -%}
+        <a href="{{ section.settings.primary_cta_url }}" class="btn btn-primary">{{ section.settings.primary_cta_text }}</a>
+      {%- endif -%}
+      {%- if section.settings.secondary_cta_text != blank -%}
+        <a href="{{ section.settings.secondary_cta_url }}" class="btn btn-outline">{{ section.settings.secondary_cta_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="hero-media">
+    {%- if section.settings.image -%}
+      <img
+        src="{{ section.settings.image | image_url: width: 1200 }}"
+        srcset="{{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1800 }} 1800w"
+        sizes="(max-width: 1024px) 100vw, 55vw"
+        alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+        fetchpriority="high">
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Eyebrow / badge text",
+      "default": "Autumn / Winter Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "THE NEW SEASON"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Tailored silhouettes, natural fibres, and considered colour — a collection built for women who dress with intention, not for trends that fade by spring."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Primary button label",
+      "default": "Shop New Arrivals"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_url",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary button label",
+      "default": "Explore Lookbook"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_url",
+      "label": "Secondary button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "settings": {
+        "badge": "Autumn / Winter Collection",
+        "heading": "THE NEW SEASON",
+        "subheading": "Tailored silhouettes, natural fibres, and considered colour — a collection built for women who dress with intention, not for trends that fade by spring.",
+        "primary_cta_text": "Shop New Arrivals",
+        "secondary_cta_text": "Explore Lookbook"
+      }
+    }
+  ]
+}
+{% endschema %}

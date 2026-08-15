@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_compare_strip": true,
+        "default_warranty_text": "1-year manufacturer warranty covering hardware defects under normal use. Contact support for full terms."
+      }
+    }
+  },
+  "order": ["main"]
+}

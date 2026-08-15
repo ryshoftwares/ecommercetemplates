@@ -1,0 +1,111 @@
+{%- comment -%}
+  sections/editorial-ritual.liquid
+  Ported 1:1 from the demo's "THE FIVE-MINUTE RITUAL" section
+  (.noae-editorial): image + numbered ritual steps as blocks + a CTA.
+{%- endcomment -%}
+<section class="noae-section noae-reveal">
+  <div class="noae-container noae-editorial">
+    <div class="noae-editorial__media">
+      {%- if section.settings.image -%}
+        <img src="{{ section.settings.image | image_url: width: 1600 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" width="800" height="450" loading="lazy">
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'noae-editorial__placeholder' }}
+      {%- endif -%}
+    </div>
+    <div>
+      <span class="noae-section__eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.body }}</p>
+      {%- if section.blocks.size > 0 -%}
+        <div class="noae-editorial__steps">
+          {%- for block in section.blocks -%}
+            <div class="noae-editorial__step" {{ block.shopify_attributes }}>
+              <span class="noae-editorial__step-num">{{ forloop.index }}</span>
+              <div>
+                <p class="noae-editorial__step-title">{{ block.settings.title }}</p>
+                <p>{{ block.settings.description }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.cta_text != blank -%}
+        <a href="{{ section.settings.cta_url }}" class="noae-btn noae-btn--dark">{{ section.settings.cta_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial ritual",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Ritual"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Five-Minute Ritual"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Three honest steps, done consistently, outperform a ten-step routine done occasionally. Here's the sequence our formulators built for daily skin health."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Shop The Ritual"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Ritual step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "Cleanse"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Step description",
+          "default": "Gentle Milk Cleanser lifts away the day without stripping the barrier."
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "step", "settings": { "title": "Cleanse", "description": "Gentle Milk Cleanser lifts away the day without stripping the barrier." } },
+      { "type": "step", "settings": { "title": "Treat", "description": "Renewal Hydrating Serum floods skin with moisture and softens fine dry lines." } },
+      { "type": "step", "settings": { "title": "Seal", "description": "Cloud Cream Moisturizer locks it all in with a cushion of ceramides." } }
+    ]
+  },
+  "presets": [
+    {
+      "name": "Editorial ritual"
+    }
+  ]
+}
+{% endschema %}

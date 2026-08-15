@@ -1,0 +1,55 @@
+{%- comment -%}
+  snippets/product-form.liquid
+  Native Shopify {% form 'product' %} — real Size variant picker (chips,
+  matching the demo's .noae-variant-chip), qty stepper, Add to Cart (AJAX via
+  assets/cart.js), Buy Now (native dynamic checkout `payment_button`), and the
+  wishlist heart toggle. Expects: product (required)
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+<product-form data-product-form>
+{%- form 'product', product, id: 'noaeProductForm', class: 'noae-product-form', data-product-form-el: '' -%}
+  <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id-input>
+
+  {%- for option in product.options_with_values -%}
+    <div class="noae-variant-group" data-option-index="{{ forloop.index0 }}">
+      <span class="noae-variant-label">{{ option.name }}</span>
+      <div class="noae-variant-options" data-option-values>
+        {%- for value in option.values -%}
+          <button type="button"
+            class="noae-variant-chip{% if value == option.selected_value %} is-selected{% endif %}"
+            data-option-value
+            data-option-index="{{ forloop.parentloop.index0 }}"
+            data-value="{{ value | escape }}">{{ value }}</button>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endfor -%}
+
+  <div id="pdpQty" class="noae-qty-selector" data-pdp-qty>
+    <button type="button" data-qty-dec aria-label="Decrease quantity">−</button>
+    <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="{{ 'sections.product.quantity' | t }}" data-qty-input>
+    <button type="button" data-qty-inc aria-label="Increase quantity">+</button>
+  </div>
+
+  <div class="noae-pdp__actions">
+    <button type="submit" name="add" class="noae-btn noae-btn--dark" data-pdp-add{% unless current_variant.available %} disabled{% endunless %}>
+      <span data-add-text>{% if current_variant.available %}{{ 'sections.product.add_to_cart' | t }}{% else %}{{ 'sections.product.sold_out' | t }}{% endif %}</span>
+    </button>
+    {%- if current_variant.available -%}
+      {{ form | payment_button }}
+    {%- endif -%}
+    {%- if settings.enable_wishlist -%}
+      <button type="button" id="pdpWishlist" class="noae-icon-btn noae-wishlist-toggle" data-wishlist-toggle data-handle="{{ product.handle }}" aria-label="{{ 'sections.product.add_to_wishlist' | t }}" aria-pressed="false">
+        {%- render 'icon', icon: 'wishlist', width: 18, height: 18 -%}
+      </button>
+    {%- endif -%}
+  </div>
+{%- endform -%}
+</product-form>
+
+{%- comment -%} Full variant + availability data for assets/product.js to drive live price/stock updates on chip selection. {%- endcomment -%}
+<script type="application/json" data-product-json>
+  {{ product | json }}
+</script>

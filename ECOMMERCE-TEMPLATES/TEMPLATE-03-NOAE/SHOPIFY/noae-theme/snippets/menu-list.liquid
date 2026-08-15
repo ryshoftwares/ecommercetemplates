@@ -1,0 +1,17 @@
+{%- comment -%}
+  snippets/menu-list.liquid
+  Recursively renders a Shopify linklist (`linklists.<handle>.links`) as the
+  NOAÉ primary nav (desktop, .noae-nav__list) or the mobile drawer nav
+  (.noae-mobile-nav__list), selected by the `mobile` param.
+  Accepts: links (required, linklist.links), mobile (optional bool)
+{%- endcomment -%}
+{%- liquid
+  assign list_class = mobile == true | default: false
+-%}
+<ul class="{% if mobile %}noae-mobile-nav__list{% else %}noae-nav__list{% endif %}">
+  {%- for link in links -%}
+    <li>
+      <a href="{{ link.url }}" class="{% if mobile %}noae-mobile-nav__link{% else %}noae-nav__link{% endif %}{% if link.active %} is-active{% endif %}">{{ link.title }}</a>
+    </li>
+  {%- endfor -%}
+</ul>

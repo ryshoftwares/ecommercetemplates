@@ -1,0 +1,40 @@
+{%- comment -%}
+  sections/promo-banner.liquid
+  Electric-blue gradient promo banner, ported 1:1 from the demo's
+  .promo-banner markup (index.html "Trade in your old device").
+{%- endcomment -%}
+<section class="section" data-reveal>
+  <div class="container">
+    <div class="promo-banner">
+      <div>
+        <h2>{{ section.settings.heading }}</h2>
+        <p>{{ section.settings.body }}</p>
+      </div>
+      {%- if section.settings.cta_text != blank -%}
+        <a href="{{ section.settings.cta_url }}" class="btn btn-secondary btn-lg">{{ section.settings.cta_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo banner",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Trade in your old device" },
+    { "type": "textarea", "id": "body", "label": "Body text", "default": "Get instant credit toward any Modix smartphone or laptop — free pickup included in most cities." },
+    { "type": "text", "id": "cta_text", "label": "Button label", "default": "Check Trade-In Value" },
+    { "type": "url", "id": "cta_url", "label": "Button link" }
+  ],
+  "presets": [
+    {
+      "name": "Promo banner",
+      "settings": {
+        "heading": "Trade in your old device",
+        "body": "Get instant credit toward any Modix smartphone or laptop — free pickup included in most cities.",
+        "cta_text": "Check Trade-In Value"
+      }
+    }
+  ]
+}
+{% endschema %}

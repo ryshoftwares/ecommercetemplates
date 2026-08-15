@@ -1,0 +1,113 @@
+{%- comment -%}
+  snippets/product-card.liquid
+  Ported 1:1 from the demo's js/products.js -> productCardHTML().
+  Accepts: product (required), quick_actions (optional bool, default true)
+
+  RATING METAFIELDS (documented convention — no reviews app assumed):
+    product.metafields.custom.rating        (number, e.g. 4.8)
+    product.metafields.custom.rating_count   (number, e.g. 126)
+  If a reviews app (Judge.me / Loox / etc.) is installed, point these two
+  lines at that app's namespace instead (e.g. product.metafields.reviews.rating).
+  When absent, the star row is not rendered.
+
+  BADGE LOGIC (computed, never hardcoded):
+    - "Sale"      when compare_at_price > price on the first available variant
+    - "New"       when the product was published within the last 21 days
+    (Bestseller has no first-party signal in Shopify; expose it via a
+    product tag "bestseller" instead — see badge logic below.)
+{%- endcomment -%}
+{%- liquid
+  assign card_variant = product.selected_or_first_available_variant
+  assign on_sale = false
+  if card_variant.compare_at_price > card_variant.price
+    assign on_sale = true
+  endif
+
+  assign is_new = false
+  assign created_days_ago = product.created_at | date: '%s'
+  assign now_seconds = 'now' | date: '%s'
+  assign age_seconds = now_seconds | minus: created_days_ago
+  assign age_days = age_seconds | divided_by: 86400
+  if age_days <= 21
+    assign is_new = true
+  endif
+
+  assign is_bestseller = false
+  if product.tags contains 'bestseller'
+    assign is_bestseller = true
+  endif
+
+  assign badge_label = ''
+  assign badge_class = ''
+  if on_sale
+    assign badge_label = 'Sale'
+    assign badge_class = 'badge-sale'
+  elsif is_bestseller
+    assign badge_label = 'Bestseller'
+    assign badge_class = 'badge-bestseller'
+  elsif is_new
+    assign badge_label = 'New'
+    assign badge_class = 'badge-new'
+  endif
+
+  assign show_quick_actions = quick_actions | default: true
+  assign secondary_image = product.media[1] | default: product.featured_media
+
+  assign rating = product.metafields.custom.rating.value
+  assign rating_count = product.metafields.custom.rating_count.value
+-%}
+<article class="product-card" data-product-id="{{ product.id }}" data-product-handle="{{ product.handle }}">
+  <div class="product-media">
+    <a href="{{ product.url }}" aria-label="View {{ product.title | escape }}">
+      {%- if product.featured_media -%}
+        <img class="img-primary" src="{{ product.featured_media | image_url: width: 600 }}" srcset="{{ product.featured_media | image_url: width: 600 }} 1x, {{ product.featured_media | image_url: width: 1200 }} 2x" alt="{{ product.featured_media.alt | default: product.title | escape }}" width="600" height="800" loading="lazy">
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'img-primary placeholder-svg' }}
+      {%- endif -%}
+      {%- if secondary_image -%}
+        <img class="img-secondary" src="{{ secondary_image | image_url: width: 600 }}" alt="{{ secondary_image.alt | default: product.title | escape }}" width="600" height="800" loading="lazy">
+      {%- endif -%}
+    </a>
+    {%- if badge_label != '' -%}
+      <span class="product-badge {{ badge_class }}">{{ badge_label }}</span>
+    {%- endif -%}
+    {%- if settings.enable_wishlist -%}
+      <button type="button" class="wishlist-toggle" data-wishlist-toggle data-handle="{{ product.handle }}" aria-label="Add {{ product.title | escape }} to wishlist" aria-pressed="false">
+        {%- render 'icon', icon: 'wishlist', width: 18, height: 18 -%}
+      </button>
+    {%- endif -%}
+    {%- if show_quick_actions -%}
+      <div class="product-card-actions">
+        <button type="button" class="btn btn-ivory btn-sm" data-quickview data-handle="{{ product.handle }}">{{ 'sections.product.quick_view' | t }}</button>
+        {%- if card_variant.available -%}
+          <button type="button" class="btn btn-primary btn-sm" data-quickadd data-variant-id="{{ card_variant.id }}">{{ 'sections.product.quick_add' | t }}</button>
+        {%- else -%}
+          <button type="button" class="btn btn-primary btn-sm" disabled>{{ 'sections.product.sold_out' | t }}</button>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="product-info">
+    <div class="product-cat">{{ product.type | default: product.collections.first.title }}</div>
+    <h3 class="product-name"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {%- if rating -%}
+      <div class="product-rating">
+        <span class="stars">{% for i in (1..5) %}{% if i <= rating %}★{% else %}☆{% endif %}{% endfor %}</span>
+        <span>{{ rating }} ({{ rating_count | default: 0 }})</span>
+      </div>
+    {%- endif -%}
+    {%- render 'price', product: product, variant: card_variant -%}
+    {%- if product.options_with_values -%}
+      {%- for option in product.options_with_values -%}
+        {%- if option.name == 'Color' or option.name == 'Colour' -%}
+          <div class="product-colors">
+            {%- for value in option.values -%}
+              {%- capture swatch_hex -%}{% render 'color-swatch', name: value %}{%- endcapture -%}
+              <span class="color-dot" style="background:{{ swatch_hex | strip }};" title="{{ value }}"></span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</article>

@@ -1,0 +1,51 @@
+{
+  "sections": {
+    "hero": {
+      "type": "about-hero",
+      "settings": {
+        "eyebrow": "Our Story",
+        "heading": "Rituals, Not Routines",
+        "body": "<p>NOAÉ began in 2021 in a rented Mumbai apartment, where our founder — tired of ten-step routines that promised everything and delivered very little — started mixing small batches of serum on her kitchen counter. She wasn't chasing trends. She wanted three honest products that did exactly what the label said, in a bottle whose ingredient list was short enough to actually read out loud.</p><p>What began as jars handed to friends became NOAÉ: a beauty label built on the belief that skin, hair and mind respond best to consistency, not complexity. Every formula spends months in dermatological review before it reaches a shelf, and every ingredient has to earn its place — nothing is added just to bulk up a bottle or pad an ingredient list.</p><p>Today NOAÉ ships across India from our formulation studio, but the premise hasn't changed. Fewer, better products. Ingredient-forward transparency. And rituals simple enough that you'll actually keep them tomorrow, and the day after that.</p>"
+      }
+    },
+    "values": {
+      "type": "values-grid",
+      "settings": {
+        "eyebrow": "What We Stand For",
+        "heading": "Three Promises We Don't Break",
+        "description": "These aren't marketing lines — they're the checklist every NOAÉ product has to pass before it's allowed to launch."
+      },
+      "blocks": {
+        "v-1": { "type": "value", "settings": { "icon": "🧴", "title": "Ingredient Integrity", "description": "Every formula lists actives at their real, visible concentrations — never hidden behind a vague \"proprietary blend.\"" } },
+        "v-2": { "type": "value", "settings": { "icon": "📦", "title": "Considered Packaging", "description": "Glass jars, recyclable cartons and refill-ready bottles, chosen to be reused long before they're thrown away." } },
+        "v-3": { "type": "value", "settings": { "icon": "🌿", "title": "Real Results", "description": "We test for measurable outcomes — hydration, barrier repair, scalp health — not just how nice a formula feels going on." } }
+      },
+      "block_order": ["v-1", "v-2", "v-3"]
+    },
+    "how_we_formulate": {
+      "type": "ingredient-spotlight",
+      "settings": {
+        "eyebrow": "How We Formulate",
+        "heading": "Fewer Ingredients, More Intention",
+        "body": "Before a NOAÉ formula reaches the lab bench, it has to pass one question: does this ingredient change how the product performs, or is it just there for show? If the answer is the latter, it doesn't make the cut."
+      },
+      "blocks": {
+        "i-1": { "type": "item", "settings": { "icon": "🔬", "title": "Batch-Tested", "description": "Each small batch is checked for stability and potency before bottling." } },
+        "i-2": { "type": "item", "settings": { "icon": "🩺", "title": "Dermatologist-Reviewed", "description": "Independent review across skin types, including sensitive and reactive skin." } },
+        "i-3": { "type": "item", "settings": { "icon": "🐇", "title": "Cruelty-Free, Always", "description": "No animal testing at any stage, from raw material to finished product." } },
+        "i-4": { "type": "item", "settings": { "icon": "🌸", "title": "Fragrance Layered Last", "description": "Scent is added only after performance is locked, never to mask an unfinished formula." } }
+      },
+      "block_order": ["i-1", "i-2", "i-3", "i-4"]
+    },
+    "cta": {
+      "type": "promo-banner",
+      "settings": {
+        "heading": "Ready To Build Your Ritual?",
+        "body": "Start with the three products our formulators recommend most, or browse the full range and build a routine that's entirely your own.",
+        "cta_text": "Shop All Products",
+        "cta_url": "/collections/all"
+      }
+    }
+  },
+  "order": ["hero", "values", "how_we_formulate", "cta"]
+}

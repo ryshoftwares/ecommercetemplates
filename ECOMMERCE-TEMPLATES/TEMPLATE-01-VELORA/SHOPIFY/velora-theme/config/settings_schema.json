@@ -1,0 +1,217 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Velora",
+    "theme_version": "1.0.0",
+    "theme_author": "Velora",
+    "theme_documentation_url": "https://velora.example.com/theme-docs",
+    "theme_support_url": "https://velora.example.com/support"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image",
+        "info": "Optional. If left blank, the shop name is shown as a wordmark, matching the VELORA demo."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Custom logo width",
+        "min": 80,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "default": 140
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand palette"
+      },
+      {
+        "type": "paragraph",
+        "content": "These default to the fixed VELORA brand tokens (Black / Ivory / Warm Beige / Charcoal / Burgundy) used throughout the master design. Adjust only if you intend to depart from the brand guidelines."
+      },
+      {
+        "type": "color",
+        "id": "color_black",
+        "label": "Black (primary text / buttons)",
+        "default": "#0A0A0A"
+      },
+      {
+        "type": "color",
+        "id": "color_ivory",
+        "label": "Ivory (page background)",
+        "default": "#F7F3EC"
+      },
+      {
+        "type": "color",
+        "id": "color_beige",
+        "label": "Warm beige (accents / soft backgrounds)",
+        "default": "#C9B79C"
+      },
+      {
+        "type": "color",
+        "id": "color_charcoal",
+        "label": "Charcoal (footer background)",
+        "default": "#2B2B2B"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent — deep burgundy (links, sale badges, CTAs on hover)",
+        "default": "#6E2A33"
+      },
+      {
+        "type": "color",
+        "id": "color_success",
+        "label": "Success",
+        "default": "#3E6E4B"
+      },
+      {
+        "type": "color",
+        "id": "color_error",
+        "label": "Error",
+        "default": "#A13A3A"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "default": "playfair_display_n6"
+      },
+      {
+        "type": "header",
+        "content": "Body"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body / UI font",
+        "default": "jost_n4"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Container max width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1400
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "default": "https://instagram.com/velora"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "default": "https://facebook.com/velora"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "default": "https://pinterest.com/velora"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "X (Twitter)",
+        "default": ""
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free shipping threshold",
+        "info": "Amount (in your shop's currency, in the smallest currency unit shown by money_format) at which the free-shipping progress bar in the cart drawer/cart page reaches 100%. The VELORA demo uses ₹4,000 — Shopify's own shop currency setting (Settings > General) governs how amounts actually display at checkout; this setting only drives the visual progress bar.",
+        "default": 4000
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_type_drawer",
+        "label": "Use cart drawer",
+        "default": true,
+        "info": "When enabled, adding a product opens the slide-in cart drawer, matching the demo. The dedicated cart page (/cart) is always available."
+      }
+    ]
+  },
+  {
+    "name": "SEO & sharing",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "default_meta_description",
+        "label": "Default meta description",
+        "default": "Velora is a premium fashion house crafting tailored dresses, outerwear, knitwear and accessories from responsibly sourced natural fibres. Shop the New Season collection.",
+        "info": "Used as a fallback on any page that has no page-specific description (product/collection descriptions are preferred automatically when present)."
+      },
+      {
+        "type": "image_picker",
+        "id": "social_sharing_image",
+        "label": "Default social sharing image",
+        "info": "Used for Open Graph / Twitter previews when a page has no more specific image (e.g. no product/collection image)."
+      }
+    ]
+  },
+  {
+    "name": "Wishlist",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Shopify has no native wishlist object. Wishlist state is stored client-side in the shopper's browser via localStorage, keyed by product handle (see assets/theme.js, VeloraWishlist). It is per-browser, not synced to the customer account."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_wishlist",
+        "label": "Enable wishlist icon + heart toggles",
+        "default": true
+      }
+    ]
+  }
+]

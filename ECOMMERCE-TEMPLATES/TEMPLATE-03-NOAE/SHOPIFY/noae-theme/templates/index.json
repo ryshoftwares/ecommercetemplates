@@ -1,0 +1,129 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Ingredient-Forward Beauty",
+        "heading": "YOUR DAILY RITUAL",
+        "subheading": "Skin-first formulas with visible-ingredient honesty, built into a five-minute morning and night ritual you'll actually look forward to.",
+        "primary_cta_text": "Shop Bestsellers",
+        "primary_cta_url": "/collections/all",
+        "secondary_cta_text": "Take the Skin Quiz",
+        "secondary_cta_url": "#skin-quiz"
+      }
+    },
+    "shop_by_concern": {
+      "type": "shop-by-concern",
+      "settings": {
+        "eyebrow": "Shop By Concern",
+        "heading": "Find Your Category",
+        "description": "Whichever ritual you're building, start with the category that fits your routine today."
+      },
+      "blocks": {
+        "concern-1": { "type": "concern", "settings": { "name": "Skincare", "description": "Serums, creams & masks for visible results" } },
+        "concern-2": { "type": "concern", "settings": { "name": "Haircare", "description": "Nourishing washes and oils for stronger strands" } },
+        "concern-3": { "type": "concern", "settings": { "name": "Wellness", "description": "Rituals for calm, sleep, and everyday balance" } },
+        "concern-4": { "type": "concern", "settings": { "name": "Body", "description": "Whipped butters and oils for soft, cared-for skin" } }
+      },
+      "block_order": ["concern-1", "concern-2", "concern-3", "concern-4"]
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Most Loved",
+        "heading": "Bestsellers",
+        "description": "The rituals our community reaches for again and again.",
+        "products_to_show": 4,
+        "soft_bg": true,
+        "show_view_all": true,
+        "view_all_text": "View All Products"
+      }
+    },
+    "editorial_ritual": {
+      "type": "editorial-ritual",
+      "settings": {
+        "eyebrow": "The Ritual",
+        "heading": "The Five-Minute Ritual",
+        "body": "Three honest steps, done consistently, outperform a ten-step routine done occasionally. Here's the sequence our formulators built for daily skin health.",
+        "cta_text": "Shop The Ritual",
+        "cta_url": "/collections/skincare"
+      },
+      "blocks": {
+        "step-1": { "type": "step", "settings": { "title": "Cleanse", "description": "Gentle Milk Cleanser lifts away the day without stripping the barrier." } },
+        "step-2": { "type": "step", "settings": { "title": "Treat", "description": "Renewal Hydrating Serum floods skin with moisture and softens fine dry lines." } },
+        "step-3": { "type": "step", "settings": { "title": "Seal", "description": "Cloud Cream Moisturizer locks it all in with a cushion of ceramides." } }
+      },
+      "block_order": ["step-1", "step-2", "step-3"]
+    },
+    "new_arrivals": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Just Landed",
+        "heading": "New Arrivals",
+        "description": "Fresh formulas, freshly restocked shelves.",
+        "products_to_show": 4,
+        "soft_bg": true,
+        "show_view_all": false
+      }
+    },
+    "ingredient_spotlight": {
+      "type": "ingredient-spotlight",
+      "settings": {
+        "eyebrow": "Our Ethos",
+        "heading": "Formulated With Intention",
+        "body": "Every NOAÉ formula starts with a short, honest ingredient list — actives that are proven to work, paired with skin-loving botanicals that keep the experience gentle."
+      },
+      "blocks": {
+        "item-1": { "type": "item", "settings": { "icon": "🌿", "title": "Clean Actives", "description": "No unnecessary fillers — every ingredient earns its place." } },
+        "item-2": { "type": "item", "settings": { "icon": "🧪", "title": "Dermatologist-Reviewed", "description": "Formulas reviewed for safety across skin types." } },
+        "item-3": { "type": "item", "settings": { "icon": "🐰", "title": "Cruelty-Free", "description": "Never tested on animals, at any stage." } },
+        "item-4": { "type": "item", "settings": { "icon": "♻️", "title": "Recyclable Packaging", "description": "Glass and recyclable plastic wherever possible." } }
+      },
+      "block_order": ["item-1", "item-2", "item-3", "item-4"]
+    },
+    "reviews": {
+      "type": "testimonials",
+      "settings": {
+        "eyebrow": "In Their Words",
+        "heading": "Loved By Our Community"
+      },
+      "blocks": {
+        "t-1": { "type": "testimonial", "settings": { "rating": 5, "quote": "My skin has never held onto moisture like this. The serum-to-cream combo is now non-negotiable.", "author": "Ananya R.", "author_meta": "Verified buyer" } },
+        "t-2": { "type": "testimonial", "settings": { "rating": 5, "quote": "The hair oil smells incredible and actually tames my frizz in humidity — first product that's done both.", "author": "Priya S.", "author_meta": "Verified buyer" } },
+        "t-3": { "type": "testimonial", "settings": { "rating": 5, "quote": "The sleep mist genuinely changed my bedtime routine. Subtle scent, real difference in how fast I settle down.", "author": "Meera K.", "author_meta": "Verified buyer" } }
+      },
+      "block_order": ["t-1", "t-2", "t-3"]
+    },
+    "promo": {
+      "type": "promo-banner",
+      "settings": {
+        "heading": "The Ritual Edit",
+        "body": "Save 15% when you build your own three-step routine — mix and match any cleanser, serum, and moisturizer.",
+        "cta_text": "Shop The Edit",
+        "cta_url": "/collections/all"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Find Your Ritual",
+        "heading": "What Does Your Skin Need?",
+        "body": "Join the list for a personalised routine match, early access to launches, and 10% off your first order.",
+        "placeholder": "you@email.com",
+        "button_text": "Get My Match",
+        "note": "Use code NOAE10 at checkout. No spam, unsubscribe anytime."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "shop_by_concern",
+    "bestsellers",
+    "editorial_ritual",
+    "new_arrivals",
+    "ingredient_spotlight",
+    "reviews",
+    "promo",
+    "newsletter"
+  ]
+}

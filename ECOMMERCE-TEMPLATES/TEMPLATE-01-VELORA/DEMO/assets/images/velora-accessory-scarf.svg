@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="t14">
+  <title id="t14">Editorial flat-lay of a burgundy silk twill VELORA scarf against a beige backdrop</title>
+  <defs>
+    <linearGradient id="ac2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C9B79C"/>
+      <stop offset="100%" stop-color="#E4D9C6"/>
+    </linearGradient>
+    <linearGradient id="ac2b" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8C3E49"/>
+      <stop offset="100%" stop-color="#4E1D24"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#ac2)"/>
+  <g transform="translate(450 600) rotate(-8)">
+    <rect x="-320" y="-320" width="640" height="640" fill="url(#ac2b)"/>
+    <rect x="-320" y="-320" width="640" height="640" fill="none" stroke="#F7F3EC" stroke-width="6" opacity="0.5"/>
+    <rect x="-260" y="-260" width="520" height="520" fill="none" stroke="#C9B79C" stroke-width="2" opacity="0.6"/>
+    <circle cx="0" cy="0" r="90" fill="none" stroke="#F7F3EC" stroke-width="3" opacity="0.5"/>
+  </g>
+  <text x="450" y="1080" font-family="Georgia, 'Playfair Display', serif" font-size="20" fill="#0A0A0A" opacity="0.55" text-anchor="middle" letter-spacing="5">VELORA — SILK SCARF</text>
+</svg>

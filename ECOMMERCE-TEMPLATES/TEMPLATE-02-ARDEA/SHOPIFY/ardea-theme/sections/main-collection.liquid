@@ -1,0 +1,230 @@
+{%- comment -%}
+  sections/main-collection.liquid
+  Shop / collection page, ported from the demo's shop.html + category.html
+  (.shop-layout / .filters / .shop-results markup), rebuilt on Shopify's
+  real faceted search (collection.filters) instead of the demo's
+  client-side js/filters.js array filtering — every facet (price, finish /
+  color, availability, and any merchant-configured rating filter) comes
+  from collection.filters so it reflects the real catalog and updates via
+  a normal filtered-collection page load (progressively enhanced by
+  assets/theme.js into an off-canvas drawer on mobile, matching
+  .filters / .filter-drawer-trigger from the demo).
+
+  AEO INTRO: uses the real collection.description (set per-collection in
+  Shopify Admin) as the category intro paragraph — never hardcoded —
+  falling back to the section's own text setting only for collections that
+  have no description yet.
+{%- endcomment -%}
+<nav class="breadcrumbs container" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li><a href="{{ routes.all_products_collection_url }}">Shop</a></li>
+    <li aria-current="page">{{ collection.title }}</li>
+  </ol>
+</nav>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | append: '/' | json }} },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": {{ shop.url | append: routes.all_products_collection_url | json }} },
+    { "@type": "ListItem", "position": 3, "name": {{ collection.title | json }}, "item": {{ shop.url | append: collection.url | json }} }
+  ]
+}
+</script>
+
+<section class="page-hero container">
+  <h1 class="page-hero__title">{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}
+    <div class="page-hero__lead lead rte">{{ collection.description }}</div>
+  {%- elsif section.settings.fallback_intro != blank -%}
+    <p class="page-hero__lead lead">{{ section.settings.fallback_intro }}</p>
+  {%- endif -%}
+</section>
+
+<section class="container section--tight">
+  {%- paginate collection.products by section.settings.products_per_page -%}
+    <div class="shop-layout">
+      <aside class="filters" aria-label="{{ 'sections.collection.filter_title' | t }}" data-filters>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+          <h3 style="font-size:1.1rem;">{{ 'sections.collection.filter_title' | t }}</h3>
+          <button type="button" class="icon-btn filters__close" data-panel-close aria-label="{{ 'sections.header.close_menu' | t }}">
+            {%- render 'icon', icon: 'close', width: 20, height: 20 -%}
+          </button>
+        </div>
+
+        {%- assign has_active_filters = false -%}
+        {%- for filter in collection.filters -%}
+          {%- if filter.active_values.size > 0 -%}{%- assign has_active_filters = true -%}{%- endif -%}
+        {%- endfor -%}
+        {%- if has_active_filters -%}
+          <a class="filter-clear" href="{{ collection.url }}?sort_by={{ collection.sort_by }}" data-filter-clear-all>{{ 'sections.collection.clear_filters' | t }}</a>
+        {%- endif -%}
+
+        <form id="CollectionFilterForm" method="get" action="{{ collection.url }}" data-collection-filter-form>
+          <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+          {%- for filter in collection.filters -%}
+            <div class="filter-group" data-filter-group>
+              <button type="button" class="filter-group__title" data-filter-group-toggle>
+                {{ filter.label }}
+                {%- render 'icon', icon: 'chevron', width: 12, height: 12 -%}
+              </button>
+              <div class="filter-group__body">
+                {%- case filter.type -%}
+
+                  {%- when 'price_range' -%}
+                    <div class="price-range-inputs">
+                      <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value }}" placeholder="Min {{ cart.currency.symbol }}" aria-label="Minimum price" min="0" data-filter-price-min>
+                      <span>–</span>
+                      <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value }}" placeholder="Max {{ cart.currency.symbol }}" aria-label="Maximum price" min="0" data-filter-price-max>
+                    </div>
+                    <p class="form-hint">Prices shown in {{ cart.currency.iso_code | default: shop.currency }}, inclusive of taxes.</p>
+
+                  {%- when 'boolean' -%}
+                    {%- for value in filter.values -%}
+                      <label class="checkbox-row">
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}>
+                        {{ value.label }} ({{ value.count }})
+                      </label>
+                    {%- endfor -%}
+
+                  {%- when 'list' -%}
+                    {%- if filter.label contains 'Color' or filter.label contains 'Colour' or filter.label contains 'Finish' -%}
+                      <div class="filter-swatches">
+                        {%- for value in filter.values -%}
+                          <button type="button"
+                            class="filter-swatch{% if value.active %} is-active{% endif %}"
+                            style="background:{% render 'color-swatch', name: value.label %};"
+                            data-filter-swatch
+                            data-param-name="{{ value.param_name }}"
+                            data-value="{{ value.value }}"
+                            aria-pressed="{{ value.active }}"
+                            title="{{ value.label }} ({{ value.count }})"></button>
+                        {%- endfor -%}
+                      </div>
+                    {%- elsif filter.label contains 'Rating' -%}
+                      {%- for value in filter.values -%}
+                        <label class="radio-row">
+                          <input type="radio" name="{{ filter.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}>
+                          {{ value.label }} ({{ value.count }})
+                        </label>
+                      {%- endfor -%}
+                    {%- else -%}
+                      {%- for value in filter.values -%}
+                        <label class="checkbox-row">
+                          <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}>
+                          {{ value.label }} ({{ value.count }})
+                        </label>
+                      {%- endfor -%}
+                    {%- endif -%}
+
+                {%- endcase -%}
+              </div>
+            </div>
+          {%- endfor -%}
+          <noscript><button type="submit" class="btn btn--dark btn--sm" style="margin-top:1rem;">{{ 'sections.collection.show_results' | t }}</button></noscript>
+        </form>
+      </aside>
+
+      <div class="shop-results">
+        <div class="shop-toolbar">
+          <button type="button" class="btn btn--outline btn--sm filter-drawer-trigger" data-filter-drawer-open>
+            {%- render 'icon', icon: 'menu', width: 16, height: 16 -%} {{ 'sections.collection.filter_title' | t }}
+          </button>
+          <p class="shop-toolbar__count" data-shop-count>
+            {%- if paginate.items == 1 -%}
+              {{ 'sections.collection.result_count.one' | t: count: paginate.items }}
+            {%- else -%}
+              {{ 'sections.collection.result_count.other' | t: count: paginate.items }}
+            {%- endif -%}
+          </p>
+          <div class="shop-toolbar__right">
+            <div class="active-filters" data-active-filters>
+              {%- for filter in collection.filters -%}
+                {%- for value in filter.active_values -%}
+                  <span class="active-filter-chip">{{ value.label }}
+                    <a href="{{ value.url_to_remove }}" aria-label="Remove {{ value.label }} filter"><button type="button">×</button></a>
+                  </span>
+                {%- endfor -%}
+              {%- endfor -%}
+            </div>
+            <label style="display:flex;align-items:center;gap:0.5rem;font-weight:400;margin-bottom:0;font-size:0.85rem;">
+              {{ 'sections.collection.sort_by' | t }}
+              <select class="sort-select" data-sort-select aria-label="{{ 'sections.collection.sort_by' | t }}" onchange="location.href=this.value">
+                {%- for option in collection.sort_options -%}
+                  <option value="{{ collection.url }}?sort_by={{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
+                {%- endfor -%}
+              </select>
+            </label>
+          </div>
+        </div>
+
+        {%- if collection.products.size > 0 -%}
+          <div class="product-grid" data-shop-grid style="grid-template-columns:repeat({{ section.settings.columns }},1fr)">
+            {%- for product in collection.products -%}
+              {%- render 'product-card', product: product -%}
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <div class="empty-state" data-shop-empty>
+            <h3>{{ 'sections.collection.no_products' | t }}</h3>
+            <p class="lead" style="margin-top:0.5rem;">{{ 'sections.collection.no_products_body' | t }}</p>
+            <a href="{{ collection.url }}" class="btn btn--dark" style="margin-top:1.5rem;">{{ 'sections.collection.clear_filters' | t }}</a>
+          </div>
+        {%- endif -%}
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="pagination" data-shop-pagination aria-label="Pagination">
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" aria-label="Previous page">{%- render 'icon', icon: 'chevron', width: 12, height: 12 -%}</a>
+            {%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a class="page-num" href="{{ part.url }}">{{ part.title }}</a>
+              {%- else -%}
+                <span class="page-num{% if part.title == paginate.current_page %} is-active{% endif %}">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" aria-label="Next page">{%- render 'icon', icon: 'chevron', width: 12, height: 12 -%}</a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "Collection pages",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "textarea",
+      "id": "fallback_intro",
+      "label": "Fallback intro text",
+      "info": "Shown only when a collection has no description set in Shopify Admin.",
+      "default": "Every Ardea piece in one place — filter by finish, price or availability to find the right fit. Each listing includes full dimensions, materials and delivery details so there are no surprises at checkout."
+    }
+  ]
+}
+{% endschema %}

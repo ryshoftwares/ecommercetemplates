@@ -1,0 +1,57 @@
+{%- comment -%}
+  snippets/spec-table.liquid
+  Reusable specifications renderer shared by sections/main-product.liquid's
+  "Specifications" tab AND its compare-with-related-products strip.
+
+  METAFIELD CONVENTION:
+    product.metafields.custom.specifications — JSON metafield, an ordered
+    array of {"label": "...", "value": "..."} objects, e.g.
+      [{"label":"Driver Size","value":"40mm dynamic"},
+       {"label":"Battery Life","value":"40 hrs (ANC on: 32 hrs)"}, ...]
+    Ported 1:1 from the master demo's js/products.js `specifications` array
+    so on-page content, JSON-LD and this table never drift apart.
+
+  Usage:
+    {% render 'spec-table', product: product %}
+      -> full <tr> rows (label/value + SKU + Availability), for wrapping in
+         <table class="spec-table"><tbody>...</tbody></table>
+    {% render 'spec-table', product: product, mode: 'key-spec' %}
+      -> plain text of just the FIRST listed spec's value, used as the
+         "Key Spec" row of the compare-with-related-products strip
+{%- endcomment -%}
+{%- liquid
+  assign specs_json = product.metafields.custom.specifications.value
+  assign specs = blank
+  if specs_json != blank
+    assign specs = specs_json | parse_json
+  endif
+-%}
+{%- if mode == 'key-spec' -%}
+  {%- if specs.size > 0 -%}{{ specs.first.value }}{%- else -%}{{ product.type | default: '—' }}{%- endif -%}
+{%- else -%}
+  {%- if specs.size > 0 -%}
+    {%- for spec in specs -%}
+      <tr><th>{{ spec.label }}</th><td>{{ spec.value }}</td></tr>
+    {%- endfor -%}
+  {%- else -%}
+    {%- for option in product.options_with_values -%}
+      <tr><th>{{ option.name }}</th><td>{{ option.values | join: ', ' }}</td></tr>
+    {%- endfor -%}
+  {%- endif -%}
+  <tr><th>SKU</th><td>{{ product.selected_or_first_available_variant.sku | default: '—' }}</td></tr>
+  <tr>
+    <th>Availability</th>
+    <td>
+      {%- if product.selected_or_first_available_variant.available -%}
+        {%- assign inv = product.selected_or_first_available_variant.inventory_quantity -%}
+        {%- if product.selected_or_first_available_variant.inventory_management and inv > 0 -%}
+          In stock ({{ inv }} units)
+        {%- else -%}
+          In stock
+        {%- endif -%}
+      {%- else -%}
+        Out of stock
+      {%- endif -%}
+    </td>
+  </tr>
+{%- endif -%}

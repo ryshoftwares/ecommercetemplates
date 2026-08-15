@@ -1,0 +1,54 @@
+{%- comment -%}
+  sections/main-list-collections.liquid
+  All-categories listing page, styled with the demo's .category-grid /
+  .category-card pattern (sections/shop-by-category.liquid), driven by the
+  real `collections` object (every collection in the store) rather than a
+  fixed category list — so a merchant adding a new collection in Shopify
+  Admin sees it appear here automatically.
+{%- endcomment -%}
+{%- render 'breadcrumb' -%}
+
+<div class="page-header">
+  <div class="container">
+    <h1>{{ section.settings.heading }}</h1>
+    {%- if section.settings.subheading != blank -%}<p class="page-header__intro">{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+</div>
+
+<div class="container section">
+  {%- liquid
+    assign sorted_collections = collections | sort: 'title'
+    if section.settings.sort_by == 'manual'
+      assign sorted_collections = collections
+    endif
+  -%}
+  <div class="category-grid">
+    {%- for collection in sorted_collections -%}
+      <a class="category-card" href="{{ collection.url }}">
+        <div class="category-card__icon">{%- render 'icon', icon: 'audio', width: 30, height: 30 -%}</div>
+        <h3>{{ collection.title }}</h3>
+        <span>{{ collection.all_products_count }} Products</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "All categories",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by Category" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Browse every Modix product family, from audio to wearables." },
+    {
+      "type": "select",
+      "id": "sort_by",
+      "label": "Sort collections by",
+      "options": [
+        { "value": "alphabetical", "label": "Alphabetical" },
+        { "value": "manual", "label": "Store's default order" }
+      ],
+      "default": "alphabetical"
+    }
+  ]
+}
+{% endschema %}

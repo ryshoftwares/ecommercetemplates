@@ -1,0 +1,33 @@
+{%- comment -%}
+  snippets/css-variables.liquid
+  Rendered inline in layout/theme.liquid <head>, AFTER assets/theme.css is
+  linked. Overrides the static token defaults in theme.css with the
+  merchant's live theme-editor settings (Colors / Typography / Layout), so
+  settings_schema.json controls are real — without theme.css needing to be a
+  Liquid asset itself. Token names mirror the MODIX demo's css/style.css
+  :root block (--color-white, --color-accent, --color-charcoal, etc).
+{%- endcomment -%}
+<style>
+  :root{
+    --color-white: {{ settings.color_white | default: '#FFFFFF' }};
+    --color-offwhite: {{ settings.color_offwhite | default: '#F5F6F8' }};
+    --color-charcoal: {{ settings.color_charcoal | default: '#17181C' }};
+    --color-slate: {{ settings.color_slate | default: '#4B5563' }};
+    --color-slate-light: {{ settings.color_slate_light | default: '#8A93A3' }};
+    --color-accent: {{ settings.color_accent | default: '#2F5DFF' }};
+    --color-accent-dark: {{ settings.color_accent_dark | default: '#2148D6' }};
+    --color-accent-light: #EBF0FF;
+    --color-border: {{ settings.color_border | default: '#E3E6EC' }};
+    --color-border-strong: #D2D6DF;
+    --color-success: {{ settings.color_success | default: '#1E9E63' }};
+    --color-danger: {{ settings.color_danger | default: '#E0453C' }};
+    --color-warning: #C97A17;
+    --color-star: {{ settings.color_star | default: '#F5A623' }};
+    --font-heading: {{ settings.font_heading.family | default: 'Space Grotesk' }}, 'Helvetica Neue', Arial, sans-serif;
+    --font-body: {{ settings.font_body.family | default: 'Inter' }}, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+    --container-max: {{ settings.page_width | default: 1320 }}px;
+  }
+</style>
+{{ settings.font_heading | font_face: font_display: 'swap' }}
+{{ settings.font_body | font_face: font_display: 'swap' }}

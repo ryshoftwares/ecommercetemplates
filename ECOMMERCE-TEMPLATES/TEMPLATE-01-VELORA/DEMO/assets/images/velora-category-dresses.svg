@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" role="img" aria-labelledby="t2">
+  <title id="t2">Abstract editorial imagery representing the VELORA Dresses collection</title>
+  <defs>
+    <linearGradient id="cd1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6E2A33"/>
+      <stop offset="100%" stop-color="#2B2B2B"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="700" fill="url(#cd1)"/>
+  <path d="M450 120 C 400 120 360 170 360 230 L 320 620 C 320 660 380 680 450 680 C 520 680 580 660 580 620 L 540 230 C 540 170 500 120 450 120 Z" fill="#F7F3EC" opacity="0.16"/>
+  <path d="M450 120 C 420 150 420 200 450 230 C 480 200 480 150 450 120 Z" fill="#F7F3EC" opacity="0.25"/>
+  <text x="450" y="380" font-family="Georgia, 'Playfair Display', serif" font-size="26" fill="#F7F3EC" opacity="0.5" text-anchor="middle" letter-spacing="6">DRESSES</text>
+</svg>

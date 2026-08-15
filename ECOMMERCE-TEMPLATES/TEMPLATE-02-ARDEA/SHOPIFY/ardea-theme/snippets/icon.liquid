@@ -1,0 +1,52 @@
+{%- comment -%}
+  snippets/icon.liquid
+  Renders one of Ardea's inline SVG icons, ported 1:1 from the master demo
+  markup (index.html header / drawers / cart / wishlist / trust badges).
+  Usage: {% render 'icon', icon: 'search', width: 20, height: 20 %}
+{%- endcomment -%}
+{%- liquid
+  assign w = width | default: 22
+  assign h = height | default: 22
+-%}
+{%- case icon -%}
+  {%- when 'menu' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="{{ w }}" height="{{ h }}"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  {%- when 'search' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="{{ w }}" height="{{ h }}"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+  {%- when 'account' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="{{ w }}" height="{{ h }}"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+  {%- when 'wishlist' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="{{ w }}" height="{{ h }}"><path d="M12 20.5s-7.5-4.6-10-9.6C.4 7.6 2 4 5.6 4c2 0 3.6 1.2 4.4 2.6C10.8 5.2 12.4 4 14.4 4 18 4 19.6 7.6 18 10.9c-2.5 5-10 9.6-10 9.6z"/></svg>
+  {%- when 'cart' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="{{ w }}" height="{{ h }}"><path d="M4 4h2l1.6 10.6a2 2 0 002 1.4h7.6a2 2 0 002-1.7L20 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
+  {%- when 'close' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="{{ w }}" height="{{ h }}"><path d="M5 5l14 14M19 5L5 19"/></svg>
+  {%- when 'chevron' -%}
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="{{ w }}" height="{{ h }}" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+  {%- when 'instagram' -%}
+    <svg viewBox="0 0 24 24" width="{{ w }}" height="{{ h }}"><path d="M12 2c2.7 0 3 .01 4.1.06 1.06.05 1.79.22 2.43.47.66.26 1.14.6 1.64 1.1.5.5.84.98 1.1 1.64.25.64.42 1.37.47 2.43.05 1.1.06 1.4.06 4.1s-.01 3-.06 4.1c-.05 1.06-.22 1.79-.47 2.43a4.4 4.4 0 01-1.1 1.64c-.5.5-.98.84-1.64 1.1-.64.25-1.37.42-2.43.47-1.1.05-1.4.06-4.1.06s-3-.01-4.1-.06c-1.06-.05-1.79-.22-2.43-.47a4.4 4.4 0 01-1.64-1.1 4.4 4.4 0 01-1.1-1.64c-.25-.64-.42-1.37-.47-2.43C2.01 15 2 14.7 2 12s.01-3 .06-4.1c.05-1.06.22-1.79.47-2.43.26-.66.6-1.14 1.1-1.64.5-.5.98-.84 1.64-1.1.64-.25 1.37-.42 2.43-.47C9 2.01 9.3 2 12 2zm0 5.8a4.2 4.2 0 100 8.4 4.2 4.2 0 000-8.4zm0 1.8a2.4 2.4 0 110 4.8 2.4 2.4 0 010-4.8zm5.15-2.9a1 1 0 110 2 1 1 0 010-2z"/></svg>
+  {%- when 'pinterest' -%}
+    <svg viewBox="0 0 24 24" width="{{ w }}" height="{{ h }}"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.66 7.86 6.4 9.27-.09-.79-.17-2 .04-2.86.19-.78 1.23-4.97 1.23-4.97s-.31-.63-.31-1.55c0-1.45.84-2.53 1.89-2.53.89 0 1.32.67 1.32 1.47 0 .9-.57 2.24-.86 3.48-.25 1.04.52 1.89 1.54 1.89 1.85 0 3.1-2.38 3.1-5.19 0-2.14-1.44-3.74-4.06-3.74-2.96 0-4.8 2.21-4.8 4.68 0 .86.25 1.46.65 1.93.1.11.11.21.08.33-.09.36-.28 1.15-.32 1.31-.05.21-.17.26-.39.15-1.44-.67-2.34-2.77-2.34-4.46 0-3.63 2.64-6.97 7.61-6.97 4 0 7.11 2.85 7.11 6.66 0 3.97-2.5 7.16-5.98 7.16-1.17 0-2.27-.61-2.64-1.33 0 0-.64 2.44-.78 2.93-.24.87-.7 1.75-1.12 2.44A10 10 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+  {%- when 'facebook' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="{{ w }}" height="{{ h }}"><path d="M18 2h-3a4 4 0 0 0-4 4v3H8v4h3v9h4v-9h3l1-4h-4V6a1 1 0 0 1 1-1h3z"/></svg>
+  {%- when 'twitter' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="{{ w }}" height="{{ h }}"><path d="M4 4l16 16M20 4L4 20"/></svg>
+  {%- when 'warranty' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="{{ w }}" height="{{ h }}"><path d="M3 12l7 7 11-13"/></svg>
+  {%- when 'truck' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="{{ w }}" height="{{ h }}"><rect x="3" y="7" width="15" height="10" rx="1"/><path d="M18 10h2l2 2v5h-4"/><circle cx="7.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/></svg>
+  {%- when 'returns' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="{{ w }}" height="{{ h }}"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z"/><path d="M12 8v4l3 2"/></svg>
+  {%- when 'shield' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="{{ w }}" height="{{ h }}"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 11 4.6-2.6 8-6 8-11V5z"/></svg>
+  {%- when 'check-circle' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="{{ w }}" height="{{ h }}"><path d="M5 12l5 5L20 6"/></svg>
+  {%- when 'alert-circle' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="{{ w }}" height="{{ h }}"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.01"/></svg>
+  {%- when 'info-circle' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="{{ w }}" height="{{ h }}"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01M12 11v5"/></svg>
+  {%- when 'empty-cart' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="{{ w }}" height="{{ h }}"><path d="M4 4h2l1.6 10.6a2 2 0 002 1.4h7.6a2 2 0 002-1.7L20 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
+  {%- when 'empty-search' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="{{ w }}" height="{{ h }}"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+{%- endcase -%}

@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {
+        "heading": "Your Bag",
+        "intro": "Review your selected rituals, apply a coupon, and check your total before heading to checkout.",
+        "checkout_button_text": "Proceed to Checkout"
+      }
+    }
+  },
+  "order": ["main"]
+}

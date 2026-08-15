@@ -1,0 +1,109 @@
+{%- comment -%}
+  sections/featured-categories.liquid
+  The demo's asymmetric 4-tile "Shop by Category" editorial grid (.cat-grid /
+  .cat-card). Each block = one collection picker + image_picker + label,
+  so merchants can point tiles at real collections.
+{%- endcomment -%}
+<section class="section-pad">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="intro">
+        {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.view_all_url != blank -%}
+        <a href="{{ section.settings.view_all_url }}" class="btn-text">{{ section.settings.view_all_text }} &rarr;</a>
+      {%- endif -%}
+    </div>
+    <div class="cat-grid reveal">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign cat_url = block.settings.collection.url | default: '#'
+          assign cat_title = block.settings.label | default: block.settings.collection.title
+        -%}
+        <a class="cat-card" href="{{ cat_url }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image -%}
+            <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.image.alt | default: cat_title | escape }}" width="900" height="700" loading="lazy">
+          {%- elsif block.settings.collection.featured_image -%}
+            <img src="{{ block.settings.collection.featured_image | image_url: width: 900 }}" alt="{{ cat_title | escape }}" width="900" height="700" loading="lazy">
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+          <span class="cat-card-label">
+            <span class="eyebrow">Category</span>
+            <h3>{{ cat_title }}</h3>
+            <span class="link">Shop {{ cat_title }}</span>
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Four categories, one point of view"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "\"View all\" link text",
+      "default": "View All Categories"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "\"View all\" link URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category tile",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Tile image",
+          "info": "Falls back to the collection's featured image when left blank."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tile label",
+          "info": "Falls back to the collection title when left blank."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Featured categories",
+      "blocks": [
+        { "type": "category", "settings": { "label": "Dresses" } },
+        { "type": "category", "settings": { "label": "Outerwear" } },
+        { "type": "category", "settings": { "label": "Knitwear" } },
+        { "type": "category", "settings": { "label": "Accessories" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

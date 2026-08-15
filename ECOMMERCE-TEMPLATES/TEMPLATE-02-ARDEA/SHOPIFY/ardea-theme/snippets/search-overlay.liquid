@@ -1,0 +1,29 @@
+{%- comment -%}
+  snippets/search-overlay.liquid
+  Full-screen predictive search overlay, ported from the demo's
+  .search-overlay markup. Live suggestions are powered by assets/search.js
+  calling Shopify's native predictive search endpoint:
+  /search/suggest.json?q=...&resources[type]=product
+{%- endcomment -%}
+<div class="search-overlay" data-search-overlay>
+  <div class="container">
+    <div class="search-overlay__top">
+      <form class="search-overlay__form" action="{{ routes.search_url }}" method="get" role="search" data-search-form>
+        {%- render 'icon', icon: 'search', width: 24, height: 24 -%}
+        <input type="search" name="q" value="{{ search.terms | escape }}" data-search-input placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}" autocomplete="off">
+        <input type="hidden" name="type" value="product">
+        <button type="button" class="icon-btn" data-search-close aria-label="{{ 'general.search.close' | t }}">
+          {%- render 'icon', icon: 'close', width: 20, height: 20 -%}
+        </button>
+      </form>
+    </div>
+    <div class="search-overlay__body">
+      <div class="search-quicklinks">
+        {%- for collection in collections limit: 4 -%}
+          <a href="{{ collection.url }}">{{ collection.title }}</a>
+        {%- endfor -%}
+      </div>
+      <div data-search-suggestions></div>
+    </div>
+  </div>
+</div>

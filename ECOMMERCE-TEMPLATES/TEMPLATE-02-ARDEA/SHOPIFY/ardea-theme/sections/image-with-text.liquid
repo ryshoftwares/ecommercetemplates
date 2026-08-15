@@ -1,0 +1,185 @@
+{%- comment -%}
+  sections/image-with-text.liquid ("Editorial spotlight / Image with text")
+  Reusable editorial section covering BOTH homepage patterns from the demo:
+    - layout "editorial": ported from .section--alt > .container.editorial —
+      numbered caption badge (.editorial__caption "01 The Signature Piece"),
+      stat row (.editorial__meta) and a product CTA. Used for "The Oak
+      Lounge Chair — one chair, five years of prototypes."
+    - layout "craft": ported from .section--dark#craftsmanship > .container.craft
+      — dark background, cream text, stat row (.craft__stats). Used for
+      "Our Craft — slow furniture, made by hand" and reusable again on the
+      About page for "Twelve workshops, not one factory."
+  Both share the same image + eyebrow/heading/body + optional CTA + up to 4
+  stat blocks, differing only in layout/background — merchants pick one
+  section instance per use and set "layout" + "background" accordingly.
+{%- endcomment -%}
+{%- liquid
+  assign section_class = 'section'
+  if section.settings.background == 'alt'
+    assign section_class = 'section section--alt'
+  elsif section.settings.background == 'dark'
+    assign section_class = 'section section--dark'
+  endif
+-%}
+<section class="{{ section_class }}"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id }}"{% endif %}>
+  <div class="container {% if section.settings.layout == 'craft' %}craft{% else %}editorial{% endif %}{% if section.settings.image_position == 'right' %} is-image-right{% endif %}">
+    <div class="{% if section.settings.layout == 'craft' %}craft__media{% else %}editorial__media{% endif %} reveal" data-reveal{% if section.settings.image_position == 'right' %} style="order:2;"{% endif %}>
+      {%- if section.settings.image -%}
+        <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" width="1200" height="{% if section.settings.layout == 'craft' %}1000{% else %}1400{% endif %}" loading="lazy">
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+      {%- if section.settings.layout == 'editorial' and section.settings.caption_number != blank -%}
+        <div class="editorial__caption"><strong>{{ section.settings.caption_number }}</strong>{{ section.settings.caption_label }}</div>
+      {%- endif -%}
+    </div>
+    <div class="{% if section.settings.layout == 'craft' %}craft__body{% endif %} reveal" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.lead != blank -%}
+        <p class="lead"{% if section.settings.layout == 'craft' %} style="color:rgba(250,247,242,0.8);"{% endif %}>{{ section.settings.lead }}</p>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}<div class="rte">{{ section.settings.body }}</div>{%- endif -%}
+
+      {%- assign stat_blocks = section.blocks | where: 'type', 'stat' -%}
+      {%- if stat_blocks.size > 0 -%}
+        <div class="{% if section.settings.layout == 'craft' %}craft__stats{% else %}editorial__meta{% endif %}">
+          {%- for block in stat_blocks -%}
+            <div {{ block.shopify_attributes }}><strong>{{ block.settings.value }}</strong><span>{{ block.settings.label }}</span></div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.cta_text != blank -%}
+        <a href="{{ section.settings.cta_url }}" class="btn {% if section.settings.layout == 'craft' %}btn--outline-light{% else %}btn--dark{% endif %}">{{ section.settings.cta_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial spotlight",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "editorial", "label": "Editorial (numbered caption + stat row)" },
+        { "value": "craft", "label": "Craft / brand story (dark stat row)" }
+      ],
+      "default": "editorial"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "cream", "label": "Cream" },
+        { "value": "alt", "label": "Sand (alt)" },
+        { "value": "dark", "label": "Charcoal (dark)" }
+      ],
+      "default": "alt"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor ID (optional)",
+      "info": "e.g. \"craftsmanship\" so other pages can link to #craftsmanship."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "caption_number",
+      "label": "Numbered caption (editorial layout only)",
+      "default": "01"
+    },
+    {
+      "type": "text",
+      "id": "caption_label",
+      "label": "Caption label",
+      "default": "The Signature Piece"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "The Oak Lounge Chair"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "One chair, five years of prototypes"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead paragraph",
+      "default": "Our founding designer spent five years refining a single steam-bent oak frame before it ever went into production — testing joinery, seat pitch and linen weight until the chair felt as good after a decade of use as it did on day one."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Additional body text",
+      "default": "<p>Every Oak Lounge Chair is built from FSC-certified European oak, upholstered in undyed heavyweight linen over a webbed jute seat, and finished entirely by hand in our partner workshop.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button label",
+      "default": "Shop the Oak Lounge Chair"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "5" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Years in Development" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Editorial spotlight",
+      "settings": {
+        "layout": "editorial",
+        "background": "alt",
+        "caption_number": "01",
+        "caption_label": "The Signature Piece",
+        "eyebrow": "The Oak Lounge Chair",
+        "heading": "One chair, five years of prototypes",
+        "cta_text": "Shop the Oak Lounge Chair"
+      },
+      "blocks": [
+        { "type": "stat", "settings": { "value": "5", "label": "Years in Development" } },
+        { "type": "stat", "settings": { "value": "126", "label": "Verified Reviews" } },
+        { "type": "stat", "settings": { "value": "4.8", "label": "Average Rating" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

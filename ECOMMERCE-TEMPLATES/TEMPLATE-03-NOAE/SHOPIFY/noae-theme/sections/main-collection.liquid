@@ -1,0 +1,217 @@
+{%- comment -%}
+  sections/main-collection.liquid
+  Referenced by templates/collection.json (Shopify auto-injects this section
+  into every collection page, including the "All products" collection used
+  for the demo's Shop All / category pages).
+
+  Ported from the demo's shop.html / category.html .noae-shop-layout /
+  .noae-filters / .noae-shop-toolbar / .noae-product-grid / .noae-pagination
+  markup.
+
+  FILTERS: uses Shopify's native Storefront Filtering API
+  (collection.filters) — real facets (category, price range, availability)
+  configured by the merchant in Settings > Search & Discovery. To reproduce
+  the demo's "Skin Type" and "Size" facets, create metafield-based filters on
+  the custom.skin_type (list) and the Size variant option — Shopify surfaces
+  both automatically as `list` type filters once configured. A "Rating"
+  facet only appears if the merchant creates a metafield-based filter on
+  custom.rating (Shopify does not ship a rating facet out of the box).
+
+  SORT: native ?sort_by= param via collection.sort_options + a <select> that
+  submits the facet form (so sort + filters share one GET request).
+{%- endcomment -%}
+<section class="noae-page-header">
+  <div class="noae-container">
+    {%- render 'breadcrumb' -%}
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p class="noae-page-header__intro">{{ collection.description }}</p>
+    {%- else -%}
+      <p class="noae-page-header__intro">{{ section.settings.default_intro }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<div class="noae-drawer-overlay" data-filter-drawer-backdrop id="filtersOverlay"></div>
+
+<div class="noae-container" data-shop-page>
+  {%- paginate collection.products by section.settings.products_per_page -%}
+  <div class="noae-shop-layout">
+    <aside class="noae-filters" id="productFilters" aria-label="Product filters" data-filters-aside>
+      <form method="get" action="{{ collection.url }}" data-facets-form>
+        {%- if collection.sort_by -%}<input type="hidden" name="sort_by" value="{{ collection.sort_by }}">{%- endif -%}
+        <div class="noae-drawer__header">
+          <p class="noae-drawer__title">{{ 'sections.collection.filter_title' | t }}</p>
+          <button type="button" class="noae-drawer__close" data-filter-drawer-close id="filtersCloseMobile" aria-label="Close filters">✕</button>
+        </div>
+
+        {%- for filter in collection.filters -%}
+          <div class="noae-filters__group" data-filter-group>
+            <p class="noae-filters__group-title" data-filter-toggle>{{ filter.label }}</p>
+            <div class="noae-filters__options">
+              {%- case filter.type -%}
+                {%- when 'list' -%}
+                  {%- assign label_down = filter.label | downcase -%}
+                  {%- if label_down contains 'size' -%}
+                    {%- for value in filter.values -%}
+                      <label class="noae-checkbox"><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}> {{ value.label }} ({{ value.count }})</label>
+                    {%- endfor -%}
+                  {%- else -%}
+                    {%- for value in filter.values -%}
+                      <label class="noae-checkbox"><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}> {{ value.label }} ({{ value.count }})</label>
+                    {%- endfor -%}
+                  {%- endif -%}
+                {%- when 'price_range' -%}
+                  <div class="noae-range-row">
+                    <label for="priceMin" class="noae-visually-hidden">Minimum price</label>
+                    <input type="number" id="priceMin" name="{{ filter.min_value.param_name }}" placeholder="Min ₹" min="0" value="{{ filter.min_value.value }}">
+                    <span>–</span>
+                    <label for="priceMax" class="noae-visually-hidden">Maximum price</label>
+                    <input type="number" id="priceMax" name="{{ filter.max_value.param_name }}" placeholder="Max ₹" min="0" value="{{ filter.max_value.value }}">
+                  </div>
+                {%- when 'boolean' -%}
+                  {%- for value in filter.values -%}
+                    <label class="noae-checkbox"><input type="checkbox" id="filterInStock" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}> {{ filter.label }}</label>
+                  {%- endfor -%}
+              {%- endcase -%}
+            </div>
+          </div>
+        {%- endfor -%}
+
+        {%- if collection.filters.size == 0 -%}
+          <p style="font-size:0.85rem;color:var(--color-plum-soft);">Configure facets in Settings &gt; Search &amp; Discovery to show category, price, skin type and size filters here.</p>
+        {%- endif -%}
+
+        <a href="{{ collection.url }}" class="noae-filters__clear" id="filtersClear" data-clear-filters>{{ 'sections.collection.clear_filters' | t }}</a>
+        <div style="margin-top:var(--space-4);"><button type="submit" class="noae-btn noae-btn--dark noae-btn--full" data-filter-drawer-apply>{{ 'sections.collection.show_results' | t }}</button></div>
+      </form>
+    </aside>
+
+    <div>
+      <div class="noae-shop-toolbar">
+        <span class="noae-shop-toolbar__count" id="shopResultCount" data-result-count>
+          {%- if collection.products_count == 1 -%}
+            {{ 'sections.collection.result_count.one' | t: count: collection.products_count }}
+          {%- else -%}
+            {{ 'sections.collection.result_count.other' | t: count: collection.products_count }}
+          {%- endif -%}
+        </span>
+        <div class="noae-shop-toolbar__right">
+          <button type="button" id="filtersOpenMobile" class="noae-btn noae-btn--outline noae-filter-trigger" data-filter-drawer-open>{{ 'sections.collection.filter_title' | t }}</button>
+          <select id="shopSortSelect" class="noae-select" aria-label="{{ 'sections.collection.sort_by' | t }}" onchange="location.href=this.value" data-sort-select>
+            {%- for option in collection.sort_options -%}
+              <option value="{{ collection.url }}?sort_by={{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+        </div>
+      </div>
+
+      {%- if collection.products.size > 0 -%}
+        <div class="noae-product-grid" id="productGrid" data-product-grid>
+          {%- for product in collection.products -%}
+            {%- render 'product-card', product: product -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="noae-empty-state" id="shopEmptyState">
+          <h3>{{ 'sections.collection.no_products' | t }}</h3>
+          <p>{{ 'sections.collection.no_products_body' | t }}</p>
+          <a href="{{ collection.url }}" class="noae-btn noae-btn--outline" id="shopEmptyStateClear">{{ 'sections.collection.clear_filters' | t }}</a>
+        </div>
+      {%- endif -%}
+
+      {%- if paginate.pages > 1 -%}
+        <div class="noae-pagination" id="shopPagination" data-pagination>
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}" class="noae-pagination__btn">{{ part.title }}</a>
+            {%- else -%}
+              <span class="noae-pagination__btn{% if part.title == paginate.current_page %} is-active{% endif %}">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+  {%- endpaginate -%}
+</div>
+
+{%- if section.settings.show_aeo_block -%}
+<section class="noae-section">
+  <div class="noae-container">
+    <div class="noae-section__head">
+      <h2>{{ section.settings.aeo_heading }}</h2>
+    </div>
+    <div class="noae-ethos__list" style="max-width:900px;margin:0 auto;">
+      <div>
+        <p class="noae-ethos__item-title">{{ section.settings.aeo_col1_heading }}</p>
+        <p class="noae-ethos__item-desc">{{ section.settings.aeo_col1_body }}</p>
+      </div>
+      <div>
+        <p class="noae-ethos__item-title">{{ section.settings.aeo_col2_heading }}</p>
+        <p class="noae-ethos__item-desc">{{ section.settings.aeo_col2_body }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection pages",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "default_intro",
+      "label": "Fallback intro text",
+      "info": "Shown only when the collection has no description set.",
+      "default": "Every NOAÉ ritual currently in stock — skincare, haircare, wellness and body — formulated with the same ingredient-forward honesty across every category."
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_aeo_block",
+      "label": "Show guide / AEO content block",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "aeo_heading",
+      "label": "Guide block heading",
+      "default": "About Shopping the Full Collection"
+    },
+    {
+      "type": "text",
+      "id": "aeo_col1_heading",
+      "label": "Column 1 heading",
+      "default": "How to choose by skin type"
+    },
+    {
+      "type": "textarea",
+      "id": "aeo_col1_body",
+      "label": "Column 1 body",
+      "default": "Filter by Skin Type to narrow to formulas suited for Dry, Oily, Combination or All skin types. Most NOAÉ serums and creams work across skin types; masks and clarifying formulas are more targeted."
+    },
+    {
+      "type": "text",
+      "id": "aeo_col2_heading",
+      "label": "Column 2 heading",
+      "default": "Shipping & Returns"
+    },
+    {
+      "type": "textarea",
+      "id": "aeo_col2_body",
+      "label": "Column 2 body",
+      "default": "Orders over ₹1,999 ship free across India in 3-6 business days. Unopened products can be returned within 14 days of delivery for a full refund."
+    }
+  ]
+}
+{% endschema %}

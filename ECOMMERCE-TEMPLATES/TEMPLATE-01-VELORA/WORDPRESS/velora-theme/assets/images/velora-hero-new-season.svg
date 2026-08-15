@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img" aria-labelledby="t1">
+  <title id="t1">Editorial still-life composition introducing the VELORA New Season collection</title>
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C9B79C"/>
+      <stop offset="55%" stop-color="#E4D9C6"/>
+      <stop offset="100%" stop-color="#F7F3EC"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A0A0A"/>
+      <stop offset="100%" stop-color="#2B2B2B"/>
+    </linearGradient>
+    <radialGradient id="g3" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#8C3E49" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#6E2A33" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#g1)"/>
+  <circle cx="850" cy="380" r="420" fill="url(#g3)"/>
+  <ellipse cx="600" cy="1120" rx="900" ry="260" fill="#0A0A0A" opacity="0.05"/>
+  <!-- abstract draped garment silhouette -->
+  <path d="M600 260 C 500 260 430 340 430 460 L 400 1180 C 400 1230 470 1260 600 1260 C 730 1260 800 1230 800 1180 L 770 460 C 770 340 700 260 600 260 Z" fill="url(#g2)" opacity="0.88"/>
+  <path d="M600 260 C 560 300 560 380 600 420 C 640 380 640 300 600 260 Z" fill="#F7F3EC" opacity="0.9"/>
+  <line x1="600" y1="420" x2="600" y2="1230" stroke="#C9B79C" stroke-width="1" opacity="0.4"/>
+  <circle cx="600" cy="470" r="4" fill="#C9B79C"/>
+  <circle cx="600" cy="560" r="4" fill="#C9B79C"/>
+  <circle cx="600" cy="650" r="4" fill="#C9B79C"/>
+  <g font-family="Georgia, 'Playfair Display', serif" fill="#0A0A0A" opacity="0.75">
+    <text x="600" y="1380" font-size="34" text-anchor="middle" letter-spacing="8">VELORA</text>
+    <text x="600" y="1418" font-size="15" text-anchor="middle" letter-spacing="4" fill="#6E2A33">THE NEW SEASON</text>
+  </g>
+</svg>

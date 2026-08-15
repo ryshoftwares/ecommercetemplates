@@ -1,0 +1,113 @@
+{%- comment -%}
+  sections/announcement-bar.liquid
+  Ported from the demo's .topbar / .topbar__messages / .topbar__utility
+  markup and js/app.js initAnnouncementRotation(): a rotating strip of
+  messages centered in the bar, plus two fixed utility links pinned to the
+  right on desktop (hidden on mobile, matching css/responsive.css).
+{%- endcomment -%}
+<div class="topbar" style="background:{{ section.settings.background_color }}; color:{{ section.settings.text_color }};">
+  <div class="container topbar__inner">
+    <div class="topbar__messages" aria-live="polite" data-announcement-track>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'message' -%}
+            {%- if block.settings.link != blank -%}
+              <a class="topbar__msg{% if forloop.first %} is-active{% endif %}" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</a>
+            {%- else -%}
+              <span class="topbar__msg{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+    <div class="topbar__utility">
+      {%- if section.settings.utility_link_1_text != blank -%}
+        <a href="{{ section.settings.utility_link_1_url }}">{{ section.settings.utility_link_1_text }}</a>
+      {%- endif -%}
+      {%- if section.settings.utility_link_2_text != blank -%}
+        <a href="{{ section.settings.utility_link_2_url }}">{{ section.settings.utility_link_2_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#2E2A26"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FAF7F2"
+    },
+    {
+      "type": "header",
+      "content": "Utility links (desktop only)"
+    },
+    {
+      "type": "text",
+      "id": "utility_link_1_text",
+      "label": "Link 1 text",
+      "default": "Help & Contact"
+    },
+    {
+      "type": "url",
+      "id": "utility_link_1_url",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "utility_link_2_text",
+      "label": "Link 2 text",
+      "default": "Our Story"
+    },
+    {
+      "type": "url",
+      "id": "utility_link_2_url",
+      "label": "Link 2 URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Message",
+          "default": "Complimentary white-glove delivery on orders over ₹75,000"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "default": {
+    "blocks": [
+      {
+        "type": "message",
+        "settings": { "text": "Complimentary white-glove delivery on orders over ₹75,000" }
+      },
+      {
+        "type": "message",
+        "settings": { "text": "New in: the Heritage Linen Sofa now in Deep Olive" }
+      },
+      {
+        "type": "message",
+        "settings": { "text": "Handcrafted to order — most pieces ship within 2–4 weeks" }
+      }
+    ]
+  }
+}
+{% endschema %}

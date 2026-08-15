@@ -1,0 +1,164 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Modix Lineup 2026",
+        "heading_line_1": "TECHNOLOGY,",
+        "heading_line_2": "REFINED.",
+        "lead": "Precision-engineered smartphones, laptops, audio and smart home devices — built around real specs, not marketing gloss. Every product ships with a published warranty and a full spec sheet.",
+        "primary_cta_text": "Shop Latest",
+        "primary_cta_url": "/collections/all",
+        "secondary_cta_text": "Compare Models",
+        "secondary_cta_url": "/collections/smartphones",
+        "badge_heading": "5,000mAh",
+        "badge_body": "Phone 12 Pro battery"
+      },
+      "blocks": {
+        "stat-1": { "type": "stat", "settings": { "value": "16", "label": "Products Engineered" } },
+        "stat-2": { "type": "stat", "settings": { "value": "4.6★", "label": "Average Rating" } },
+        "stat-3": { "type": "stat", "settings": { "value": "1-2 Yr", "label": "Warranty Standard" } }
+      },
+      "block_order": ["stat-1", "stat-2", "stat-3"]
+    },
+    "shop_by_category": {
+      "type": "shop-by-category",
+      "settings": {
+        "eyebrow": "Shop by Category",
+        "heading": "Everything you need, engineered together",
+        "subheading": "Five product families designed to work as one connected system, from your pocket to your living room."
+      },
+      "blocks": {
+        "cat-1": { "type": "category", "settings": { "label": "Audio", "icon": "audio" } },
+        "cat-2": { "type": "category", "settings": { "label": "Smartphones", "icon": "phone" } },
+        "cat-3": { "type": "category", "settings": { "label": "Laptops", "icon": "laptop" } },
+        "cat-4": { "type": "category", "settings": { "label": "Smart Home", "icon": "home" } },
+        "cat-5": { "type": "category", "settings": { "label": "Wearables", "icon": "watch" } }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4", "cat-5"]
+    },
+    "spec_comparison": {
+      "type": "spec-comparison",
+      "settings": {
+        "eyebrow": "Compare",
+        "heading": "Which Modix Phone is right for you?",
+        "subheading": "A quick side-by-side of the specs that actually matter before you buy.",
+        "view_all_text": "Shop Smartphones",
+        "view_all_url": "/collections/smartphones",
+        "model_tag_1": "Flagship",
+        "model_tag_2": "Everyday",
+        "model_tag_3": "Essentials"
+      },
+      "blocks": {
+        "row-1": { "type": "spec_row", "settings": { "label": "Display", "value_1": "6.7\" 120Hz LTPO", "value_2": "6.4\" 120Hz", "value_3": "6.1\" 90Hz" } },
+        "row-2": { "type": "spec_row", "settings": { "label": "Camera", "value_1": "50MP Triple, 5x Zoom", "value_2": "50MP Dual", "value_3": "48MP Single" } },
+        "row-3": { "type": "spec_row", "settings": { "label": "Battery", "value_1": "5,000mAh / 65W", "value_2": "4,500mAh / 45W", "value_3": "4,000mAh / 25W" } },
+        "row-4": { "type": "spec_row", "settings": { "label": "Water Resistance", "value_1": "IP68", "value_2": "IP67", "value_3": "IP54" } },
+        "row-5": { "type": "spec_row", "settings": { "label": "Wireless Charging", "value_1": "30W", "value_2": "—", "value_3": "—" } }
+      },
+      "block_order": ["row-1", "row-2", "row-3", "row-4", "row-5"]
+    },
+    "new_arrivals": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Just Landed",
+        "heading": "New Arrivals",
+        "subheading": "The latest additions to the Modix lineup, fresh from engineering.",
+        "products_to_show": 4,
+        "view_all_text": "View All New",
+        "alt_background": true
+      }
+    },
+    "best_sellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Fan Favorites",
+        "heading": "Best Sellers",
+        "subheading": "The products Modix customers reach for again and again.",
+        "products_to_show": 4,
+        "view_all_text": "View All Best Sellers",
+        "alt_background": false
+      }
+    },
+    "engineering_story": {
+      "type": "engineering-story",
+      "settings": {
+        "eyebrow": "Engineering & Design",
+        "heading": "Every millimetre is a decision",
+        "body": "From driver placement in Pulse to the hinge tolerance in Book Pro 16, our design studio tests each component against real usage — not just a spec sheet — before it ships."
+      },
+      "blocks": {
+        "item-1": { "type": "list_item", "settings": { "title": "Material Testing", "body": "Every chassis is drop-tested through 300+ cycles before tooling is approved for production." } },
+        "item-2": { "type": "list_item", "settings": { "title": "Acoustic Tuning", "body": "Our audio team hand-tunes every driver across 40+ listening sessions before a headphone ships." } },
+        "item-3": { "type": "list_item", "settings": { "title": "Battery Validation", "body": "Battery life claims are measured at 50% brightness on a standardized mixed-use benchmark, not best-case." } }
+      },
+      "block_order": ["item-1", "item-2", "item-3"]
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "average_rating": "4.6",
+        "review_summary_text": "Based on 4,300+ verified Modix customer reviews"
+      },
+      "blocks": {
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "The over-ear headphones' ANC is genuinely as good as the spec sheet claims — I use them on every flight now.",
+            "author": "Rohan K.",
+            "product_name": "Wireless Headphones"
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Switched from another brand to a Modix laptop for uni — fanless, silent, and the battery genuinely lasts all day.",
+            "author": "Sanya M.",
+            "product_name": "Everyday Laptop"
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "The smart speaker and bulb kit set up in ten minutes and the voice control actually works reliably — no dropped commands.",
+            "author": "Arjun P.",
+            "product_name": "Smart Home Speaker"
+          }
+        }
+      },
+      "block_order": ["review-1", "review-2", "review-3"]
+    },
+    "promo_banner": {
+      "type": "promo-banner",
+      "settings": {
+        "heading": "Trade in your old device",
+        "body": "Get instant credit toward any Modix smartphone or laptop — free pickup included in most cities.",
+        "cta_text": "Check Trade-In Value",
+        "cta_url": "/pages/contact"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Stay Updated",
+        "heading": "Get early access to new Modix drops",
+        "body": "Product launches, firmware updates and members-only pricing — no spam, unsubscribe any time.",
+        "button_text": "Subscribe"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "shop_by_category",
+    "spec_comparison",
+    "new_arrivals",
+    "best_sellers",
+    "engineering_story",
+    "testimonials",
+    "promo_banner",
+    "newsletter"
+  ]
+}

@@ -1,0 +1,247 @@
+{%- comment -%}
+  sections/main-product.liquid
+  Full PDP, referenced by templates/product.json. Ported 1:1 from the demo's
+  product.html .pdp-grid / .pdp-info / .pdp-tabs / .faq-accordion /
+  .related-section / .recently-viewed markup.
+
+  METAFIELD NAMESPACE/KEYS used below (all namespace "custom", all optional —
+  every one has a sensible fallback so the page never looks broken without
+  them configured in Settings > Custom data > Products):
+    custom.features           (list of single line text)  -> Features tab
+    custom.materials          (single line text)           -> Materials tab
+    custom.care_instructions  (multi-line text)             -> Care tab
+    custom.size_guide         (rich text)                   -> Size Guide tab
+      (falls back to a generic UK-sizing table matching the demo's static one)
+    custom.faqs               (JSON: [{ "q": "...", "a": "..." }, ...])
+                                -> FAQ accordion + FAQPage JSON-LD
+                                (only rendered when present, so the JSON-LD
+                                 always matches what's visibly on the page)
+    custom.rating / custom.rating_count  -> see snippets/product-card.liquid
+
+  RELATED PRODUCTS: product.metafields.custom.related_products (a Shopify
+  "list of products" reference metafield) when present, else falls back to
+  "same collection, excluding current" (product.collections.first.products).
+
+  RECENTLY VIEWED: localStorage, mirrors the demo's js/product.js — see
+  assets/product.js (VeloraRecentlyViewed), documented alongside the
+  wishlist convention in settings_schema.json.
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign features = product.metafields.custom.features.value
+  assign materials = product.metafields.custom.materials.value
+  assign care = product.metafields.custom.care_instructions.value
+  assign size_guide = product.metafields.custom.size_guide.value
+  assign faqs = product.metafields.custom.faqs.value
+  assign rating = product.metafields.custom.rating.value
+  assign rating_count = product.metafields.custom.rating_count.value
+
+  assign related_products = product.metafields.custom.related_products.value
+  if related_products == blank
+    assign related_products = product.collections.first.products | where_exp: 'p', 'p.id != product.id'
+  endif
+-%}
+<div data-pdp data-product-handle="{{ product.handle }}">
+  <div class="container">
+    {%- render 'breadcrumb' -%}
+  </div>
+
+  <div class="container pdp-grid">
+    <div class="pdp-thumbs" data-pdp-thumbs>
+      {%- for media in product.media -%}
+        <img src="{{ media | image_url: width: 120, height: 160, crop: 'center' }}" alt="{{ media.alt | default: product.title | escape }}" width="120" height="160" class="{% if forloop.first %}is-active{% endif %}" data-thumb-idx="{{ forloop.index0 }}" data-full-src="{{ media | image_url: width: 900 }}" loading="lazy">
+      {%- endfor -%}
+    </div>
+    <div class="pdp-main-media" data-pdp-main-media aria-label="Product image, click to zoom">
+      {%- if product.featured_media -%}
+        <img src="{{ product.featured_media | image_url: width: 900 }}" alt="{{ product.featured_media.alt | default: product.title | escape }}" width="700" height="933" data-pdp-main-img>
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+    <div class="pdp-info">
+      <p class="eyebrow">{{ product.type | default: product.collections.first.title }}</p>
+      <h1>{{ product.title }}</h1>
+      {%- if rating -%}
+        <div class="product-rating">
+          <span class="stars">{% for i in (1..5) %}{% if i <= rating %}★{% else %}☆{% endif %}{% endfor %}</span>
+          <span>{{ rating }} ({{ rating_count | default: 0 }} reviews)</span>
+        </div>
+      {%- endif -%}
+      {%- render 'price', product: product, variant: current_variant -%}
+      <p class="desc">{{ product.description | strip_html }}</p>
+
+      <div class="stock-msg {% if current_variant.available %}{% if current_variant.inventory_quantity <= 10 and current_variant.inventory_management != null %}low-stock{% else %}in-stock{% endif %}{% endif %}">
+        {%- if current_variant.available -%}
+          {%- if current_variant.inventory_management != null and current_variant.inventory_quantity <= 10 and current_variant.inventory_quantity > 0 -%}
+            {{ 'sections.product.low_stock' | t: count: current_variant.inventory_quantity }}
+          {%- else -%}
+            {{ 'sections.product.in_stock' | t }}
+          {%- endif -%}
+        {%- else -%}
+          {{ 'sections.product.out_of_stock' | t }}
+        {%- endif -%}
+      </div>
+
+      {%- render 'product-form', product: product -%}
+
+      <div class="trust-row">
+        <div class="trust-item">{%- render 'icon', icon: 'truck', width: 20, height: 20 -%}<span>{{ section.settings.shipping_trust_text }}</span></div>
+        <div class="trust-item">{%- render 'icon', icon: 'returns', width: 20, height: 20 -%}<span>{{ section.settings.returns_trust_text }}</span></div>
+        <div class="trust-item">{%- render 'icon', icon: 'shield', width: 20, height: 20 -%}<span>{{ section.settings.checkout_trust_text }}</span></div>
+      </div>
+      <p class="pdp-meta-row"><span><strong>{{ current_variant.sku | default: '—' }}</strong>{{ 'sections.product.sku' | t }}</span><span><strong>{{ product.vendor | default: shop.name }}</strong>{{ 'sections.product.brand' | t }}</span></p>
+    </div>
+  </div>
+
+  <div class="container pdp-tabs">
+    <div class="tab-nav" role="tablist">
+      <button type="button" class="is-active" data-tab="overview" id="tab-overview">{{ 'sections.product.overview' | t }}</button>
+      {%- if features != blank -%}<button type="button" data-tab="features">{{ 'sections.product.features' | t }}</button>{%- endif -%}
+      {%- if materials != blank -%}<button type="button" data-tab="materials">{{ 'sections.product.materials' | t }}</button>{%- endif -%}
+      <button type="button" data-tab="size-guide" id="tab-size-guide">{{ 'sections.product.size_guide' | t }}</button>
+      <button type="button" data-tab="shipping" id="tab-shipping">{{ 'sections.product.shipping' | t }}</button>
+      <button type="button" data-tab="returns" id="tab-returns">{{ 'sections.product.returns' | t }}</button>
+      {%- if care != blank -%}<button type="button" data-tab="care">{{ 'sections.product.care' | t }}</button>{%- endif -%}
+    </div>
+
+    <div class="tab-panel is-active" data-tab-panel="overview">
+      <h3>{{ 'sections.product.overview' | t }}</h3>
+      <p>{{ product.description }}</p>
+    </div>
+
+    {%- if features != blank -%}
+      <div class="tab-panel" data-tab-panel="features">
+        <h3>{{ 'sections.product.key_features' | t }}</h3>
+        <ul>{%- for f in features -%}<li>{{ f }}</li>{%- endfor -%}</ul>
+      </div>
+    {%- endif -%}
+
+    {%- if materials != blank -%}
+      <div class="tab-panel" data-tab-panel="materials">
+        <h3>{{ 'sections.product.materials' | t }}</h3>
+        <p>{{ materials }}</p>
+      </div>
+    {%- endif -%}
+
+    <div class="tab-panel" data-tab-panel="size-guide">
+      <h3>{{ 'sections.product.size_guide' | t }}</h3>
+      {%- if size_guide != blank -%}
+        {{ size_guide }}
+      {%- else -%}
+        <p>{{ shop.name }} sizing follows standard UK sizing. If you are between sizes, we recommend sizing up for a relaxed fit or sizing down for a fitted silhouette.</p>
+        <table class="spec-table">
+          <tr><th>XS</th><td>UK 6 · Bust 80cm · Waist 61cm</td></tr>
+          <tr><th>S</th><td>UK 8 · Bust 84cm · Waist 65cm</td></tr>
+          <tr><th>M</th><td>UK 10 · Bust 88cm · Waist 69cm</td></tr>
+          <tr><th>L</th><td>UK 12 · Bust 94cm · Waist 75cm</td></tr>
+          <tr><th>XL</th><td>UK 14 · Bust 100cm · Waist 81cm</td></tr>
+        </table>
+      {%- endif -%}
+    </div>
+
+    <div class="tab-panel" data-tab-panel="shipping">
+      <h3>{{ 'sections.product.shipping' | t }}</h3>
+      {{ section.settings.shipping_tab_content }}
+    </div>
+
+    <div class="tab-panel" data-tab-panel="returns">
+      <h3>{{ 'sections.product.returns' | t }}</h3>
+      {{ section.settings.returns_tab_content }}
+    </div>
+
+    {%- if care != blank -%}
+      <div class="tab-panel" data-tab-panel="care">
+        <h3>{{ 'sections.product.care_instructions' | t }}</h3>
+        <p>{{ care }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- if faqs != blank -%}
+      <div class="faq-accordion">
+        <h2>{{ 'sections.product.faqs' | t }}</h2>
+        <div data-pdp-faqs>
+          {%- for faq in faqs -%}
+            <div class="faq-item" data-faq-item>
+              <button type="button" class="faq-question" aria-expanded="false">{{ faq.q }}<span class="plus">+</span></button>
+              <div class="faq-answer"><p>{{ faq.a }}</p></div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {%- for faq in faqs -%}
+          { "@type": "Question", "name": {{ faq.q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq.a | json }} } }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+      </script>
+    {%- endif -%}
+  </div>
+
+  {%- if related_products.size > 0 -%}
+    <section class="related-section" data-related-section>
+      <div class="container">
+        <div class="section-head"><h2>{{ 'sections.product.related' | t }}</h2></div>
+        <div class="product-grid" data-related-grid>
+          {%- for related in related_products limit: 4 -%}
+            {%- unless related.id == product.id -%}
+              {%- render 'product-card', product: related -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  <section class="recently-viewed" data-recent-section style="display:none">
+    <div class="container">
+      <div class="section-head"><h2>{{ 'sections.product.recently_viewed' | t }}</h2></div>
+      <div class="product-grid" data-recent-grid></div>
+    </div>
+  </section>
+</div>
+
+{%- render 'json-ld-product', product: product -%}
+
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [
+    {
+      "type": "text",
+      "id": "shipping_trust_text",
+      "label": "Shipping trust-row text",
+      "default": "Free delivery on orders over ₹4,000, 3-5 business days across India."
+    },
+    {
+      "type": "text",
+      "id": "returns_trust_text",
+      "label": "Returns trust-row text",
+      "default": "30-day returns and exchanges on unworn items with tags attached."
+    },
+    {
+      "type": "text",
+      "id": "checkout_trust_text",
+      "label": "Checkout trust-row text",
+      "default": "Secure checkout with card, UPI or cash on delivery."
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_tab_content",
+      "label": "Shipping tab content",
+      "default": "<p>Orders are processed within 1-2 business days. Standard delivery across India takes 3-5 business days and is free on orders over ₹4,000. Express delivery (1-2 business days) is available at checkout for a flat fee.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "returns_tab_content",
+      "label": "Returns tab content",
+      "default": "<p>We accept returns and exchanges within 30 days of delivery on unworn items with original tags attached. Refunds are issued to the original payment method within 5-7 business days of us receiving the return.</p>"
+    }
+  ]
+}
+{% endschema %}

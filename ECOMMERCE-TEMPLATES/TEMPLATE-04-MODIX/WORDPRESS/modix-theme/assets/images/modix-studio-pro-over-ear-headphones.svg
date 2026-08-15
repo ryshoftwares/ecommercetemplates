@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Line illustration of the Modix Studio Pro Over-Ear Headphones on a stand">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#2F5DFF" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#2F5DFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="500" fill="#F5F6F8"/>
+  <circle cx="250" cy="220" r="190" fill="url(#glow)"/>
+  <line x1="250" y1="330" x2="250" y2="410" stroke="#17181C" stroke-width="5"/>
+  <line x1="200" y1="410" x2="300" y2="410" stroke="#17181C" stroke-width="5" stroke-linecap="round"/>
+  <path d="M130 240 C130 130 185 65 250 65 C315 65 370 130 370 240" fill="none" stroke="#17181C" stroke-width="7" stroke-linecap="round"/>
+  <path d="M142 240 C142 148 190 88 250 88 C310 88 358 148 358 240" fill="none" stroke="#2F5DFF" stroke-width="2" stroke-dasharray="3 7" opacity="0.55"/>
+  <rect x="95" y="235" width="70" height="120" rx="30" fill="#FFFFFF" stroke="#17181C" stroke-width="6"/>
+  <rect x="335" y="235" width="70" height="120" rx="30" fill="#FFFFFF" stroke="#17181C" stroke-width="6"/>
+  <circle cx="130" cy="295" r="12" fill="none" stroke="#2F5DFF" stroke-width="3"/>
+  <circle cx="370" cy="295" r="12" fill="none" stroke="#2F5DFF" stroke-width="3"/>
+</svg>

@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_contact_form": false
+      }
+    },
+    "craftsmanship": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "craft",
+        "background": "dark",
+        "image_position": "left",
+        "anchor_id": "craftsmanship",
+        "eyebrow": "Our Craft",
+        "heading": "Twelve workshops, not one factory",
+        "lead": "Every Ardea piece passes through the hands of fewer than twelve people, from the timber yard to your living room. We work with small, family-run workshops rather than mass factories, because joinery this precise can't be rushed.",
+        "cta_text": "Shop the Collection",
+        "cta_url": "/collections/all"
+      },
+      "blocks": {
+        "stat-1": { "type": "stat", "settings": { "value": "12", "label": "Workshop Partners" } },
+        "stat-2": { "type": "stat", "settings": { "value": "100%", "label": "FSC-Certified Timber" } },
+        "stat-3": { "type": "stat", "settings": { "value": "15yr", "label": "Structural Warranty" } }
+      },
+      "block_order": ["stat-1", "stat-2", "stat-3"]
+    }
+  },
+  "order": ["main", "craftsmanship"]
+}

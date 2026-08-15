@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | Ardea</title>
+<meta name="description" content="Complete your Ardea order — this is a visual checkout prototype for demonstration purposes only; no payment is processed.">
+<link rel="canonical" href="https://www.ardealiving.in/checkout.html">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-row">
+    <div class="header-row__start">
+      <a href="index.html" class="logo">ARDEA<span>.</span></a>
+    </div>
+    <nav class="main-nav" aria-label="Primary"><ul class="main-nav__list"><li class="main-nav__item"><a href="shop.html" class="main-nav__link">Continue Shopping</a></li></ul></nav>
+    <div class="header-row__end">
+      <button type="button" class="icon-btn" data-cart-open aria-label="Cart"><svg viewBox="0 0 24 24"><path d="M4 4h2l1.6 10.6a2 2 0 002 1.4h7.6a2 2 0 002-1.7L20 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg><span class="count-badge" data-cart-count style="display:none;">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero container">
+    <h1 class="page-hero__title">Checkout</h1>
+    <p class="form-hint">This is a visual checkout prototype for demonstration purposes only. No payment is processed and no order is actually placed.</p>
+    <div class="checkout-steps">
+      <span>1. Bag</span><span class="is-active">2. Checkout</span><span>3. Confirmation</span>
+    </div>
+  </section>
+
+  <section class="container section--tight">
+    <div class="checkout-layout" data-checkout-form-view>
+      <div>
+        <div class="checkout-block">
+          <h2>Contact Information</h2>
+          <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" placeholder="you@example.com" required></div>
+          <label class="checkbox-row"><input type="checkbox"> Email me with news and offers</label>
+        </div>
+
+        <div class="checkout-block">
+          <h2>Shipping Address</h2>
+          <div class="field-row">
+            <div class="form-group"><label for="fname">First Name</label><input type="text" id="fname" required></div>
+            <div class="form-group"><label for="lname">Last Name</label><input type="text" id="lname" required></div>
+          </div>
+          <div class="form-group"><label for="addr">Address</label><input type="text" id="addr" placeholder="Flat / House no., Street" required></div>
+          <div class="form-group"><label for="addr2">Apartment, Suite, etc. (optional)</label><input type="text" id="addr2"></div>
+          <div class="field-row">
+            <div class="form-group"><label for="city">City</label><input type="text" id="city" required></div>
+            <div class="form-group"><label for="state">State</label><input type="text" id="state" required></div>
+          </div>
+          <div class="field-row">
+            <div class="form-group"><label for="pin">PIN Code</label><input type="text" id="pin" required></div>
+            <div class="form-group"><label for="phone">Phone</label><input type="tel" id="phone" required></div>
+          </div>
+        </div>
+
+        <div class="checkout-block">
+          <h2>Delivery Method</h2>
+          <div class="delivery-options">
+            <label class="option-card"><input type="radio" name="delivery" checked><span class="option-card__text"><strong>Standard Delivery</strong><span>7–14 business days · tracked courier</span></span><span class="option-card__price">Free</span></label>
+            <label class="option-card"><input type="radio" name="delivery"><span class="option-card__text"><strong>White-Glove Delivery</strong><span>2–4 weeks · room-of-choice placement &amp; packaging removal</span></span><span class="option-card__price">₹1,499</span></label>
+            <label class="option-card"><input type="radio" name="delivery"><span class="option-card__text"><strong>Express Delivery</strong><span>3–5 business days, where available</span></span><span class="option-card__price">₹899</span></label>
+          </div>
+        </div>
+
+        <div class="checkout-block">
+          <h2>Payment</h2>
+          <div class="payment-options">
+            <label class="option-card"><input type="radio" name="payment" checked><span class="option-card__text"><strong>Credit / Debit Card</strong><span>Visa, Mastercard, RuPay, Amex</span></span></label>
+            <label class="option-card"><input type="radio" name="payment"><span class="option-card__text"><strong>UPI</strong><span>Pay via any UPI app</span></span></label>
+            <label class="option-card"><input type="radio" name="payment"><span class="option-card__text"><strong>Cash on Delivery</strong><span>Available on orders under ₹50,000</span></span></label>
+          </div>
+          <div class="payment-card-fields">
+            <div class="form-group" style="grid-column:1/-1;"><label for="cardnum">Card Number</label><input type="text" id="cardnum" placeholder="•••• •••• •••• ••••"></div>
+            <div class="form-group"><label for="cardexp">Expiry</label><input type="text" id="cardexp" placeholder="MM / YY"></div>
+            <div class="form-group"><label for="cardcvc">CVC</label><input type="text" id="cardcvc" placeholder="•••"></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="order-summary">
+        <h2 style="font-size:1.2rem;margin-bottom:1.25rem;">Order Summary</h2>
+        <div class="order-summary__items" data-checkout-items></div>
+        <form class="coupon-row" data-coupon-form>
+          <input type="text" placeholder="Coupon code (try ARDEA10)" aria-label="Coupon code">
+          <button type="submit" class="btn btn--outline btn--sm">Apply</button>
+        </form>
+        <p class="coupon-note" data-coupon-note></p>
+        <div data-checkout-summary></div>
+        <button type="button" class="btn btn--primary btn--full" data-place-order style="margin-top:1.25rem;">Place Order</button>
+        <div class="security-badges">
+          <span>🔒 Secure Checkout</span>
+          <span>✓ PCI-DSS Compliant UI</span>
+          <span>↩ 30-Day Returns</span>
+        </div>
+      </aside>
+    </div>
+
+    <div class="empty-state" data-checkout-confirmation style="display:none;">
+      <svg viewBox="0 0 24 24" width="64" height="64" style="margin:0 auto 1.5rem;stroke:var(--olive);fill:none;stroke-width:1.3;"><path d="M4 12l7 7 11-13"/></svg>
+      <h2>Thank you — this demo order is "placed"</h2>
+      <p class="lead" style="margin-top:0.5rem;max-width:480px;margin-inline:auto;">In a real store this screen would confirm your order number and estimated delivery date. No payment was processed and nothing was actually purchased.</p>
+      <a href="shop.html" class="btn btn--dark" style="margin-top:1.5rem;">Continue Shopping</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" style="padding-top:2rem;">
+  <div class="container footer-bottom">
+    <p>© 2026 ARDEA Living. All rights reserved.</p>
+    <div class="payment-icons"><span>VISA</span><span>MASTERCARD</span><span>UPI</span></div>
+  </div>
+</footer>
+
+<aside class="side-drawer" data-cart-drawer aria-label="Shopping cart">
+  <div class="side-drawer__header"><h2 class="side-drawer__title">Your Cart</h2><button type="button" class="icon-btn" data-panel-close aria-label="Close cart"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+  <div class="side-drawer__body"><div data-cart-drawer-progress></div><div data-cart-drawer-items></div></div>
+  <div class="side-drawer__footer" data-cart-drawer-footer></div>
+</aside>
+<div class="scrim" data-scrim></div>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  var data = window.ArdeaData;
+  var cart = window.ArdeaCart;
+
+  function renderCheckout() {
+    var totals = cart.computeTotals();
+    var itemsEl = document.querySelector("[data-checkout-items]");
+    if (itemsEl) {
+      itemsEl.innerHTML = totals.lines.map(function (x) {
+        return '<div class="order-summary__item"><img src="' + x.product.image + '" alt="" width="56" height="64"><span>' + x.product.name + ' × ' + x.line.qty + '</span><strong>' + data.formatINR(x.product.price * x.line.qty) + '</strong></div>';
+      }).join("") || '<p class="form-hint">Your cart is empty — <a href="shop.html">continue shopping</a>.</p>';
+    }
+    var summaryEl = document.querySelector("[data-checkout-summary]");
+    if (summaryEl) {
+      summaryEl.innerHTML =
+        '<div class="summary-row"><span>Subtotal</span><span>' + data.formatINR(totals.subtotal) + '</span></div>' +
+        (totals.discount > 0 ? '<div class="summary-row"><span>Discount (ARDEA10)</span><span class="value--accent">-' + data.formatINR(totals.discount) + '</span></div>' : "") +
+        '<div class="summary-row"><span>Delivery</span><span>' + (totals.shipping === 0 ? "Free" : data.formatINR(totals.shipping)) + '</span></div>' +
+        '<div class="summary-row summary-row--total"><span>Total</span><span>' + data.formatINR(totals.total) + '</span></div>';
+    }
+  }
+
+  var couponForm = document.querySelector("[data-coupon-form]");
+  if (couponForm) {
+    couponForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = couponForm.querySelector("input");
+      try { sessionStorage.setItem("ardea_coupon", (input.value || "").trim().toUpperCase()); } catch (err) {}
+      var note = document.querySelector("[data-coupon-note]");
+      var code = (input.value || "").trim().toUpperCase();
+      if (note) {
+        if (code === cart.COUPON_CODE) { note.textContent = "Coupon ARDEA10 applied — 10% off your order."; note.className = "coupon-note is-success"; }
+        else if (code) { note.textContent = "That coupon code isn't valid. Try ARDEA10."; note.className = "coupon-note is-error"; }
+      }
+      renderCheckout();
+    });
+  }
+
+  var placeOrderBtn = document.querySelector("[data-place-order]");
+  if (placeOrderBtn) {
+    placeOrderBtn.addEventListener("click", function () {
+      var email = document.getElementById("email");
+      if (email && !email.value) { email.focus(); window.ArdeaToast.show("Please fill in your email to continue (demo validation).", "error"); return; }
+      document.querySelector("[data-checkout-form-view]").style.display = "none";
+      document.querySelector("[data-checkout-confirmation]").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  document.addEventListener("ardea:cart-updated", renderCheckout);
+  renderCheckout();
+})();
+</script>
+</body>
+</html>

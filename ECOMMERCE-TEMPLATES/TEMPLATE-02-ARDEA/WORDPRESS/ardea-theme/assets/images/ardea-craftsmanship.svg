@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000" role="img" aria-labelledby="t16">
+<title id="t16">Woodworker's hands shaping an oak joint in the Ardea workshop, shown as warm abstract line art</title>
+<defs>
+<linearGradient id="w1-bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#2E2A26"/>
+<stop offset="55%" stop-color="#4B5A45"/>
+<stop offset="100%" stop-color="#2E2A26"/>
+</linearGradient>
+<radialGradient id="w1-glow" cx="70%" cy="25%" r="55%">
+<stop offset="0%" stop-color="#A9603E" stop-opacity="0.45"/>
+<stop offset="100%" stop-color="#A9603E" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="1000" fill="url(#w1-bg)"/>
+<ellipse cx="850" cy="260" rx="380" ry="320" fill="url(#w1-glow)"/>
+<g stroke="#FAF7F2" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+<rect x="380" y="560" width="440" height="60" rx="6"/>
+<path d="M380 590 L280 640 Q250 655 260 685 L280 700"/>
+<path d="M820 590 L920 640 Q950 655 940 685 L920 700"/>
+<line x1="600" y1="560" x2="600" y2="460"/>
+<path d="M560 460 L640 460 L620 400 L580 400 Z"/>
+</g>
+<g stroke="#EDE6DA" stroke-width="3" fill="none" opacity="0.5">
+<line x1="440" y1="580" x2="760" y2="580"/>
+<line x1="440" y1="600" x2="760" y2="600"/>
+</g>
+</svg>

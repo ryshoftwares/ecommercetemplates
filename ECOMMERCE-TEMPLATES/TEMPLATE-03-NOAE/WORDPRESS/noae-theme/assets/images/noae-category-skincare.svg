@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="t d">
+  <title id="t">NOAE skincare category</title>
+  <desc id="d">Soft cream and rose gradient with a botanical blob backdrop behind an abstract dropper bottle silhouette, representing the skincare category.</desc>
+  <defs>
+    <radialGradient id="bg" cx="30%" cy="25%" r="85%">
+      <stop offset="0%" stop-color="#FBF7F4"/>
+      <stop offset="60%" stop-color="#F5EDE7"/>
+      <stop offset="100%" stop-color="#EFDFD8"/>
+    </radialGradient>
+    <linearGradient id="blobA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EFDFD8" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#EFDFD8" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="blobB" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#DCE4D8" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#DCE4D8" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="vessel" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4A3B3D"/>
+      <stop offset="100%" stop-color="#3A2E30"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg)"/>
+  <path d="M700 -40 C860 60 900 300 800 460 C700 620 480 660 360 540 C240 420 280 220 400 100 C500 0 620 -80 700 -40Z" fill="url(#blobA)"/>
+  <path d="M-40 640 C100 540 280 560 340 700 C400 840 280 960 100 940 C-60 920 -140 740 -40 640Z" fill="url(#blobB)"/>
+  <circle cx="600" cy="220" r="4" fill="#C9A66B" opacity="0.8"/>
+  <circle cx="640" cy="290" r="3" fill="#C9A66B" opacity="0.6"/>
+  <circle cx="560" cy="330" r="2.5" fill="#C9A66B" opacity="0.7"/>
+  <g transform="translate(300,340)">
+    <ellipse cx="80" cy="330" rx="144" ry="24" fill="#3A2E30" opacity="0.08"/>
+    <rect x="0" y="60" width="160" height="300" rx="35.2" fill="#4A3B3D"/>
+    <rect x="14.399999999999999" y="80" width="131.2" height="245.99999999999997" rx="25.6" fill="#3A2E30" opacity="0.12"/>
+    <rect x="30.4" y="0" width="99.2" height="80" rx="14" fill="#C9A66B"/>
+    <rect x="46.4" y="-46" width="67.2" height="60" rx="10" fill="#C9A66B" opacity="0.85"/>
+    <rect x="30.4" y="220" width="99.2" height="6" fill="#FBF7F4" opacity="0.45"/>
+  </g>
+
+</svg>

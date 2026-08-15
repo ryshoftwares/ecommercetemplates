@@ -1,0 +1,22 @@
+{%- comment -%}
+  snippets/color-swatch.liquid
+  Maps a Color/Colour option value to a hex swatch, mirroring the demo's
+  js/products.js colorToHex() map. Falls back to the theme's warm-beige
+  token for any colour name not in the VELORA palette.
+  Usage: {% render 'color-swatch', name: value %} -> outputs a bare hex string
+{%- endcomment -%}
+{%- case name | downcase -%}
+  {%- when 'black' -%}#0A0A0A
+  {%- when 'ivory' -%}#F7F3EC
+  {%- when 'burgundy' -%}#6E2A33
+  {%- when 'camel' -%}#B08A5C
+  {%- when 'charcoal' -%}#2B2B2B
+  {%- when 'beige' -%}#C9B79C
+  {%- when 'gold' -%}#C6A664
+  {%- when 'white' -%}#FFFFFF
+  {%- when 'navy' -%}#1D2A44
+  {%- when 'brown' -%}#5A3E2B
+  {%- when 'green' -%}#3E6E4B
+  {%- when 'grey', 'gray' -%}#8A8580
+  {%- else -%}#C9B79C
+{%- endcase -%}

@@ -1,0 +1,102 @@
+{%- comment -%}
+  sections/featured-collection.liquid
+  Reused for both "Bestsellers" and "New Arrivals" on the homepage (see
+  templates/index.json), ported from the demo's #bestsellersGrid /
+  #newArrivalsGrid product grids. Real collection.products loop via
+  snippets/product-card.liquid — never hardcoded products.
+{%- endcomment -%}
+{%- liquid
+  assign featured_collection = collections[section.settings.collection]
+-%}
+<section class="noae-section{% if section.settings.soft_bg %} noae-section--soft{% endif %} noae-reveal">
+  <div class="noae-container">
+    <div class="noae-section__head">
+      <span class="noae-section__eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.description != blank -%}
+        <p class="noae-section__desc">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+    {%- if featured_collection != blank -%}
+      <div class="noae-product-grid">
+        {%- for product in featured_collection.products limit: section.settings.products_to_show -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="noae-section__desc" style="text-align:center;">Select a collection in the theme editor to populate this grid.</p>
+    {%- endif -%}
+    {%- if section.settings.show_view_all -%}
+      <div class="noae-section__foot">
+        <a href="{{ featured_collection.url | default: routes.all_products_collection_url }}" class="noae-btn noae-btn--outline">{{ section.settings.view_all_text }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Most Loved"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "The rituals our community reaches for again and again."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 12,
+      "step": 4,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "soft_bg",
+      "label": "Use soft cream background",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show \"View All\" button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all button text",
+      "default": "View All Products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection",
+      "settings": {
+        "eyebrow": "Most Loved",
+        "heading": "Bestsellers"
+      }
+    }
+  ]
+}
+{% endschema %}

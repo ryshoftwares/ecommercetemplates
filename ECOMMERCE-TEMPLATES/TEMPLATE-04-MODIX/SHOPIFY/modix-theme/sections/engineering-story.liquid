@@ -1,0 +1,68 @@
+{%- comment -%}
+  sections/engineering-story.liquid
+  Dark editorial image+text section, ported 1:1 from the demo's .editorial /
+  .editorial__grid / .editorial__list markup (index.html "Engineering &
+  Design" + about.html reuse). Numbered list items are block-based.
+{%- endcomment -%}
+<section class="section editorial" data-reveal>
+  <div class="container editorial__grid">
+    <div class="editorial__media">
+      {%- if section.settings.image -%}
+        <img src="{{ section.settings.image | image_url: width: 700 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" width="700" height="560" loading="lazy">
+      {%- endif -%}
+    </div>
+    <div>
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.body }}</p>
+      {%- if section.blocks.size > 0 -%}
+        <div class="editorial__list">
+          {%- for block in section.blocks -%}
+            <div class="editorial__list-item" {{ block.shopify_attributes }}>
+              <span class="num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              <div><h4>{{ block.settings.title }}</h4><p>{{ block.settings.body }}</p></div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Engineering & design story",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Engineering & Design" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Every millimetre is a decision" },
+    { "type": "textarea", "id": "body", "label": "Body text", "default": "From driver placement in Pulse to the hinge tolerance in Book Pro 16, our design studio tests each component against real usage — not just a spec sheet — before it ships." }
+  ],
+  "blocks": [
+    {
+      "type": "list_item",
+      "name": "Numbered item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Material Testing" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Every chassis is drop-tested through 300+ cycles before tooling is approved for production." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Engineering & design story",
+      "settings": {
+        "eyebrow": "Engineering & Design",
+        "heading": "Every millimetre is a decision",
+        "body": "From driver placement in Pulse to the hinge tolerance in Book Pro 16, our design studio tests each component against real usage — not just a spec sheet — before it ships."
+      },
+      "blocks": [
+        { "type": "list_item", "settings": { "title": "Material Testing", "body": "Every chassis is drop-tested through 300+ cycles before tooling is approved for production." } },
+        { "type": "list_item", "settings": { "title": "Acoustic Tuning", "body": "Our audio team hand-tunes every driver across 40+ listening sessions before a headphone ships." } },
+        { "type": "list_item", "settings": { "title": "Battery Validation", "body": "Battery life claims are measured at 50% brightness on a standardized mixed-use benchmark, not best-case." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

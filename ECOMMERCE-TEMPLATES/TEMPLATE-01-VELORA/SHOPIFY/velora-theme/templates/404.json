@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {
+        "heading": "Page Not Found",
+        "body": "The page you're looking for may have been moved or no longer exists. Try one of the links below, or search for what you need.",
+        "home_button_text": "Back to Home",
+        "shop_button_text": "Shop All",
+        "show_featured_collection": true,
+        "featured_heading": "You Might Like"
+      }
+    }
+  },
+  "order": ["main"]
+}

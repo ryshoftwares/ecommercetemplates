@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="t14">
+<title id="t14">Set of three terracotta vases in varying heights shown as warm abstract line art</title>
+<defs>
+<linearGradient id="p8-bg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#FAF7F2"/>
+<stop offset="100%" stop-color="#EDE6DA"/>
+</linearGradient>
+<radialGradient id="p8-glow" cx="70%" cy="20%" r="55%">
+<stop offset="0%" stop-color="#A9603E" stop-opacity="0.30"/>
+<stop offset="100%" stop-color="#A9603E" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#p8-bg)"/>
+<ellipse cx="560" cy="220" rx="260" ry="220" fill="url(#p8-glow)"/>
+<ellipse cx="400" cy="800" rx="260" ry="34" fill="#2E2A26" opacity="0.10"/>
+<g stroke="#A9603E" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+<path d="M260 780 Q250 640 280 590 Q310 540 280 480 L330 480 Q360 540 330 590 Q300 640 320 780 Z"/>
+<path d="M420 780 Q412 660 440 620 L470 620 Q490 660 480 780 Z"/>
+<path d="M540 780 Q532 700 560 680 L580 680 Q595 700 588 780 Z"/>
+</g>
+</svg>

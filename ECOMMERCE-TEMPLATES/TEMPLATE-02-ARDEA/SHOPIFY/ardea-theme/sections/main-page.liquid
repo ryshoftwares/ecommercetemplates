@@ -1,0 +1,141 @@
+{%- comment -%}
+  sections/main-page.liquid
+  Generic page template covering the demo's about.html / contact.html
+  layout (.page-hero + rich text body in a constrained column), rendering
+  page.content from Shopify Admin > Pages — never hardcoded copy. Used by
+  templates/page.json (About, Contact, Privacy, Terms, etc). The
+  Contact-specific form + studio-info layout and the About-specific
+  value-grid / timeline / craft blocks live in their own page templates
+  (templates/page.about.json can layer additional sections like
+  sections/image-with-text.liquid "craft" layout on top of this one; a
+  dedicated contact form is provided inline below when
+  section.settings.show_contact_form is enabled).
+{%- endcomment -%}
+<nav class="breadcrumbs container" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title }}</li>
+  </ol>
+</nav>
+
+<section class="page-hero container">
+  <h1 class="page-hero__title">{{ page.title }}</h1>
+</section>
+
+<section class="container section--tight">
+  {%- if section.settings.show_contact_form -%}
+    <div class="contact-layout">
+      <div>
+        <div class="rte">{{ page.content }}</div>
+        {%- form 'contact', class: 'contact-form' -%}
+          {%- if form.posted_successfully? -%}
+            <p data-toast-on-load="success:{{ section.settings.form_success_message | escape }}"></p>
+          {%- endif -%}
+          <div class="field-row">
+            <div class="form-group"><label for="ContactFormName">Full Name</label><input type="text" id="ContactFormName" name="contact[name]" value="{% if customer %}{{ customer.name }}{% endif %}" required></div>
+            <div class="form-group"><label for="ContactFormEmail">Email Address</label><input type="email" id="ContactFormEmail" name="contact[email]" value="{% if customer %}{{ customer.email }}{% endif %}" required></div>
+          </div>
+          <div class="form-group">
+            <label for="ContactFormSubject">Subject</label>
+            <select id="ContactFormSubject" name="contact[subject]">
+              {%- for option in section.settings.subject_options | split: ',' -%}
+                <option value="{{ option | strip }}">{{ option | strip }}</option>
+              {%- endfor -%}
+            </select>
+          </div>
+          <div class="form-group"><label for="ContactFormMessage">Message</label><textarea id="ContactFormMessage" name="contact[body]" required placeholder="Tell us a bit about what you need…"></textarea></div>
+          <button type="submit" class="btn btn--primary" style="width:100%;">{{ section.settings.form_button_text }}</button>
+        {%- endform -%}
+      </div>
+      <div>
+        <h2 style="font-size:1.3rem;margin-bottom:0.5rem;">{{ section.settings.info_heading }}</h2>
+        {%- if section.settings.info_lead != blank -%}<p class="lead">{{ section.settings.info_lead }}</p>{%- endif -%}
+        <div class="contact-info-list">
+          {%- if section.settings.address != blank -%}
+            <div>{%- render 'icon', icon: 'shield', width: 22, height: 22 -%}<div><strong>Studio Address</strong><span>{{ section.settings.address }}</span></div></div>
+          {%- endif -%}
+          {%- if section.settings.phone != blank -%}
+            <div>{%- render 'icon', icon: 'shield', width: 22, height: 22 -%}<div><strong>Phone</strong><a href="tel:{{ section.settings.phone | strip }}">{{ section.settings.phone }}</a></div></div>
+          {%- endif -%}
+          {%- if section.settings.email != blank -%}
+            <div>{%- render 'icon', icon: 'shield', width: 22, height: 22 -%}<div><strong>Email</strong><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></div></div>
+          {%- endif -%}
+          {%- if section.settings.hours != blank -%}
+            <div>{%- render 'icon', icon: 'shield', width: 22, height: 22 -%}<div><strong>Studio Hours</strong><span>{{ section.settings.hours }}</span></div></div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- else -%}
+    <div class="rte" style="max-width:760px;">{{ page.content }}</div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_contact_form",
+      "label": "Show contact form + studio info layout",
+      "info": "Enable on the Contact page only; leave off for About/Privacy/Terms style pages, which render page.content alone.",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "form_button_text",
+      "label": "Form button label",
+      "default": "Send Message"
+    },
+    {
+      "type": "text",
+      "id": "form_success_message",
+      "label": "Success toast message",
+      "default": "Thanks — we'll be in touch shortly."
+    },
+    {
+      "type": "text",
+      "id": "subject_options",
+      "label": "Subject dropdown options (comma separated)",
+      "default": "Order Support, Showroom Visit, Trade & Bulk Enquiry, Press, Something Else"
+    },
+    {
+      "type": "header",
+      "content": "Studio info column"
+    },
+    {
+      "type": "text",
+      "id": "info_heading",
+      "label": "Heading",
+      "default": "Visit the Studio"
+    },
+    {
+      "type": "text",
+      "id": "info_lead",
+      "label": "Lead text",
+      "default": "Our showroom is open by appointment."
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Studio address"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email"
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "label": "Studio hours"
+    }
+  ]
+}
+{% endschema %}

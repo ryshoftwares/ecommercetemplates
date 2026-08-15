@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Line illustration of a Modix smartphone showing its display and camera module">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#2F5DFF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#2F5DFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EBF0FF"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="500" height="500" fill="#F5F6F8"/>
+  <circle cx="250" cy="250" r="195" fill="url(#glow)"/>
+  <rect x="175" y="70" width="150" height="320" rx="28" fill="url(#screen)" stroke="#17181C" stroke-width="6"/>
+  <rect x="192" y="94" width="116" height="252" rx="6" fill="#FFFFFF" stroke="#17181C" stroke-width="2" opacity="0.5"/>
+  <rect x="225" y="80" width="50" height="8" rx="4" fill="#17181C" opacity="0.6"/>
+  <circle cx="250" cy="368" r="10" fill="none" stroke="#17181C" stroke-width="3"/>
+  <g stroke="#17181C" stroke-width="3" fill="none">
+    <rect x="205" y="106" width="46" height="46" rx="10"/>
+    <circle cx="228" cy="129" r="12" stroke="#2F5DFF"/>
+    <circle cx="255" cy="112" r="6" fill="#2F5DFF" stroke="none"/>
+  </g>
+</svg>

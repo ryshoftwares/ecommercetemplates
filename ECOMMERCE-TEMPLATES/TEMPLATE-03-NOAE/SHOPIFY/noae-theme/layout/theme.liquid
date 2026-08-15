@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page_title }}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}</title>
+{%- if page_description -%}
+<meta name="description" content="{{ page_description | escape }}">
+{%- else -%}
+<meta name="description" content="{{ settings.default_meta_description | escape }}">
+{%- endif -%}
+<meta name="robots" content="{% if template.name == 'cart' or template.name == 'wishlist' %}noindex, follow{% else %}index, follow{% endif %}">
+<link rel="canonical" href="{{ canonical_url }}">
+
+{%- render 'meta-tags' -%}
+
+{%- if settings.favicon -%}
+<link rel="icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}" type="image/png">
+{%- else -%}
+<link rel="icon" href="{{ 'favicon.svg' | asset_url }}" type="image/svg+xml">
+{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"></noscript>
+
+{{ 'theme.css' | asset_url | stylesheet_tag }}
+{%- render 'css-variables' -%}
+
+<script>
+  window.Noae = window.Noae || {};
+  window.Noae.routes = {
+    root_url: {{ routes.root_url | json }},
+    cart_url: {{ routes.cart_url | json }},
+    cart_add_url: {{ routes.cart_add_url | json }},
+    cart_change_url: {{ routes.cart_change_url | json }},
+    cart_update_url: {{ routes.cart_update_url | json }},
+    predictive_search_url: {{ routes.predictive_search_url | json }},
+    search_url: {{ routes.search_url | json }},
+    all_products_collection_url: {{ routes.all_products_collection_url | json }}
+  };
+  window.Noae.moneyFormat = {{ shop.money_format | json }};
+  window.Noae.cartFreeShippingThreshold = {{ settings.cart_free_shipping_threshold | default: 1999 }};
+  window.Noae.cartTypeDrawer = {{ settings.cart_type_drawer | json }};
+  window.Noae.enableWishlist = {{ settings.enable_wishlist | json }};
+</script>
+
+<script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+{%- if template.name == 'product' -%}
+<script src="{{ 'product.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'search.js' | asset_url }}" defer="defer"></script>
+
+{{ content_for_header }}
+
+{%- render 'json-ld-organization' -%}
+</head>
+<body class="noae-template-{{ template.name }}">
+<a href="#main" class="noae-skip-link">Skip to content</a>
+
+{% section 'announcement-bar' %}
+{% section 'header' %}
+
+<main id="main">
+  {{ content_for_layout }}
+</main>
+
+{% section 'footer' %}
+
+{%- render 'cart-drawer' -%}
+{%- render 'search-overlay' -%}
+{%- render 'quick-view-modal' -%}
+<div id="toastRegion" class="noae-toast-region" role="status" aria-live="polite"></div>
+</body>
+</html>

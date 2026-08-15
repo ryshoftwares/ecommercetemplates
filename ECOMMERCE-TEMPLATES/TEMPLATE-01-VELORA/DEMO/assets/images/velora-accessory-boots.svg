@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="t16">
+  <title id="t16">Editorial still-life of black leather VELORA ankle boots against a beige backdrop</title>
+  <defs>
+    <linearGradient id="ac4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E4D9C6"/>
+      <stop offset="100%" stop-color="#C9B79C"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#ac4)"/>
+  <ellipse cx="450" cy="820" rx="260" ry="34" fill="#0A0A0A" opacity="0.1"/>
+  <path d="M330 520 C 330 460 360 430 420 430 L 460 430 C 500 430 520 460 520 500 L 520 700 L 620 760 C 640 770 640 800 610 800 L 340 800 C 320 800 310 780 320 760 L 330 700 Z" fill="#0A0A0A"/>
+  <rect x="330" y="700" width="190" height="16" fill="#2B2B2B"/>
+  <rect x="490" y="690" width="14" height="110" fill="#2B2B2B"/>
+  <text x="450" y="960" font-family="Georgia, 'Playfair Display', serif" font-size="20" fill="#0A0A0A" opacity="0.55" text-anchor="middle" letter-spacing="5">VELORA — ANKLE BOOTS</text>
+</svg>

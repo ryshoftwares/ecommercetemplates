@@ -1,0 +1,119 @@
+{%- comment -%}
+  sections/testimonials.liquid
+  Ported from the demo's .testimonial-grid / .testimonial-card markup.
+  Uses static, merchant-editable blocks (quote/author/rating) rather than
+  assuming a reviews app is installed — the no-app-required approach. If a
+  reviews app (Judge.me/Loox/etc.) is later installed, swap this section's
+  blocks for that app's Liquid embed block without touching the rest of the
+  theme.
+{%- endcomment -%}
+<section class="section-pad">
+  <div class="container">
+    <div class="section-head-center reveal">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="testimonial-grid reveal">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'testimonial' -%}
+          <div class="testimonial-card" {{ block.shopify_attributes }}>
+            <span class="stars">{% for i in (1..5) %}{% if i <= block.settings.rating %}★{% else %}☆{% endif %}{% endfor %}</span>
+            <p>&ldquo;{{ block.settings.quote }}&rdquo;</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">{{ block.settings.author | slice: 0 }}</div>
+              <div><strong>{{ block.settings.author }}</strong><span>{{ block.settings.author_meta }}</span></div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "In Their Words"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What our customers say"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author name"
+        },
+        {
+          "type": "text",
+          "id": "author_meta",
+          "label": "Author meta text",
+          "default": "Verified Buyer"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The Wool Tailored Coat is the best outerwear purchase I've made in years. The fit is exactly as described and it still looks brand new after a full winter of wear.",
+            "author": "Riya Kapoor",
+            "author_meta": "Verified Buyer, Mumbai"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Ordered the Cashmere Crewneck in three colours after trying the first one. Genuinely the softest cashmere I've owned at this price point.",
+            "author": "Ananya Shah",
+            "author_meta": "Verified Buyer, Bengaluru"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Customer service helped me exchange a size within a day, and the Leather Structured Tote has held up beautifully to daily commuting.",
+            "author": "Nisha Verma",
+            "author_meta": "Verified Buyer, Delhi"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,354 @@
+{%- comment -%}
+  sections/main-product.liquid
+  Full PDP, ported from the demo's product.html (.pdp-grid / .pdp-gallery /
+  .pdp-info / .pdp-tabs / .accordion-item / .related-strip / .recently-viewed
+  markup).
+
+  Reuses snippets/product-form.liquid for the entire native
+  {% form 'product' %} (color swatches, storage/size pills, qty, Add to Cart,
+  Buy Now dynamic checkout button, wishlist toggle) and snippets/price.liquid
+  for the price row, so variant logic lives in exactly one place.
+
+  METAFIELD CONVENTIONS (all optional; every one falls back to
+  product.description or is hidden when absent — nothing is fabricated):
+    product.metafields.custom.specifications  JSON: [{"label":"...","value":"..."}]
+      (rendered by snippets/spec-table.liquid; falls back to
+      product.options_with_values when absent)
+    product.metafields.custom.features        JSON: ["...", "...", ...]
+      (bullet list for the "Key Features" tab; falls back to
+      product.description, same as "Overview")
+    product.metafields.custom.box_contents     JSON: ["...", "...", ...]
+      ("What's in the Box" numbered list)
+    product.metafields.custom.warranty         single/multi-line text
+      ("Warranty" tab copy)
+    product.metafields.custom.faqs             JSON: [{"question":"...","answer":"..."}]
+      (visible FAQ accordion below renders this; FAQPage JSON-LD is only
+      emitted when this metafield is present, so it can never drift from
+      what's on the page)
+    product.metafields.custom.rating / rating_count  see snippets/product-card.liquid
+
+  RELATED PRODUCTS / COMPARE STRIP: uses Shopify's native product
+  recommendations endpoint (routes.product_recommendations_url) as a
+  progressive enhancement over an SSR fallback built from the product's own
+  first collection — so the grid (and the spec-comparison table beneath it)
+  is always real data, with or without JS.
+
+  RECENTLY VIEWED: client-side only (assets/product.js), reading/writing an
+  array of product handles in localStorage ("modix_recently_viewed"), then
+  fetching each product's real data from Shopify's native
+  /products/{handle}.js JSON endpoint to render cards — never hardcoded.
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign on_sale = false
+  if current_variant.compare_at_price > current_variant.price
+    assign on_sale = true
+    assign discount_pct = current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round
+  endif
+
+  assign rating = product.metafields.custom.rating.value
+  assign rating_count = product.metafields.custom.rating_count.value
+
+  assign features_json = product.metafields.custom.features.value
+  assign features = blank
+  if features_json != blank
+    assign features = features_json | parse_json
+  endif
+
+  assign box_contents_json = product.metafields.custom.box_contents.value
+  assign box_contents = blank
+  if box_contents_json != blank
+    assign box_contents = box_contents_json | parse_json
+  endif
+
+  assign warranty_text = product.metafields.custom.warranty.value
+
+  assign faqs_json = product.metafields.custom.faqs.value
+  assign faqs = blank
+  if faqs_json != blank
+    assign faqs = faqs_json | parse_json
+  endif
+
+  assign related_collection = product.collections.first
+  assign free_shipping_amount = settings.cart_free_shipping_threshold | times: 100 | money
+-%}
+
+{%- render 'breadcrumb' -%}
+{%- render 'json-ld-product', product: product -%}
+
+<div class="container" data-pdp>
+  <div class="pdp-grid">
+    <div class="pdp-gallery">
+      <div class="pdp-gallery__main" data-gallery-main>
+        {%- if product.featured_media -%}
+          <img
+            src="{{ product.featured_media | image_url: width: 900 }}"
+            alt="{{ product.featured_media.alt | default: product.title | escape }}"
+            width="600" height="600" fetchpriority="high" data-gallery-image data-media-id="{{ product.featured_media.id }}">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      <div class="pdp-gallery__thumbs" data-gallery-thumbs>
+        {%- for media in product.media -%}
+          <button type="button" class="pdp-gallery__thumb{% if forloop.first %} is-active{% endif %}" data-thumb-index="{{ forloop.index0 }}" data-media-id="{{ media.id }}" data-full-src="{{ media | image_url: width: 900 }}" aria-label="View image {{ forloop.index }}">
+            <img src="{{ media | image_url: width: 168 }}" alt="" width="84" height="84" loading="lazy">
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="pdp-info">
+      <span class="pdp-info__category">{{ product.type | default: related_collection.title }}</span>
+      <h1 data-pdp-title>{{ product.title }}</h1>
+      <div class="pdp-info__meta">
+        {%- if rating -%}
+          <span class="rating">
+            <span class="rating__stars" aria-hidden="true">{% for i in (1..5) %}<svg viewBox="0 0 20 20" fill="currentColor" style="opacity:{% if i <= rating %}1{% else %}0.28{% endif %}"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>{% endfor %}</span>
+            <span class="rating__count">{{ rating }} ({{ rating_count | default: 0 }})</span>
+          </span>
+        {%- endif -%}
+        <span class="pdp-info__sku">{{ 'sections.product.sku' | t }}: {{ current_variant.sku }}</span>
+      </div>
+      {%- render 'price', product: product, variant: current_variant, large: true -%}
+      <p class="pdp-info__desc">{{ product.description | strip_html | truncate: 260 }}</p>
+
+      {%- render 'product-form', product: product -%}
+
+      <p class="pdp-stock{% if current_variant.inventory_quantity <= 10 and current_variant.inventory_quantity > 0 %} is-low{% endif %}">
+        <span class="dot"></span>
+        {%- if current_variant.available -%}
+          {%- if current_variant.inventory_management and current_variant.inventory_quantity <= 10 and current_variant.inventory_quantity > 0 -%}
+            {{ 'sections.product.low_stock' | t: count: current_variant.inventory_quantity }}
+          {%- else -%}
+            {{ 'sections.product.in_stock' | t }}
+          {%- endif -%}
+        {%- else -%}
+          {{ 'sections.product.out_of_stock' | t }}
+        {%- endif -%}
+      </p>
+
+      <ul class="pdp-trust">
+        <li>{%- render 'icon', icon: 'truck', width: 22, height: 22 -%}{{ 'sections.product.free_shipping_trust' | t: amount: free_shipping_amount }}</li>
+        <li>{%- render 'icon', icon: 'warranty', width: 22, height: 22 -%}{{ 'sections.product.warranty_trust' | t }}</li>
+        <li>{%- render 'icon', icon: 'returns', width: 22, height: 22 -%}{{ 'sections.product.returns_trust' | t }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pdp-tabs">
+    <div class="tabs-nav" role="tablist">
+      <button class="is-active" role="tab" aria-selected="true" aria-controls="tab-overview" id="tab-btn-overview">{{ 'sections.product.overview' | t }}</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-features" id="tab-btn-features">{{ 'sections.product.features' | t }}</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-specs" id="tab-btn-specs">{{ 'sections.product.specifications' | t }}</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-box" id="tab-btn-box">{{ 'sections.product.box_contents' | t }}</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-warranty" id="tab-btn-warranty">{{ 'sections.product.warranty' | t }}</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-shipping" id="tab-btn-shipping">{{ 'sections.product.shipping_returns' | t }}</button>
+    </div>
+
+    <div class="tab-panel is-active" id="tab-overview" role="tabpanel" aria-labelledby="tab-btn-overview">
+      <h3>{{ 'sections.product.overview' | t }}</h3>
+      <p>{{ product.description | strip_html }}</p>
+    </div>
+
+    <div class="tab-panel" id="tab-features" role="tabpanel" aria-labelledby="tab-btn-features">
+      <h3>{{ 'sections.product.features' | t }}</h3>
+      {%- if features.size > 0 -%}
+        <ul class="feature-list">
+          {%- for feature in features -%}
+            <li>{%- render 'icon', icon: 'check', width: 18, height: 18 -%}{{ feature }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <p>{{ product.description | strip_html }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tab-panel" id="tab-specs" role="tabpanel" aria-labelledby="tab-btn-specs">
+      <h3>{{ 'sections.product.specifications' | t }}</h3>
+      <table class="spec-table"><tbody>{%- render 'spec-table', product: product -%}</tbody></table>
+    </div>
+
+    <div class="tab-panel" id="tab-box" role="tabpanel" aria-labelledby="tab-btn-box">
+      <h3>{{ 'sections.product.box_contents' | t }}</h3>
+      {%- if box_contents.size > 0 -%}
+        <ul class="box-contents-list">
+          {%- for item in box_contents -%}
+            <li><span class="count">{{ forloop.index }}.</span> {{ item }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <p>{{ product.title }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tab-panel" id="tab-warranty" role="tabpanel" aria-labelledby="tab-btn-warranty">
+      <h3>{{ 'sections.product.warranty' | t }}</h3>
+      {%- if warranty_text != blank -%}
+        <p>{{ warranty_text }}</p>
+      {%- else -%}
+        <p>{{ section.settings.default_warranty_text }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tab-panel" id="tab-shipping" role="tabpanel" aria-labelledby="tab-btn-shipping">
+      <h3>{{ 'sections.product.shipping_returns' | t }}</h3>
+      <p>{{ 'sections.product.shipping_returns_body_1' | t: amount: free_shipping_amount }}</p>
+      <p>{{ 'sections.product.shipping_returns_body_2' | t }} — see our <a href="{{ pages.contact.url | default: '/pages/contact' }}" style="color:var(--color-accent);font-weight:600;">{{ 'sections.product.shipping_returns' | t }}</a> page for the full policy and how to start a return.</p>
+    </div>
+  </div>
+
+  {%- if section.settings.show_compare_strip -%}
+    <div class="pdp-tabs compare-strip" style="border-radius:var(--radius-lg);padding:var(--sp-32);">
+      <h3 style="color:var(--text-on-dark);margin-bottom:20px;">{{ 'sections.product.compare_heading' | t }}</h3>
+      {%- liquid
+        assign compare_count = 0
+        assign compare_products = ''
+      -%}
+      <div class="compare-strip__table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th><span class="model-tag">{{ 'sections.product.this_product' | t }}</span>{{ product.title }}</th>
+              {%- if recommendations.performed -%}
+                {%- for related_product in recommendations.products limit: 2 -%}
+                  <th><span class="model-tag">{{ 'sections.product.compare_model' | t }}</span><a href="{{ related_product.url }}" style="color:inherit;">{{ related_product.title }}</a></th>
+                {%- endfor -%}
+              {%- else -%}
+                {%- assign shown = 0 -%}
+                {%- for related_product in related_collection.products -%}
+                  {%- if related_product.id != product.id and shown < 2 -%}
+                    <th><span class="model-tag">{{ 'sections.product.compare_model' | t }}</span><a href="{{ related_product.url }}" style="color:inherit;">{{ related_product.title }}</a></th>
+                    {%- assign shown = shown | plus: 1 -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Price</th>
+              <td class="is-highlight">{{ product.price | money }}</td>
+              {%- if recommendations.performed -%}
+                {%- for related_product in recommendations.products limit: 2 -%}<td>{{ related_product.price | money }}</td>{%- endfor -%}
+              {%- else -%}
+                {%- assign shown = 0 -%}
+                {%- for related_product in related_collection.products -%}
+                  {%- if related_product.id != product.id and shown < 2 -%}<td>{{ related_product.price | money }}</td>{%- assign shown = shown | plus: 1 -%}{%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </tr>
+            <tr>
+              <th>Rating</th>
+              <td>{% if rating %}{{ rating }} / 5{% else %}—{% endif %}</td>
+              {%- if recommendations.performed -%}
+                {%- for related_product in recommendations.products limit: 2 -%}<td>{% assign rp_rating = related_product.metafields.custom.rating.value %}{% if rp_rating %}{{ rp_rating }} / 5{% else %}—{% endif %}</td>{%- endfor -%}
+              {%- else -%}
+                {%- assign shown = 0 -%}
+                {%- for related_product in related_collection.products -%}
+                  {%- if related_product.id != product.id and shown < 2 -%}{%- assign rp_rating = related_product.metafields.custom.rating.value -%}<td>{% if rp_rating %}{{ rp_rating }} / 5{% else %}—{% endif %}</td>{%- assign shown = shown | plus: 1 -%}{%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </tr>
+            <tr>
+              <th>Key Spec</th>
+              <td>{%- render 'spec-table', product: product, mode: 'key-spec' -%}</td>
+              {%- if recommendations.performed -%}
+                {%- for related_product in recommendations.products limit: 2 -%}<td>{%- render 'spec-table', product: related_product, mode: 'key-spec' -%}</td>{%- endfor -%}
+              {%- else -%}
+                {%- assign shown = 0 -%}
+                {%- for related_product in related_collection.products -%}
+                  {%- if related_product.id != product.id and shown < 2 -%}<td>{%- render 'spec-table', product: related_product, mode: 'key-spec' -%}</td>{%- assign shown = shown | plus: 1 -%}{%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if faqs.size > 0 -%}
+    <section class="pdp-tabs">
+      <h3 style="margin-bottom:20px;">{{ 'sections.product.faqs' | t }}</h3>
+      <div data-accordion-group>
+        {%- for faq in faqs -%}
+          <div class="accordion-item">
+            <button class="accordion-item__header" aria-expanded="false" id="faq-q-{{ forloop.index }}" aria-controls="faq-a-{{ forloop.index }}">
+              <span>{{ faq.question }}</span>
+              {%- render 'icon', icon: 'chevron', width: 14, height: 14 -%}
+            </button>
+            <div class="accordion-item__body" id="faq-a-{{ forloop.index }}" role="region" aria-labelledby="faq-q-{{ forloop.index }}">
+              <div class="accordion-item__body-inner">{{ faq.answer }}</div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </section>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for faq in faqs -%}
+        {
+          "@type": "Question",
+          "name": {{ faq.question | json }},
+          "acceptedAnswer": { "@type": "Answer", "text": {{ faq.answer | json }} }
+        }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+    </script>
+  {%- endif -%}
+
+  <section class="related-strip" id="related-products" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4&intent=related">
+    <div class="section-header">
+      <div class="section-header__text"><h2>{{ 'sections.product.related' | t }}</h2></div>
+    </div>
+    <div class="product-grid" data-related-grid>
+      {%- if recommendations.performed -%}
+        {%- for recommended_product in recommendations.products -%}
+          {%- render 'product-card', product: recommended_product -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign related_count = 0 -%}
+        {%- for related_product in related_collection.products -%}
+          {%- if related_product.id != product.id and related_count < 4 -%}
+            {%- render 'product-card', product: related_product -%}
+            {%- assign related_count = related_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </section>
+
+  <section class="recently-viewed" data-recently-viewed style="display:none;">
+    <div class="section-header">
+      <div class="section-header__text"><h2>{{ 'sections.product.recently_viewed' | t }}</h2></div>
+    </div>
+    <div class="product-grid" data-recently-viewed-grid></div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_compare_strip",
+      "label": "Show compare-with-related-products strip",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "default_warranty_text",
+      "label": "Default warranty copy",
+      "info": "Shown only when a product has no custom.warranty metafield.",
+      "default": "1-year manufacturer warranty covering hardware defects under normal use. Contact support for full terms."
+    }
+  ]
+}
+{% endschema %}

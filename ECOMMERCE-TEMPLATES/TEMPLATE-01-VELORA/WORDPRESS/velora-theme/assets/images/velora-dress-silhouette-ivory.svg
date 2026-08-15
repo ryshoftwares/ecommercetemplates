@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="t8">
+  <title id="t8">Editorial silhouette study of a floor-length ivory VELORA gown against a beige backdrop</title>
+  <defs>
+    <linearGradient id="db3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C9B79C"/>
+      <stop offset="100%" stop-color="#B08A5C"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#db3)"/>
+  <ellipse cx="450" cy="1140" rx="380" ry="50" fill="#0A0A0A" opacity="0.1"/>
+  <path d="M450 200 C 400 200 365 250 365 310 L 350 420 C 300 600 300 900 340 1100 L 560 1100 C 600 900 600 600 550 420 L 535 310 C 535 250 500 200 450 200 Z" fill="#F7F3EC"/>
+  <path d="M450 200 C 420 235 420 290 450 320 C 480 290 480 235 450 200 Z" fill="#E4D9C6"/>
+  <line x1="450" y1="420" x2="450" y2="1090" stroke="#C9B79C" stroke-width="1.5" opacity="0.7"/>
+  <text x="450" y="1160" font-family="Georgia, 'Playfair Display', serif" font-size="20" fill="#0A0A0A" opacity="0.55" text-anchor="middle" letter-spacing="5">VELORA — COLUMN GOWN</text>
+</svg>

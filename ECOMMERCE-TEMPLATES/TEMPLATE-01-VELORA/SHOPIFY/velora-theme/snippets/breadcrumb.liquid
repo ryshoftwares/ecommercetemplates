@@ -1,0 +1,80 @@
+{%- comment -%}
+  snippets/breadcrumb.liquid
+  Renders the visible breadcrumb trail (.breadcrumb markup ported from the
+  demo) AND a matching BreadcrumbList JSON-LD block, built from the same
+  array so the two can never drift apart.
+
+  Accepts optional `product` / `collection` context via global objects.
+{%- endcomment -%}
+{%- liquid
+  assign crumbs_name = ''
+  assign crumb_names = ''
+  assign crumb_urls = ''
+
+  assign crumb_names = 'Home'
+  assign crumb_urls = routes.root_url
+
+  case template.name
+    when 'index'
+      assign crumb_names = 'Home'
+    when 'collection'
+      assign crumb_names = crumb_names | append: '|' | append: 'Shop'
+      assign crumb_urls = crumb_urls | append: '|' | append: routes.all_products_collection_url
+      assign crumb_names = crumb_names | append: '|' | append: collection.title
+      assign crumb_urls = crumb_urls | append: '|' | append: collection.url
+    when 'product'
+      assign crumb_names = crumb_names | append: '|' | append: 'Shop'
+      assign crumb_urls = crumb_urls | append: '|' | append: routes.all_products_collection_url
+      if product.collections.first
+        assign crumb_names = crumb_names | append: '|' | append: product.collections.first.title
+        assign crumb_urls = crumb_urls | append: '|' | append: product.collections.first.url
+      endif
+      assign crumb_names = crumb_names | append: '|' | append: product.title
+      assign crumb_urls = crumb_urls | append: '|' | append: product.url
+    when 'search'
+      assign crumb_names = crumb_names | append: '|' | append: 'Search'
+      assign crumb_urls = crumb_urls | append: '|' | append: routes.search_url
+    when 'list-collections'
+      assign crumb_names = crumb_names | append: '|' | append: 'Collections'
+      assign crumb_urls = crumb_urls | append: '|' | append: routes.collections_url
+    when 'page'
+      assign crumb_names = crumb_names | append: '|' | append: page.title
+      assign crumb_urls = crumb_urls | append: '|' | append: page.url
+    when 'cart'
+      assign crumb_names = crumb_names | append: '|' | append: 'Cart'
+      assign crumb_urls = crumb_urls | append: '|' | append: routes.cart_url
+    else
+      assign crumb_names = crumb_names | append: '|' | append: page_title
+  endcase
+
+  assign names = crumb_names | split: '|'
+  assign urls = crumb_urls | split: '|'
+-%}
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    {%- for name in names -%}
+      {%- assign url = urls[forloop.index0] -%}
+      {%- if forloop.last -%}
+        <li aria-current="page">{{ name }}</li>
+      {%- else -%}
+        <li><a href="{{ url }}">{{ name }}</a></li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ol>
+</nav>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {%- for name in names -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "name": {{ name | json }},
+        "item": {{ shop.url | append: urls[forloop.index0] | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>

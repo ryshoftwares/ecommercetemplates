@@ -1,0 +1,225 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Ardea",
+    "theme_version": "1.0.0",
+    "theme_author": "Ardea Living",
+    "theme_documentation_url": "https://ardealiving.example.com/theme-docs",
+    "theme_support_url": "https://ardealiving.example.com/support"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image",
+        "info": "Optional. If left blank, the shop name is shown as a wordmark (\"ARDEA.\"), matching the ARDEA demo."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Custom logo width",
+        "min": 80,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "default": 150
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand palette"
+      },
+      {
+        "type": "paragraph",
+        "content": "These default to the fixed ARDEA brand tokens (Sand / Terracotta / Deep Olive / Charcoal Brown / Cream) used throughout the master design. Adjust only if you intend to depart from the brand guidelines."
+      },
+      {
+        "type": "color",
+        "id": "color_sand",
+        "label": "Sand (soft backgrounds, alt sections)",
+        "default": "#EDE6DA"
+      },
+      {
+        "type": "color",
+        "id": "color_sand_dark",
+        "label": "Sand — dark (borders, placeholders)",
+        "default": "#E3D8C4"
+      },
+      {
+        "type": "color",
+        "id": "color_terracotta",
+        "label": "Terracotta (primary accent, CTAs, sale badges)",
+        "default": "#A9603E"
+      },
+      {
+        "type": "color",
+        "id": "color_terracotta_dark",
+        "label": "Terracotta — dark (hover state)",
+        "default": "#8A4C32"
+      },
+      {
+        "type": "color",
+        "id": "color_olive",
+        "label": "Deep olive (secondary accent, success)",
+        "default": "#4B5A45"
+      },
+      {
+        "type": "color",
+        "id": "color_charcoal",
+        "label": "Charcoal brown (headings, dark sections, footer)",
+        "default": "#2E2A26"
+      },
+      {
+        "type": "color",
+        "id": "color_cream",
+        "label": "Cream (page background)",
+        "default": "#FAF7F2"
+      },
+      {
+        "type": "color",
+        "id": "color_error",
+        "label": "Error",
+        "default": "#A13E2B"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "info": "Defaults to Fraunces, matching the ARDEA demo's warm editorial serif.",
+        "default": "fraunces_n5"
+      },
+      {
+        "type": "header",
+        "content": "Body"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body / UI font",
+        "info": "Defaults to Manrope, matching the ARDEA demo.",
+        "default": "manrope_n4"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Container max width",
+        "min": 1080,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1360
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "default": "https://www.instagram.com/ardealiving"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "default": "https://www.pinterest.com/ardealiving"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "X (Twitter)",
+        "default": ""
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free delivery threshold",
+        "info": "Amount (in your shop's currency major units) at which the free-delivery progress bar in the cart drawer/cart page reaches 100%. The ARDEA demo uses ₹6,000. Shopify's own shop currency setting (Settings > General) governs how amounts actually display at checkout; this setting only drives the visual progress bar.",
+        "default": 6000
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_type_drawer",
+        "label": "Use cart drawer",
+        "default": true,
+        "info": "When enabled, adding a product opens the slide-in cart drawer, matching the demo. The dedicated cart page (/cart) is always available."
+      }
+    ]
+  },
+  {
+    "name": "SEO & sharing",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "default_meta_description",
+        "label": "Default meta description",
+        "default": "Ardea designs modern furniture and home decor for living rooms, bedrooms, kitchens and lighting — solid oak, linen and stone, made to be lived in.",
+        "info": "Used as a fallback on any page that has no page-specific description (product/collection descriptions are preferred automatically when present)."
+      },
+      {
+        "type": "image_picker",
+        "id": "social_sharing_image",
+        "label": "Default social sharing image",
+        "info": "Used for Open Graph / Twitter previews when a page has no more specific image (e.g. no product/collection image)."
+      }
+    ]
+  },
+  {
+    "name": "Wishlist",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Shopify has no native wishlist object. Wishlist state is stored client-side in the shopper's browser via localStorage, keyed by product handle (see assets/theme.js, ArdeaWishlist). It is per-browser, not synced to the customer account."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_wishlist",
+        "label": "Enable wishlist icon + heart toggles",
+        "default": true
+      }
+    ]
+  }
+]

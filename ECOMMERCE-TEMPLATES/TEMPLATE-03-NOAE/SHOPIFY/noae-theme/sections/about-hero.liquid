@@ -1,0 +1,59 @@
+{%- comment -%}
+  sections/about-hero.liquid
+  Ported 1:1 from the demo's about.html founder-story hero
+  (.noae-about-hero): portrait-format image + eyebrow/H1/rich body copy.
+{%- endcomment -%}
+<section class="noae-section noae-reveal">
+  <div class="noae-container">
+    <div class="noae-about-hero">
+      <div class="noae-about-hero__media">
+        {%- if section.settings.image -%}
+          <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" width="800" height="1000" loading="lazy">
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'noae-about-hero__placeholder' }}
+        {%- endif -%}
+      </div>
+      <div>
+        <span class="noae-section__eyebrow">{{ section.settings.eyebrow }}</span>
+        <h1>{{ section.settings.heading }}</h1>
+        {{ section.settings.body }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Story"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Rituals, Not Routines"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body copy",
+      "default": "<p>NOAÉ began in 2021 in a rented Mumbai apartment, where our founder — tired of ten-step routines that promised everything and delivered very little — started mixing small batches of serum on her kitchen counter. She wasn't chasing trends. She wanted three honest products that did exactly what the label said, in a bottle whose ingredient list was short enough to actually read out loud.</p><p>What began as jars handed to friends became NOAÉ: a beauty label built on the belief that skin, hair and mind respond best to consistency, not complexity. Every formula spends months in dermatological review before it reaches a shelf, and every ingredient has to earn its place.</p><p>Today NOAÉ ships across India from our formulation studio, but the premise hasn't changed. Fewer, better products. Ingredient-forward transparency. And rituals simple enough that you'll actually keep them tomorrow, and the day after that.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Portrait image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About hero"
+    }
+  ]
+}
+{% endschema %}

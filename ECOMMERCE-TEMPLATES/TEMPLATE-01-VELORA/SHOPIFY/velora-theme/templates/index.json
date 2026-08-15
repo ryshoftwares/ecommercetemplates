@@ -1,0 +1,144 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "badge": "Autumn / Winter Collection",
+        "heading": "THE NEW SEASON",
+        "subheading": "Tailored silhouettes, natural fibres, and considered colour — a collection built for women who dress with intention, not for trends that fade by spring.",
+        "primary_cta_text": "Shop New Arrivals",
+        "primary_cta_url": "/collections/all",
+        "secondary_cta_text": "Explore Lookbook",
+        "secondary_cta_url": "/pages/about"
+      }
+    },
+    "editorial_quote": {
+      "type": "editorial-quote",
+      "settings": {
+        "quote": "We don't design for a season. We design pieces you'll still be reaching for in five years.",
+        "citation": "Anaïs Moreau, Creative Director, Velora"
+      }
+    },
+    "featured_categories": {
+      "type": "featured-categories",
+      "settings": {
+        "eyebrow": "Shop by Category",
+        "heading": "Four categories, one point of view",
+        "view_all_text": "View All Categories",
+        "view_all_url": "/collections/all"
+      },
+      "blocks": {
+        "cat-1": { "type": "category", "settings": { "label": "Dresses" } },
+        "cat-2": { "type": "category", "settings": { "label": "Outerwear" } },
+        "cat-3": { "type": "category", "settings": { "label": "Knitwear" } },
+        "cat-4": { "type": "category", "settings": { "label": "Accessories" } }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4"]
+    },
+    "new_arrivals": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Just Landed",
+        "heading": "New Arrivals",
+        "products_to_show": 4,
+        "columns": 4,
+        "view_all_text": "Shop All",
+        "tight_top": true
+      }
+    },
+    "brand_story": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Our Story",
+        "heading": "Crafted in small batches, built to last seasons",
+        "body": "<p>Founded in 2014, Velora began as a two-person atelier focused on a single idea: clothing should be made from real materials, cut with real tailoring, and sold without the churn of fast fashion. Today we work with a small number of European mills and Indian ateliers to produce considered collections twice a year.</p>",
+        "cta_text": "Read Our Story",
+        "cta_url": "/pages/about"
+      },
+      "blocks": {
+        "stat-1": { "type": "stat", "settings": { "value": "2014", "label": "Founded" } },
+        "stat-2": { "type": "stat", "settings": { "value": "40+", "label": "Countries Shipped To" } },
+        "stat-3": { "type": "stat", "settings": { "value": "92%", "label": "Natural Fibres" } }
+      },
+      "block_order": ["stat-1", "stat-2", "stat-3"]
+    },
+    "best_sellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Customer Favourites",
+        "heading": "Best Sellers",
+        "products_to_show": 4,
+        "columns": 4,
+        "view_all_text": "Shop All"
+      }
+    },
+    "promo": {
+      "type": "promo-banner",
+      "settings": {
+        "eyebrow": "Limited Time",
+        "heading": "End of Season Sale — Up to 30% Off",
+        "body": "Selected dresses, outerwear and knitwear are reduced for a limited time. Use code VELORA10 at checkout for an extra 10% off your order.",
+        "cta_text": "Shop the Sale",
+        "cta_url": "/collections/all"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "settings": {
+        "eyebrow": "In Their Words",
+        "heading": "What our customers say"
+      },
+      "blocks": {
+        "t-1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The Wool Tailored Coat is the best outerwear purchase I've made in years. The fit is exactly as described and it still looks brand new after a full winter of wear.",
+            "author": "Riya Kapoor",
+            "author_meta": "Verified Buyer, Mumbai"
+          }
+        },
+        "t-2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Ordered the Cashmere Crewneck in three colours after trying the first one. Genuinely the softest cashmere I've owned at this price point.",
+            "author": "Ananya Shah",
+            "author_meta": "Verified Buyer, Bengaluru"
+          }
+        },
+        "t-3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Customer service helped me exchange a size within a day, and the Leather Structured Tote has held up beautifully to daily commuting.",
+            "author": "Nisha Verma",
+            "author_meta": "Verified Buyer, Delhi"
+          }
+        }
+      },
+      "block_order": ["t-1", "t-2", "t-3"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Join the Velora List",
+        "body": "Be first to hear about new collections, private sales and styling notes from our design team.",
+        "placeholder": "Your email address",
+        "button_text": "Subscribe",
+        "disclaimer": "By subscribing you agree to receive marketing emails from Velora. Unsubscribe anytime."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "editorial_quote",
+    "featured_categories",
+    "new_arrivals",
+    "brand_story",
+    "best_sellers",
+    "promo",
+    "reviews",
+    "newsletter"
+  ]
+}

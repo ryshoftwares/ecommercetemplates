@@ -1,0 +1,95 @@
+{%- comment -%}
+  sections/main-404.liquid
+  Matches the demo's 404.html (.error-page markup) plus a "start with a
+  room" grid reusing real top-level collections (linklists['main-menu']'s
+  first item's child links, same convention as sections/header.liquid's
+  mega menu) rather than the demo's static room list.
+{%- endcomment -%}
+<nav class="breadcrumbs container" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">Page Not Found</li>
+  </ol>
+</nav>
+
+<section class="container error-page">
+  <p class="error-page__code">404</p>
+  <p class="eyebrow" style="justify-content:center;">{{ section.settings.eyebrow }}</p>
+  <h1>{{ section.settings.heading }}</h1>
+  <p class="lead" style="max-width:520px;margin-inline:auto;">{{ section.settings.body }}</p>
+  <div class="error-page__actions">
+    <a href="{{ routes.root_url }}" class="btn btn--dark">{{ section.settings.primary_cta_text }}</a>
+    <a href="{{ routes.all_products_collection_url }}" class="btn btn--outline">{{ section.settings.secondary_cta_text }}</a>
+  </div>
+</section>
+
+{%- liquid
+  assign shop_menu = linklists[section.settings.menu]
+  assign shop_link = shop_menu.links.first
+-%}
+{%- if shop_link.links.size > 0 -%}
+  <section class="section container">
+    <div class="section-head">
+      <div class="section-head__text">
+        <p class="eyebrow">Shop by Room</p>
+        <h2>Or start with a room</h2>
+      </div>
+    </div>
+    <div class="room-grid">
+      {%- for room_link in shop_link.links -%}
+        <a class="room-card" href="{{ room_link.url }}">
+          {{ 'collection-1' | placeholder_svg_tag: 'room-card__img placeholder-svg' }}
+          <div class="room-card__overlay">
+            <h3>{{ room_link.title }}</h3>
+            <span class="room-card__cta">Shop {{ room_link.title }}</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "404 page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Lost, Not Broken"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "We couldn't find that page"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "The piece you're looking for may have been moved, renamed, or never existed. Let's get you back to browsing the collection."
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Primary button label",
+      "default": "Back to Home"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary button label",
+      "default": "Shop All Collections"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu to pull \"start with a room\" tiles from",
+      "default": "main-menu",
+      "info": "Uses the first top-level link's child links (same menu structure as the header's mega menu)."
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,162 @@
+{%- comment -%}
+  sections/footer.liquid
+  Four-column footer ported 1:1 from the demo's .noae-footer / .noae-footer__grid
+  markup: brand blurb + socials, three link lists driven by linklists, and a
+  native customer newsletter form. Copyright year is live via 'now' | date.
+{%- endcomment -%}
+<footer class="noae-footer">
+  <div class="noae-container">
+    <div class="noae-footer__grid">
+      <div>
+        <p class="noae-footer__logo">NO<span style="color:var(--color-rose)">AÉ</span></p>
+        <p class="noae-footer__desc">{{ section.settings.brand_blurb }}</p>
+        <div class="noae-footer__social">
+          {%- if settings.social_instagram_link != blank -%}<a href="{{ settings.social_instagram_link }}" aria-label="NOAÉ on Instagram">{% render 'icon', icon: 'instagram' %}</a>{%- endif -%}
+          {%- if settings.social_pinterest_link != blank -%}<a href="{{ settings.social_pinterest_link }}" aria-label="NOAÉ on Pinterest">{% render 'icon', icon: 'pinterest' %}</a>{%- endif -%}
+          {%- if settings.social_facebook_link != blank -%}<a href="{{ settings.social_facebook_link }}" aria-label="NOAÉ on Facebook">{% render 'icon', icon: 'facebook' %}</a>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'link_list' -%}
+            <div {{ block.shopify_attributes }}>
+              <p class="noae-footer__heading">{{ block.settings.heading }}</p>
+              {%- assign footer_menu = linklists[block.settings.menu] -%}
+              <ul class="noae-footer__list">
+                {%- for link in footer_menu.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- when 'text_block' -%}
+            <div {{ block.shopify_attributes }}>
+              <p class="noae-footer__heading">{{ block.settings.heading }}</p>
+              <div class="noae-footer__list">{{ block.settings.text }}</div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_newsletter -%}
+      <div class="noae-newsletter" style="margin-bottom:var(--space-7);">
+        <span class="noae-section__eyebrow">{{ section.settings.newsletter_eyebrow }}</span>
+        <h2>{{ section.settings.newsletter_heading }}</h2>
+        <p>{{ section.settings.newsletter_body }}</p>
+        {%- form 'customer', id: 'footerNewsletterForm', class: 'noae-newsletter__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label for="footerNewsletterEmail" class="noae-visually-hidden">Email address</label>
+          <input type="email" id="footerNewsletterEmail" name="contact[email]" placeholder="you@email.com" required>
+          <button type="submit" class="noae-btn noae-btn--dark">{{ section.settings.newsletter_button_text }}</button>
+        {%- endform -%}
+        <p class="noae-newsletter__note">{{ section.settings.newsletter_note }}</p>
+      </div>
+    {%- endif -%}
+
+    <div class="noae-footer__bottom">
+      <p>© {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'sections.footer.copyright' | t }}</p>
+      <p class="noae-footer__payments">{{ section.settings.payment_text }}</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "brand_blurb",
+      "label": "Brand blurb",
+      "default": "Modern rituals for skin, hair, and mind — formulated with ingredient-forward honesty and a whole lot of softness."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show newsletter block",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_eyebrow",
+      "label": "Newsletter eyebrow",
+      "default": "Find Your Ritual"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter heading",
+      "default": "What Does Your Skin Need?"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_body",
+      "label": "Newsletter body",
+      "default": "Join the list for a personalised routine match, early access to launches, and 10% off your first order."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button_text",
+      "label": "Newsletter button text",
+      "default": "Get My Match"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_note",
+      "label": "Newsletter note",
+      "default": "Use code NOAE10 at checkout. No spam, unsubscribe anytime."
+    },
+    {
+      "type": "text",
+      "id": "payment_text",
+      "label": "Payment methods text",
+      "default": "Visa · Mastercard · UPI · Cash on Delivery"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Link list column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Shop"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer-shop"
+        }
+      ]
+    },
+    {
+      "type": "text_block",
+      "name": "Text block column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Help"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Content",
+          "default": "<p>support@noae-demo.com</p>"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "link_list", "settings": { "heading": "Shop", "menu": "footer-shop" } },
+      { "type": "link_list", "settings": { "heading": "Company", "menu": "footer-company" } },
+      { "type": "link_list", "settings": { "heading": "Help", "menu": "footer-help" } }
+    ]
+  }
+}
+{% endschema %}

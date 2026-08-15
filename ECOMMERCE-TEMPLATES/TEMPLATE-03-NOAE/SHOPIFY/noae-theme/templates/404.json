@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {
+        "heading": "This Page Skipped Its Ritual",
+        "body": "The page you're looking for has been moved, renamed, or never existed. Let's get you back to something worth browsing.",
+        "home_button_text": "Back To Home",
+        "shop_button_text": "Shop All Products",
+        "contact_button_text": "Contact Support",
+        "contact_page": "contact",
+        "show_categories": true,
+        "categories_eyebrow": "Or Start Here",
+        "categories_heading": "Find Your Category"
+      },
+      "blocks": {
+        "concern-1": { "type": "concern", "settings": { "name": "Skincare", "description": "Serums, creams & masks for visible results" } },
+        "concern-2": { "type": "concern", "settings": { "name": "Haircare", "description": "Nourishing washes and oils for stronger strands" } },
+        "concern-3": { "type": "concern", "settings": { "name": "Wellness", "description": "Rituals for calm, sleep, and everyday balance" } },
+        "concern-4": { "type": "concern", "settings": { "name": "Body", "description": "Whipped butters and oils for soft, cared-for skin" } }
+      },
+      "block_order": ["concern-1", "concern-2", "concern-3", "concern-4"]
+    }
+  },
+  "order": ["main"]
+}

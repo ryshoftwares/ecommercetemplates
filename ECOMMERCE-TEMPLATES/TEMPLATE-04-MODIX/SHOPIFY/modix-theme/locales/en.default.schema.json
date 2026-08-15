@@ -1,0 +1,87 @@
+{
+  "settings_schema": {
+    "logo": {
+      "name": "Logo"
+    },
+    "colors": {
+      "name": "Colors"
+    },
+    "typography": {
+      "name": "Typography"
+    },
+    "layout": {
+      "name": "Layout"
+    },
+    "social": {
+      "name": "Social media"
+    },
+    "cart": {
+      "name": "Cart"
+    },
+    "seo": {
+      "name": "SEO & sharing"
+    },
+    "wishlist": {
+      "name": "Wishlist"
+    }
+  },
+  "sections": {
+    "announcement-bar": {
+      "name": "Announcement bar"
+    },
+    "header": {
+      "name": "Header"
+    },
+    "footer": {
+      "name": "Footer"
+    },
+    "hero": {
+      "name": "Hero"
+    },
+    "shop-by-category": {
+      "name": "Shop by category"
+    },
+    "spec-comparison": {
+      "name": "Spec comparison strip"
+    },
+    "featured-collection": {
+      "name": "Featured collection"
+    },
+    "engineering-story": {
+      "name": "Engineering & design story"
+    },
+    "testimonials": {
+      "name": "Testimonials"
+    },
+    "promo-banner": {
+      "name": "Promo banner"
+    },
+    "newsletter": {
+      "name": "Newsletter"
+    },
+    "main-collection": {
+      "name": "Collection pages"
+    },
+    "main-product": {
+      "name": "Product page"
+    },
+    "main-cart": {
+      "name": "Cart page"
+    },
+    "main-search": {
+      "name": "Search results"
+    },
+    "main-404": {
+      "name": "404 page"
+    },
+    "main-list-collections": {
+      "name": "All categories"
+    },
+    "main-page": {
+      "name": "Page"
+    },
+    "main-wishlist": {
+      "name": "Wishlist page"
+    }
+  }
+}

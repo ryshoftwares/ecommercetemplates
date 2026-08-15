@@ -1,0 +1,24 @@
+# Modix — robots.txt
+# https://www.modix-demo.com/
+
+User-agent: *
+Allow: /
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+Allow: /index.html
+Allow: /shop.html
+Allow: /category.html
+Allow: /product.html
+Allow: /about.html
+Allow: /contact.html
+
+# Transactional / session-specific pages carry no unique indexable
+# content and are intentionally excluded from crawl.
+Disallow: /cart.html
+Disallow: /checkout.html
+Disallow: /wishlist.html
+Disallow: /search.html
+Disallow: /404.html
+
+Sitemap: https://www.modix-demo.com/sitemap.xml

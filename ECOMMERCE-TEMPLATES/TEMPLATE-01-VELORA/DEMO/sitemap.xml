@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Velora — sitemap.xml (documentation-quality reference for this static demo,
+     not served dynamically). Cart, checkout, wishlist, search and 404 are
+     intentionally omitted, matching robots.txt and each page's robots meta tag. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>index.html</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>shop.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>about.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>contact.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+
+  <url><loc>category.html?cat=dresses</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>category.html?cat=outerwear</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>category.html?cat=knitwear</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>category.html?cat=accessories</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+
+  <url><loc>product.html?slug=silk-tailored-dress</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=velvet-wrap-dress</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=ivory-column-gown</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=pleated-midi-dress</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=wool-tailored-coat</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=belted-trench-coat</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=cashmere-blend-cape</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=quilted-field-jacket</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=cashmere-crewneck-sweater</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=ribbed-merino-turtleneck</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=oversized-alpaca-cardigan</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=cropped-knit-vest</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=leather-structured-tote</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=silk-twill-scarf</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=gold-plated-hoop-earrings</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>product.html?slug=leather-ankle-boots</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+</urlset>

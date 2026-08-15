@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" width="900" height="1100" role="img" aria-labelledby="t19">
+  <title id="t19">Editorial atelier scene representing the VELORA design studio and brand story</title>
+  <defs>
+    <linearGradient id="ab1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E4D9C6"/>
+      <stop offset="100%" stop-color="#C9B79C"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#ab1)"/>
+  <rect x="120" y="700" width="660" height="10" fill="#0A0A0A" opacity="0.2"/>
+  <rect x="180" y="500" width="180" height="200" fill="#F7F3EC" opacity="0.5"/>
+  <rect x="400" y="420" width="140" height="280" fill="#2B2B2B" opacity="0.75"/>
+  <rect x="580" y="540" width="160" height="160" fill="#6E2A33" opacity="0.55"/>
+  <circle cx="450" cy="260" r="90" fill="#F7F3EC" opacity="0.4"/>
+  <text x="450" y="920" font-family="Georgia, 'Playfair Display', serif" font-size="24" fill="#0A0A0A" opacity="0.55" text-anchor="middle" letter-spacing="5">VELORA ATELIER — EST. 2014</text>
+</svg>

@@ -1,0 +1,63 @@
+{%- comment -%}
+  sections/main-search.liquid
+  Full search results page, referenced by templates/search.json. Ported from
+  the demo's search.html — uses Shopify's native `search` object (real
+  server-rendered results, {{ search.terms }}, search.results) rather than
+  the demo's client-side filter, with an empty state matching the design.
+{%- endcomment -%}
+<div class="page-band">
+  <div class="container">
+    {%- render 'breadcrumb' -%}
+    <h1>{{ 'general.search.results_for' | t: terms: search.terms }}</h1>
+  </div>
+</div>
+
+<div class="container" style="padding:var(--sp-8) 0" data-search-page>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="search-input-row" style="max-width:640px;margin:0 auto 40px" data-search-page-form>
+    {%- render 'icon', icon: 'search', width: 22, height: 22 -%}
+    <input type="text" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}" data-search-page-input>
+    <input type="hidden" name="type" value="product">
+  </form>
+
+  {%- if search.performed and search.results_count > 0 -%}
+    <p class="result-count" data-search-count>{{ 'general.search.results_count' | t: count: search.results_count }}</p>
+    <div class="product-grid" data-search-grid>
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}
+          {%- render 'product-card', product: item -%}
+        {%- else -%}
+          <article class="product-card">
+            <div class="product-info">
+              <h3 class="product-name"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+              <p class="text-muted">{{ item.content | strip_html | truncate: 120 }}</p>
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    {%- if search.pages > 1 -%}
+      <div class="pagination" data-pagination>
+        {%- paginate search.results by 24 -%}
+          {%- if paginate.previous %}<a href="{{ paginate.previous.url }}">&larr;</a>{% endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- else -%}<span class="is-active">{{ part.title }}</span>{%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next %}<a href="{{ paginate.next.url }}">&rarr;</a>{% endif -%}
+        {%- endpaginate -%}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="empty-state" data-search-empty>
+      <svg viewBox="0 0 24 24" stroke-width="1.2" fill="none" stroke="currentColor" width="64" height="64"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+      <h3>{{ 'general.search.no_results' | t: terms: search.terms }}</h3>
+      {%- unless search.performed -%}<p class="text-muted">{{ 'general.search.enter_term' | t }}</p>{%- endunless -%}
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">{{ 'general.back_to_shop' | t }}</a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Search results"
+}
+{% endschema %}

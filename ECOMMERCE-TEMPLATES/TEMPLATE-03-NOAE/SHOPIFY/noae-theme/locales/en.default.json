@@ -1,0 +1,115 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Search serums, cleansers, rituals...",
+      "open": "Search",
+      "close": "Close search",
+      "results_for": "Search results for \"{{ terms }}\"",
+      "no_results": "No products found for \"{{ terms }}\". Try a different search term or browse categories below.",
+      "enter_term": "Start typing to discover serums, cleansers, and rituals.",
+      "results_count": "{{ count }} results"
+    },
+    "continue_shopping": "Continue Shopping",
+    "back_to_shop": "Back to Shop"
+  },
+  "sections": {
+    "header": {
+      "menu": "Menu",
+      "open_menu": "Open menu",
+      "close_menu": "Close menu",
+      "account": "Account",
+      "wishlist": "Wishlist",
+      "cart": "Open cart"
+    },
+    "footer": {
+      "copyright": "All rights reserved.",
+      "newsletter_success": "Welcome to the ritual — check your inbox for 10% off."
+    },
+    "contact": {
+      "success": "Thanks for reaching out — we'll be in touch within 1-2 business days."
+    },
+    "cart": {
+      "title": "Your Bag",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "shipping": "Shipping",
+      "total": "Total",
+      "free": "FREE",
+      "view_cart": "View Bag",
+      "checkout": "Checkout",
+      "empty": "Your bag is empty",
+      "empty_body": "Looks like you haven't added a ritual yet. Explore our bestsellers and find your next daily favourite.",
+      "remove": "Remove",
+      "quantity": "Quantity",
+      "free_shipping_unlocked": "You've unlocked FREE SHIPPING",
+      "free_shipping_remaining": "Add {{ amount }} more to unlock FREE SHIPPING",
+      "order_summary": "Order Summary",
+      "discount_code_placeholder": "Coupon code (try NOAE10)",
+      "apply": "Apply",
+      "discount_note": "Have a discount code? Shopify applies valid discount codes automatically at checkout — enter it on the next step. Codes cannot be validated on this page because Shopify does not expose discount validation to theme JavaScript.",
+      "secure_checkout": "Secure Checkout",
+      "easy_returns": "Easy Returns",
+      "fast_shipping": "Fast Shipping"
+    },
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "buy_now": "Buy Now",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "in_stock": "In Stock — ships in 1-2 business days",
+      "low_stock": "Only {{ count }} left in stock",
+      "out_of_stock": "Currently Out of Stock",
+      "quantity": "Quantity",
+      "sku": "SKU",
+      "brand": "Brand",
+      "size": "Size",
+      "quick_view": "Quick View",
+      "quick_add": "Quick Add",
+      "add_to_wishlist": "Add to wishlist",
+      "remove_from_wishlist": "Remove from wishlist",
+      "added_to_wishlist": "Added to wishlist",
+      "removed_from_wishlist": "Removed from wishlist",
+      "added_to_cart": "{{ product }} added to your bag",
+      "overview": "Overview",
+      "key_ingredients": "Key Ingredients",
+      "how_to_use": "How to Use",
+      "skin_type": "Skin Type",
+      "shipping": "Shipping",
+      "storage": "Storage",
+      "faqs": "Frequently Asked Questions",
+      "related": "You May Also Love",
+      "recently_viewed": "Recently Viewed",
+      "new": "New",
+      "sale": "Sale",
+      "bestseller": "Bestseller"
+    },
+    "wishlist": {
+      "title": "Your Wishlist",
+      "saved_items": "{{ count }} saved items",
+      "empty_title": "Your wishlist is waiting",
+      "empty_body": "You haven't saved anything yet. Tap the heart icon on any product to keep track of the rituals you're considering.",
+      "discover": "Continue Shopping",
+      "move_to_cart": "Move to Bag"
+    },
+    "collection": {
+      "filter_title": "Filters",
+      "sort_by": "Sort products",
+      "sort_featured": "Featured",
+      "sort_newest": "Newest",
+      "sort_price_asc": "Price: Low to High",
+      "sort_price_desc": "Price: High to Low",
+      "sort_rating": "Top Rated",
+      "clear_filters": "Clear All",
+      "show_results": "Show Results",
+      "no_products": "No products match your filters",
+      "no_products_body": "Try widening your price range or clearing a filter to see more rituals.",
+      "result_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "in_stock_only": "In Stock Only",
+      "any_rating": "Any rating",
+      "rating_up": "{{ rating }} & up"
+    }
+  }
+}

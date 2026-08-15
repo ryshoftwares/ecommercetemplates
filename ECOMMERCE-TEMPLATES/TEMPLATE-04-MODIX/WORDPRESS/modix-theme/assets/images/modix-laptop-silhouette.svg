@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Line illustration of a Modix laptop open at an angle showing the keyboard deck">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#2F5DFF" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#2F5DFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EBF0FF"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="500" height="500" fill="#F5F6F8"/>
+  <circle cx="250" cy="240" r="195" fill="url(#glow)"/>
+  <path d="M150 130 L350 130 L365 320 L135 320 Z" fill="url(#screen)" stroke="#17181C" stroke-width="6"/>
+  <rect x="160" y="145" width="180" height="115" fill="#FFFFFF" stroke="#17181C" stroke-width="2" opacity="0.55"/>
+  <line x1="200" y1="175" x2="300" y2="175" stroke="#2F5DFF" stroke-width="3" opacity="0.6"/>
+  <line x1="200" y1="195" x2="280" y2="195" stroke="#17181C" stroke-width="2" opacity="0.35"/>
+  <line x1="200" y1="215" x2="290" y2="215" stroke="#17181C" stroke-width="2" opacity="0.35"/>
+  <path d="M100 320 L400 320 L420 360 C420 368 414 372 405 372 L95 372 C86 372 80 368 80 360 Z" fill="#FFFFFF" stroke="#17181C" stroke-width="6"/>
+  <rect x="220" y="340" width="60" height="8" rx="4" fill="#17181C" opacity="0.4"/>
+</svg>

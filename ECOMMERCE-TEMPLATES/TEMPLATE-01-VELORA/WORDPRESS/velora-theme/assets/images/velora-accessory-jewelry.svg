@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="t15">
+  <title id="t15">Editorial still-life of gold-plated VELORA hoop earrings against a charcoal backdrop</title>
+  <defs>
+    <linearGradient id="ac3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2B2B2B"/>
+      <stop offset="100%" stop-color="#0A0A0A"/>
+    </linearGradient>
+    <radialGradient id="ac3g" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E9CE8E"/>
+      <stop offset="100%" stop-color="#C6A664"/>
+    </radialGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#ac3)"/>
+  <circle cx="390" cy="560" r="90" fill="none" stroke="url(#ac3g)" stroke-width="14"/>
+  <circle cx="520" cy="640" r="90" fill="none" stroke="url(#ac3g)" stroke-width="14"/>
+  <circle cx="390" cy="480" r="6" fill="#F7F3EC" opacity="0.5"/>
+  <circle cx="520" cy="560" r="6" fill="#F7F3EC" opacity="0.5"/>
+  <text x="450" y="900" font-family="Georgia, 'Playfair Display', serif" font-size="20" fill="#F7F3EC" opacity="0.55" text-anchor="middle" letter-spacing="5">VELORA — GOLD HOOPS</text>
+</svg>

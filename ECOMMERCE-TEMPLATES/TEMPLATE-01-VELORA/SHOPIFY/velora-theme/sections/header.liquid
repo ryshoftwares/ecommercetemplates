@@ -1,0 +1,146 @@
+{%- comment -%}
+  sections/header.liquid
+  Centered-logo VELORA header: utility icons split left/right around a
+  centered wordmark, primary nav row below, ported 1:1 from the demo's
+  .site-header / .header-row / .primary-nav markup, plus the mobile drawer
+  variant (.mobile-drawer). Main menu is Shopify-native: linklists.<handle>.links,
+  rendered recursively via snippets/menu-list.liquid so dropdown sub-menus work.
+
+  WISHLIST: Shopify has no native wishlist object/API. The heart icon + count
+  badge below are driven entirely client-side by assets/theme.js
+  (window.Velora.wishlist), which stores an array of product handles in
+  localStorage ("velora_wishlist_v1") — see settings_schema.json > Wishlist
+  for the merchant-facing note on this limitation.
+{%- endcomment -%}
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+-%}
+<header class="site-header" data-site-header>
+  <div class="header-row">
+    <div class="header-utility left">
+      <button class="hamburger icon-btn" data-drawer-open aria-label="{{ 'sections.header.open_menu' | t }}" aria-expanded="false">
+        {%- render 'icon', icon: 'menu', width: 22, height: 22 -%}
+      </button>
+      {%- if section.settings.show_search -%}
+        <button class="icon-btn" data-search-open aria-label="{{ 'general.search.open' | t }}">
+          {%- render 'icon', icon: 'search', width: 20, height: 20 -%}
+        </button>
+      {%- endif -%}
+      <div class="header-search-inline"></div>
+    </div>
+
+    {%- liquid
+      assign header_logo = section.settings.logo | default: settings.logo
+      assign header_logo_width = section.settings.logo_width | default: settings.logo_width
+    -%}
+    <a href="{{ routes.root_url }}" class="logo">
+      {%- if header_logo -%}
+        <img src="{{ header_logo | image_url: width: 400 }}" alt="{{ shop.name }}" width="{{ header_logo_width }}" style="width:{{ header_logo_width }}px; height:auto;">
+      {%- else -%}
+        {{ shop.name | upcase }}<span>.</span>
+      {%- endif -%}
+    </a>
+
+    <div class="header-utility right">
+      {%- if section.settings.show_account -%}
+        <a class="icon-btn" href="{{ routes.account_url }}" aria-label="{{ 'sections.header.account' | t }}">
+          {%- render 'icon', icon: 'account', width: 20, height: 20 -%}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.show_wishlist and settings.enable_wishlist -%}
+        <a class="icon-btn" href="{{ pages.wishlist.url | default: '/pages/wishlist' }}" data-wishlist-link aria-label="{{ 'sections.header.wishlist' | t }}">
+          {%- render 'icon', icon: 'wishlist', width: 20, height: 20 -%}
+          <span class="icon-count" data-wishlist-count style="display:none">0</span>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.show_cart -%}
+        <button class="icon-btn" data-cart-open aria-label="{{ 'sections.header.cart' | t }}">
+          {%- render 'icon', icon: 'cart', width: 20, height: 20 -%}
+          <span class="icon-count" data-cart-count{% if cart.item_count == 0 %} style="display:none"{% endif %}>{{ cart.item_count }}</span>
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if menu.links.size > 0 -%}
+    <nav class="primary-nav" aria-label="Primary">
+      <div class="container">
+        {%- render 'menu-list', links: menu.links -%}
+      </div>
+    </nav>
+  {%- endif -%}
+</header>
+
+<div class="mobile-drawer-backdrop" data-drawer-backdrop></div>
+<div class="mobile-drawer" data-mobile-drawer id="mobileDrawer">
+  <div class="drawer-head">
+    <span class="logo" style="font-size:1.4rem">{{ shop.name | upcase }}<span>.</span></span>
+    <button class="drawer-close" data-drawer-close aria-label="{{ 'sections.header.close_menu' | t }}">
+      {%- render 'icon', icon: 'close', width: 22, height: 22 -%}
+    </button>
+  </div>
+  <nav aria-label="Mobile primary">
+    {%- render 'menu-list', links: menu.links -%}
+  </nav>
+  <div class="drawer-foot">{{ section.settings.drawer_footer_text }}</div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image",
+      "info": "Optional — falls back to the shop name as a wordmark, matching the VELORA demo."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show wishlist icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart icon",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "drawer_footer_text",
+      "label": "Mobile drawer footer text",
+      "default": "Free shipping on orders over ₹4,000"
+    }
+  ]
+}
+{% endschema %}

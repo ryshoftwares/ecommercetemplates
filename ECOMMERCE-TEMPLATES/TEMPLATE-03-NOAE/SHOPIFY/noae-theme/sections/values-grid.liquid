@@ -1,0 +1,91 @@
+{%- comment -%}
+  sections/values-grid.liquid
+  Ported 1:1 from the demo's about.html "THREE PROMISES WE DON'T BREAK"
+  section (.noae-values-grid / .noae-value-card).
+{%- endcomment -%}
+<section class="noae-section noae-section--soft noae-reveal">
+  <div class="noae-container">
+    <div class="noae-section__head">
+      <span class="noae-section__eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.description != blank -%}
+        <p class="noae-section__desc">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+    {%- if section.blocks.size > 0 -%}
+      <div class="noae-values-grid">
+        {%- for block in section.blocks -%}
+          <article class="noae-value-card" {{ block.shopify_attributes }}>
+            <span class="noae-value-card__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.description }}</p>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Values grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "What We Stand For"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Three Promises We Don't Break"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "These aren't marketing lines — they're the checklist every NOAÉ product has to pass before it's allowed to launch."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Emoji icon",
+          "default": "🧴"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Ingredient Integrity"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Every formula lists actives at their real, visible concentrations — never hidden behind a vague \"proprietary blend.\""
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "value", "settings": { "icon": "🧴", "title": "Ingredient Integrity", "description": "Every formula lists actives at their real, visible concentrations — never hidden behind a vague \"proprietary blend.\"" } },
+      { "type": "value", "settings": { "icon": "📦", "title": "Considered Packaging", "description": "Glass jars, recyclable cartons and refill-ready bottles, chosen to be reused long before they're thrown away." } },
+      { "type": "value", "settings": { "icon": "🌿", "title": "Real Results", "description": "We test for measurable outcomes — hydration, barrier repair, scalp health — not just how nice a formula feels going on." } }
+    ]
+  },
+  "presets": [
+    {
+      "name": "Values grid"
+    }
+  ]
+}
+{% endschema %}

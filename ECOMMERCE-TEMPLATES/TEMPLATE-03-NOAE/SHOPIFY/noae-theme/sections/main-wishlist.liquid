@@ -1,0 +1,43 @@
+{%- comment -%}
+  sections/main-wishlist.liquid
+  Wishlist page, referenced by templates/page.wishlist.json — assign this
+  alternate template to a Page titled "Wishlist" in Admin > Online Store >
+  Pages (Template: page.wishlist) to publish it at /pages/wishlist, matching
+  the header's wishlist link fallback in sections/header.liquid.
+
+  Shopify has no native wishlist object. This shell is empty on the server;
+  assets/theme.js reads the saved product handles from localStorage
+  ("noae_wishlist_v1"), fetches each product's live JSON from
+  `/products/{handle}.js`, and renders the product-card markup client-side —
+  mirroring the demo's js/wishlist.js renderWishlistPage().
+{%- endcomment -%}
+<section class="noae-page-header">
+  <div class="noae-container">
+    {%- render 'breadcrumb' -%}
+    <h1>{{ 'sections.wishlist.title' | t }}</h1>
+    <p class="noae-page-header__intro">{{ section.settings.intro }}</p>
+  </div>
+</section>
+
+<div class="noae-container" style="padding-bottom:var(--space-9);" data-wishlist-page>
+  <div class="noae-empty-state" id="wishlistEmptyState" data-wishlist-empty style="display:none">
+    <h3>{{ 'sections.wishlist.empty_title' | t }}</h3>
+    <p>{{ 'sections.wishlist.empty_body' | t }}</p>
+    <a href="{{ routes.all_products_collection_url }}" class="noae-btn noae-btn--primary noae-mt-6">{{ 'sections.wishlist.discover' | t }}</a>
+  </div>
+  <div class="noae-wishlist-grid" id="wishlistGrid" data-wishlist-grid></div>
+</div>
+
+{% schema %}
+{
+  "name": "Wishlist page",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "Every ritual you've saved, gathered in one place. Come back whenever you're ready to add them to your bag."
+    }
+  ]
+}
+{% endschema %}

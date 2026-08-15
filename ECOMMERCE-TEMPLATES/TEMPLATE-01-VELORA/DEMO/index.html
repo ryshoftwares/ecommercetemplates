@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<!--
+  VELORA Demo — Master Design Reference
+  URL convention used throughout this demo:
+    product.html?slug=<product-slug>
+    category.html?cat=<category-slug>
+    shop.html?cat=<category-slug>   (optional preset filter)
+    search.html?q=<query>
+  Product/category data lives in js/products.js and is rendered client-side.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora — Premium Fashion &amp; Modern Essentials</title>
+<meta name="description" content="Velora is a premium fashion house crafting tailored dresses, outerwear, knitwear and accessories from responsibly sourced natural fibres. Shop the New Season collection.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="index.html">
+
+<meta property="og:title" content="Velora — Premium Fashion & Modern Essentials">
+<meta property="og:description" content="Tailored dresses, outerwear, knitwear and accessories crafted from responsibly sourced natural fibres. Discover the Velora New Season collection.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="index.html">
+<meta property="og:image" content="assets/images/velora-hero-new-season.svg">
+<meta property="og:site_name" content="Velora">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Velora — Premium Fashion & Modern Essentials">
+<meta name="twitter:description" content="Tailored dresses, outerwear, knitwear and accessories crafted from responsibly sourced natural fibres.">
+<meta name="twitter:image" content="assets/images/velora-hero-new-season.svg">
+
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "OnlineStore",
+  "name": "Velora",
+  "url": "index.html",
+  "logo": "assets/icons/favicon.svg",
+  "description": "Premium fashion house crafting tailored dresses, outerwear, knitwear and accessories.",
+  "sameAs": ["https://instagram.com/velora", "https://pinterest.com/velora"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Velora",
+  "url": "index.html",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "search.html?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announce-bar">
+  <div class="announce-track">
+    <p class="announce-item">Free shipping on orders over <strong>&#8377;4,000</strong></p>
+    <p class="announce-item">The New Season collection is now live</p>
+    <p class="announce-item">Use code <strong>VELORA10</strong> for 10% off your first order</p>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-row">
+    <div class="header-utility left">
+      <button class="hamburger icon-btn" data-drawer-open aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="22" height="22"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <button class="icon-btn" data-search-open aria-label="Open search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+      </button>
+      <div class="header-search-inline"></div>
+    </div>
+
+    <a href="index.html" class="logo">VELORA<span>.</span></a>
+
+    <div class="header-utility right">
+      <a class="icon-btn" href="contact.html" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+      </a>
+      <a class="icon-btn" href="wishlist.html" aria-label="Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.6-10-9.2C0.3 8.3 2 4.5 5.7 4c2-.3 3.7.7 4.9 2.3C11.8 4.7 13.5 3.7 15.5 4c3.7.5 5.4 4.3 3.7 7.8C20 16.4 12 21 12 21z"/></svg>
+        <span class="icon-count" data-wishlist-count style="display:none">0</span>
+      </a>
+      <button class="icon-btn" data-cart-open aria-label="Open cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 7H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+        <span class="icon-count" data-cart-count style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="primary-nav" aria-label="Primary">
+    <div class="container">
+      <ul>
+        <li><a href="category.html?cat=dresses">Women</a></li>
+        <li><a href="category.html?cat=outerwear">Men</a></li>
+        <li><a href="category.html?cat=accessories">Accessories</a></li>
+        <li><a href="shop.html">New Arrivals</a></li>
+        <li><a href="shop.html" class="nav-sale">Sale</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-drawer-backdrop"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-head">
+    <span class="logo" style="font-size:1.4rem">VELORA<span>.</span></span>
+    <button class="drawer-close" data-drawer-close aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="22" height="22"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+    </button>
+  </div>
+  <nav aria-label="Mobile primary">
+    <ul>
+      <li><a href="category.html?cat=dresses">Women</a></li>
+      <li><a href="category.html?cat=outerwear">Men</a></li>
+      <li><a href="category.html?cat=accessories">Accessories</a></li>
+      <li><a href="shop.html">New Arrivals</a></li>
+      <li><a href="shop.html">Sale</a></li>
+      <li><a href="wishlist.html">Wishlist</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="drawer-foot">Free shipping on orders over ₹4,000</div>
+</div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay">
+  <div class="search-overlay-panel">
+    <div class="container">
+      <form class="search-input-row" data-search-form>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+        <input type="text" placeholder="Search for dresses, coats, accessories…" data-search-input aria-label="Search products">
+        <button type="button" class="search-close" data-search-close aria-label="Close search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="20" height="20"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+        </button>
+      </form>
+      <div class="search-suggestions" data-search-results></div>
+      <div style="margin-top:24px">
+        <p class="search-empty-hint">Popular searches</p>
+        <div class="popular-searches">
+          <button type="button" data-popular-search>Dresses</button>
+          <button type="button" data-popular-search>Wool Coat</button>
+          <button type="button" data-popular-search>Cashmere</button>
+          <button type="button" data-popular-search>Accessories</button>
+          <button type="button" data-popular-search>Sale</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer-backdrop"></div>
+<div class="cart-drawer">
+  <div class="drawer-head">
+    <h3 style="font-size:1.1rem">Your Cart</h3>
+    <button class="drawer-close" data-cart-close aria-label="Close cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="22" height="22"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+    </button>
+  </div>
+  <div class="freeship-bar" data-freeship-bar></div>
+  <div class="cart-drawer-items" data-cart-drawer-items></div>
+  <div class="cart-drawer-foot" data-cart-drawer-foot>
+    <div class="summary-row"><span>Subtotal</span><span data-subtotal>₹0</span></div>
+    <div class="summary-row" data-discount-row style="display:none"><span>Discount</span><span class="discount-amt" data-discount>₹0</span></div>
+    <div class="summary-row"><span>Shipping</span><span data-shipping>₹0</span></div>
+    <div class="summary-row total"><span>Total</span><span data-total>₹0</span></div>
+    <a href="cart.html" class="btn btn-outline btn-block" style="margin-top:16px">View Cart</a>
+    <a href="checkout.html" class="btn btn-primary btn-block" style="margin-top:10px">Checkout</a>
+  </div>
+</div>
+
+<!-- QUICK VIEW MODAL -->
+<div class="modal-backdrop" data-quickview-modal>
+  <div class="quick-view-modal" role="dialog" aria-modal="true" aria-label="Quick view">
+    <button class="modal-close" data-qv-close aria-label="Close quick view">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+    </button>
+    <div class="qv-grid" data-qv-body></div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">Autumn / Winter Collection</p>
+      <h1>THE NEW SEASON</h1>
+      <p class="lede">Tailored silhouettes, natural fibres, and considered colour — a collection built for women who dress with intention, not for trends that fade by spring.</p>
+      <div class="hero-cta-group">
+        <a href="shop.html" class="btn btn-primary">Shop New Arrivals</a>
+        <a href="about.html" class="btn btn-outline">Explore Lookbook</a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="assets/images/velora-hero-new-season.svg" alt="Editorial still-life composition introducing the Velora New Season collection in ivory and burgundy tones" width="1200" height="1500" fetchpriority="high">
+    </div>
+  </section>
+
+  <!-- EDITORIAL QUOTE -->
+  <section class="editorial-quote reveal">
+    <div class="container">
+      <blockquote>"We don't design for a season. We design pieces you'll still be reaching for in five years."</blockquote>
+      <cite>Anaïs Moreau, Creative Director, Velora</cite>
+    </div>
+  </section>
+
+  <!-- FEATURED CATEGORIES -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="intro">
+          <p class="eyebrow">Shop by Category</p>
+          <h2>Four categories, one point of view</h2>
+        </div>
+        <a href="shop.html" class="btn-text">View All Categories &rarr;</a>
+      </div>
+      <div class="cat-grid reveal">
+        <a class="cat-card" href="category.html?cat=dresses">
+          <img src="assets/images/velora-category-dresses.svg" alt="Editorial imagery representing the Velora Dresses collection" width="900" height="700" loading="lazy">
+          <span class="cat-card-label"><span class="eyebrow">Category</span><h3>Dresses</h3><span class="link">Shop Dresses</span></span>
+        </a>
+        <a class="cat-card" href="category.html?cat=outerwear">
+          <img src="assets/images/velora-category-outerwear.svg" alt="Editorial imagery representing the Velora Outerwear collection" width="900" height="700" loading="lazy">
+          <span class="cat-card-label"><span class="eyebrow">Category</span><h3>Outerwear</h3><span class="link">Shop Outerwear</span></span>
+        </a>
+        <a class="cat-card" href="category.html?cat=knitwear">
+          <img src="assets/images/velora-category-knitwear.svg" alt="Editorial imagery representing the Velora Knitwear collection" width="900" height="700" loading="lazy">
+          <span class="cat-card-label"><span class="eyebrow">Category</span><h3>Knitwear</h3><span class="link">Shop Knitwear</span></span>
+        </a>
+        <a class="cat-card" href="category.html?cat=accessories">
+          <img src="assets/images/velora-category-accessories.svg" alt="Editorial imagery representing the Velora Accessories collection" width="900" height="700" loading="lazy">
+          <span class="cat-card-label"><span class="eyebrow">Category</span><h3>Accessories</h3><span class="link">Shop Accessories</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW ARRIVALS -->
+  <section class="section-pad" style="padding-top:0">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="intro">
+          <p class="eyebrow">Just Landed</p>
+          <h2>New Arrivals</h2>
+        </div>
+        <a href="shop.html" class="btn-text">Shop All &rarr;</a>
+      </div>
+      <div class="product-grid reveal" data-new-arrivals></div>
+    </div>
+  </section>
+
+  <!-- BRAND STORY STRIP -->
+  <section class="story-strip reveal">
+    <div class="story-media">
+      <img src="assets/images/velora-about-story.svg" alt="Editorial atelier scene representing the Velora design studio" width="900" height="1100" loading="lazy">
+    </div>
+    <div class="story-content">
+      <p class="eyebrow">Our Story</p>
+      <h2>Crafted in small batches, built to last seasons</h2>
+      <p>Founded in 2014, Velora began as a two-person atelier focused on a single idea: clothing should be made from real materials, cut with real tailoring, and sold without the churn of fast fashion. Today we work with a small number of European mills and Indian ateliers to produce considered collections twice a year.</p>
+      <div class="story-stats">
+        <div class="story-stat"><strong>2014</strong><span>Founded</span></div>
+        <div class="story-stat"><strong>40+</strong><span>Countries Shipped To</span></div>
+        <div class="story-stat"><strong>92%</strong><span>Natural Fibres</span></div>
+      </div>
+      <a href="about.html" class="btn btn-outline">Read Our Story</a>
+    </div>
+  </section>
+
+  <!-- BEST SELLERS -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="intro">
+          <p class="eyebrow">Customer Favourites</p>
+          <h2>Best Sellers</h2>
+        </div>
+        <a href="shop.html" class="btn-text">Shop All &rarr;</a>
+      </div>
+      <div class="product-grid reveal" data-best-sellers></div>
+    </div>
+  </section>
+
+  <!-- PROMO BANNER -->
+  <section class="promo-banner reveal">
+    <img src="assets/images/velora-campaign-banner.svg" alt="Wide editorial campaign banner for the Velora end of season sale" width="1600" height="900" loading="lazy">
+    <div class="promo-content">
+      <p class="eyebrow">Limited Time</p>
+      <h2>End of Season Sale — Up to 30% Off</h2>
+      <p>Selected dresses, outerwear and knitwear are reduced for a limited time. Use code VELORA10 at checkout for an extra 10% off your order.</p>
+      <a href="shop.html" class="btn btn-ivory">Shop the Sale</a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="section-head-center reveal">
+        <p class="eyebrow">In Their Words</p>
+        <h2>What our customers say</h2>
+      </div>
+      <div class="testimonial-grid reveal">
+        <div class="testimonial-card">
+          <span class="stars">★★★★★</span>
+          <p>"The Wool Tailored Coat is the best outerwear purchase I've made in years. The fit is exactly as described and it still looks brand new after a full winter of wear."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">R</div>
+            <div><strong>Riya Kapoor</strong><span>Verified Buyer, Mumbai</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <span class="stars">★★★★★</span>
+          <p>"Ordered the Cashmere Crewneck in three colours after trying the first one. Genuinely the softest cashmere I've owned at this price point."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">A</div>
+            <div><strong>Ananya Shah</strong><span>Verified Buyer, Bengaluru</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <span class="stars">★★★★★</span>
+          <p>"Customer service helped me exchange a size within a day, and the Leather Structured Tote has held up beautifully to daily commuting."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">N</div>
+            <div><strong>Nisha Verma</strong><span>Verified Buyer, Delhi</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter reveal">
+    <div class="container">
+      <h2>Join the Velora List</h2>
+      <p>Be first to hear about new collections, private sales and styling notes from our design team.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); this.reset(); window.VeloraToast && window.VeloraToast.show('Thanks for subscribing to Velora.', 'success');">
+        <input type="email" required placeholder="Your email address" aria-label="Email address">
+        <button type="submit" class="btn btn-ivory">Subscribe</button>
+      </form>
+      <p class="newsletter-note">By subscribing you agree to receive marketing emails from Velora. Unsubscribe anytime.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <span class="logo">VELORA<span>.</span></span>
+      <p>Premium fashion for the woman who dresses with intention. Tailored dresses, outerwear, knitwear and accessories, made to last.</p>
+      <div class="social-row">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9 17c1-4 1.5-6 1.5-8a2.5 2.5 0 0 1 5 0c0 2-1 4-1 5.5a2 2 0 0 0 4 0"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a4 4 0 0 0-4 4v3H8v4h3v9h4v-9h3l1-4h-4V6a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="category.html?cat=dresses">Dresses</a></li>
+        <li><a href="category.html?cat=outerwear">Outerwear</a></li>
+        <li><a href="category.html?cat=knitwear">Knitwear</a></li>
+        <li><a href="category.html?cat=accessories">Accessories</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="product.html?slug=silk-tailored-dress#tab-shipping">Shipping</a></li>
+        <li><a href="product.html?slug=silk-tailored-dress#tab-returns">Returns</a></li>
+        <li><a href="search.html">Search</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Velora</a></li>
+        <li><a href="about.html#values">Sustainability</a></li>
+        <li><a href="contact.html">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Newsletter</h4>
+      <p style="color:rgba(247,243,236,0.65);font-size:0.9rem;margin-bottom:12px">Seasonal drops and styling notes, twice a month.</p>
+      <form onsubmit="event.preventDefault(); this.reset(); window.VeloraToast && window.VeloraToast.show('Thanks for subscribing.', 'success');" style="display:flex;gap:8px">
+        <input type="email" required placeholder="Email" aria-label="Email" style="background:transparent;border:1px solid rgba(247,243,236,0.3);color:#F7F3EC;padding:10px;border-radius:4px;flex:1;min-height:44px">
+        <button type="submit" class="btn-icon" style="border-color:rgba(247,243,236,0.3);color:#F7F3EC" aria-label="Subscribe">&rarr;</button>
+      </form>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; 2026 Velora. All rights reserved.</p>
+    <div class="payment-icons">
+      <span>VISA</span><span>MASTERCARD</span><span>UPI</span><span>COD</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/search.js"></script>
+<script src="js/product.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var VP = window.VeloraProducts;
+    if (!VP) return;
+    var all = VP.all();
+    VP.renderGrid(document.querySelector("[data-new-arrivals]"), all.filter(function (p) { return p.badge === "New"; }).slice(0, 4), { eager: false });
+    VP.renderGrid(document.querySelector("[data-best-sellers]"), all.filter(function (p) { return p.badge === "Bestseller"; }).concat(all.filter(function(p){return p.rating>=4.7 && p.badge!=="Bestseller";})).slice(0, 4));
+    if (window.VeloraWishlist) window.VeloraWishlist.sync();
+  });
+</script>
+</body>
+</html>

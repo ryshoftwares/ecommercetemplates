@@ -1,0 +1,169 @@
+{%- comment -%}
+  sections/footer.liquid
+  Ported 1:1 from the demo's .site-footer / .footer-grid markup: brand
+  column with social row, block-based link columns (menu or custom text),
+  and a newsletter column using Shopify's native customer newsletter form
+  ({% form 'customer' %} with tag "newsletter", which Shopify recognises for
+  its built-in subscriber list — no app required).
+{%- endcomment -%}
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="{{ routes.root_url }}" class="logo">{{ shop.name | upcase }}<span>.</span></a>
+      <p>{{ section.settings.brand_text }}</p>
+      <div class="footer-social">
+        {%- if settings.social_instagram_link != blank -%}
+          <a href="{{ settings.social_instagram_link }}" aria-label="Ardea on Instagram">{%- render 'icon', icon: 'instagram', width: 16, height: 16 -%}</a>
+        {%- endif -%}
+        {%- if settings.social_pinterest_link != blank -%}
+          <a href="{{ settings.social_pinterest_link }}" aria-label="Ardea on Pinterest">{%- render 'icon', icon: 'pinterest', width: 16, height: 16 -%}</a>
+        {%- endif -%}
+        {%- if settings.social_facebook_link != blank -%}
+          <a href="{{ settings.social_facebook_link }}" aria-label="Ardea on Facebook">{%- render 'icon', icon: 'facebook', width: 16, height: 16 -%}</a>
+        {%- endif -%}
+        {%- if settings.social_twitter_link != blank -%}
+          <a href="{{ settings.social_twitter_link }}" aria-label="Ardea on X">{%- render 'icon', icon: 'twitter', width: 16, height: 16 -%}</a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+
+        {%- when 'menu_column' -%}
+          <nav class="footer-col" {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.heading }}</h4>
+            <ul>
+              {%- for link in linklists[block.settings.menu].links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </nav>
+
+        {%- when 'text_column' -%}
+          <div class="footer-col" {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.heading }}</h4>
+            <div class="footer-col-richtext">{{ block.settings.text }}</div>
+          </div>
+
+        {%- when 'newsletter' -%}
+          <div class="footer-col" {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.heading }}</h4>
+            <p style="font-size:0.85rem;color:rgba(250,247,242,0.65);margin-bottom:1rem;">{{ block.settings.subtext }}</p>
+            {%- form 'customer', class: 'newsletter-form', style: 'margin-top:0;' -%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input type="email" name="contact[email]" required placeholder="{{ 'general.search.placeholder' | t }}" aria-label="Email address" value="{% if customer %}{{ customer.email }}{% endif %}">
+              <button type="submit" class="btn btn--primary">{{ block.settings.button_text }}</button>
+              {%- if form.posted_successfully? -%}
+                <p data-toast-on-load="success:Thanks — you're on the list."></p>
+              {%- endif -%}
+            {%- endform -%}
+          </div>
+
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="container footer-bottom">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.copyright_text }}</p>
+    <div class="footer-bottom__legal">
+      {%- if section.settings.privacy_url != blank -%}<a href="{{ section.settings.privacy_url }}">Privacy Policy</a>{%- endif -%}
+      {%- if section.settings.terms_url != blank -%}<a href="{{ section.settings.terms_url }}">Terms of Service</a>{%- endif -%}
+    </div>
+    <div class="payment-icons">
+      {%- for method in section.settings.payment_icons | split: ',' -%}
+        <span>{{ method | strip }}</span>
+      {%- endfor -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "brand_text",
+      "label": "Brand description",
+      "default": "Modern furniture and home decor, designed in small batches from solid wood, natural fibre and stone — built to be lived in, repaired, and passed on."
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright text",
+      "default": "All rights reserved."
+    },
+    {
+      "type": "url",
+      "id": "privacy_url",
+      "label": "Privacy policy link"
+    },
+    {
+      "type": "url",
+      "id": "terms_url",
+      "label": "Terms of service link"
+    },
+    {
+      "type": "text",
+      "id": "payment_icons",
+      "label": "Payment / trust badges (comma separated)",
+      "default": "VISA, MASTERCARD, UPI"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_column",
+      "name": "Menu column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    },
+    {
+      "type": "text_column",
+      "name": "Text column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Help" },
+        { "type": "richtext", "id": "text", "label": "Content" }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Stay in Touch" },
+        { "type": "text", "id": "subtext", "label": "Subtext", "default": "Slow design notes, new arrivals and studio news — no spam." },
+        { "type": "text", "id": "button_text", "label": "Button label", "default": "Join" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "default": {
+    "blocks": [
+      {
+        "type": "menu_column",
+        "settings": { "heading": "Shop", "menu": "footer" }
+      },
+      {
+        "type": "text_column",
+        "settings": {
+          "heading": "Help",
+          "text": "<ul><li><a href=\"/pages/contact\">Contact Us</a></li><li><a href=\"/cart\">Your Cart</a></li><li><a href=\"/pages/wishlist\">Wishlist</a></li><li><a href=\"/search\">Search</a></li></ul>"
+        }
+      },
+      {
+        "type": "text_column",
+        "settings": {
+          "heading": "Company",
+          "text": "<ul><li><a href=\"/pages/about\">Our Story</a></li><li><a href=\"/pages/about#craftsmanship\">Craftsmanship</a></li><li><a href=\"/pages/contact\">Visit Our Studio</a></li></ul>"
+        }
+      },
+      {
+        "type": "newsletter",
+        "settings": { "heading": "Stay in Touch", "subtext": "Slow design notes, new arrivals and studio news — no spam.", "button_text": "Join" }
+      }
+    ]
+  }
+}
+{% endschema %}

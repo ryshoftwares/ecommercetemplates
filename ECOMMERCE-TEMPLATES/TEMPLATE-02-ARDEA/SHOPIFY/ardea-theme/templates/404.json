@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {
+        "eyebrow": "Lost, Not Broken",
+        "heading": "We couldn't find that page",
+        "body": "The piece you're looking for may have been moved, renamed, or never existed. Let's get you back to browsing the collection.",
+        "primary_cta_text": "Back to Home",
+        "secondary_cta_text": "Shop All Collections",
+        "menu": "main-menu"
+      }
+    }
+  },
+  "order": ["main"]
+}

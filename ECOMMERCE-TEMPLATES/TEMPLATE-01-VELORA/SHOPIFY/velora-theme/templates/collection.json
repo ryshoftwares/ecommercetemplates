@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "default_intro": "Every Velora piece currently in season — dresses, outerwear, knitwear and accessories — in one place.",
+        "products_per_page": 16,
+        "show_aeo_block": true,
+        "aeo_heading": "About Shopping the Full Collection",
+        "aeo_col1_heading": "How sizing works across categories",
+        "aeo_col1_body": "All Velora garments use consistent UK sizing from XS to XL. Knitwear and outerwear are cut with slightly more ease than dresses — check each product's Size Guide tab for exact measurements before ordering.",
+        "aeo_col2_heading": "Shipping & Returns",
+        "aeo_col2_body": "Orders over ₹4,000 ship free across India in 3-5 business days. Unworn items with tags attached can be returned or exchanged within 30 days of delivery."
+      }
+    }
+  },
+  "order": ["main"]
+}

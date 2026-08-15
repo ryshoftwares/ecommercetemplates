@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="t11">
+  <title id="t11">Editorial silhouette study of a beige cashmere VELORA knit against an ivory backdrop</title>
+  <defs>
+    <linearGradient id="kn1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7F3EC"/>
+      <stop offset="100%" stop-color="#E4D9C6"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#kn1)"/>
+  <ellipse cx="450" cy="1120" rx="380" ry="60" fill="#0A0A0A" opacity="0.06"/>
+  <path d="M450 240 L 340 300 L 300 420 L 350 440 L 370 380 L 380 900 L 520 900 L 530 380 L 550 440 L 600 420 L 560 300 Z" fill="#C9B79C"/>
+  <path d="M420 240 Q 450 280 480 240" stroke="#F7F3EC" stroke-width="10" fill="none"/>
+  <g stroke="#B08A5C" stroke-width="2" opacity="0.4" fill="none">
+    <path d="M400 480 q20 20 0 40 q-20 20 0 40 q20 20 0 40"/>
+    <path d="M450 480 q20 20 0 40 q-20 20 0 40 q20 20 0 40"/>
+    <path d="M500 480 q20 20 0 40 q-20 20 0 40 q20 20 0 40"/>
+  </g>
+  <text x="450" y="1130" font-family="Georgia, 'Playfair Display', serif" font-size="20" fill="#0A0A0A" opacity="0.55" text-anchor="middle" letter-spacing="5">VELORA — CASHMERE KNIT</text>
+</svg>

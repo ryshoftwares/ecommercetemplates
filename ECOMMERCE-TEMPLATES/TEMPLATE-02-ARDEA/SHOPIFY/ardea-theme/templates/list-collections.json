@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "heading": "Shop by Room",
+        "subheading": "Browse every Ardea collection, from full rooms to individual finishes.",
+        "sort_by": "alphabetical"
+      }
+    }
+  },
+  "order": ["main"]
+}

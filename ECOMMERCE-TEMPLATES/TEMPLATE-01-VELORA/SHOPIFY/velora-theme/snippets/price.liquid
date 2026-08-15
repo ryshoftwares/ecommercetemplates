@@ -1,0 +1,25 @@
+{%- comment -%}
+  snippets/price.liquid
+  Renders the .product-price markup from the demo, using real money objects.
+  Accepts:
+    product        - a Shopify product object
+    variant        - (optional) a specific variant; defaults to product.selected_or_first_available_variant
+    show_badge     - (optional) also render the -XX% discount chip
+{%- endcomment -%}
+{%- liquid
+  assign target_variant = variant | default: product.selected_or_first_available_variant
+  assign compare_at = target_variant.compare_at_price
+  assign price = target_variant.price
+  assign on_sale = false
+  if compare_at > price
+    assign on_sale = true
+    assign discount_pct = compare_at | minus: price | times: 100.0 | divided_by: compare_at | round
+  endif
+-%}
+<div class="product-price">
+  <span class="price-current">{{ price | money }}</span>
+  {%- if on_sale -%}
+    <span class="price-compare">{{ compare_at | money }}</span>
+    <span class="price-discount">-{{ discount_pct }}%</span>
+  {%- endif -%}
+</div>

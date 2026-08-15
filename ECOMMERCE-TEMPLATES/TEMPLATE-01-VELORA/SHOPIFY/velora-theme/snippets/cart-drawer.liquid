@@ -1,0 +1,39 @@
+{%- comment -%}
+  snippets/cart-drawer.liquid
+  Slide-in cart drawer shell, ported from the demo's .cart-drawer markup.
+  Rendered once in layout/theme.liquid. Contents are driven live by
+  assets/cart.js against Shopify's AJAX Cart API (/cart.js, /cart/add.js,
+  /cart/change.js) — the Liquid below renders the current server-side cart
+  on first paint so there is no flash of an empty drawer before JS runs.
+{%- endcomment -%}
+<div class="cart-drawer-backdrop" data-cart-drawer-backdrop></div>
+<aside class="cart-drawer" data-cart-drawer aria-label="{{ 'sections.cart.title' | t }}" aria-hidden="true">
+  <div class="drawer-head">
+    <h3 style="font-size:1.1rem">{{ 'sections.cart.title' | t }}</h3>
+    <button class="drawer-close" data-cart-close aria-label="{{ 'sections.header.close_menu' | t }}">
+      {%- render 'icon', icon: 'close', width: 22, height: 22 -%}
+    </button>
+  </div>
+
+  <div class="freeship-bar" data-freeship-bar></div>
+
+  <div class="cart-drawer-items" data-cart-drawer-items>
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-empty" data-cart-empty-template hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+        <h3>{{ 'sections.cart.empty' | t }}</h3>
+        <p class="text-muted">{{ 'sections.cart.empty_body' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">{{ 'general.continue_shopping' | t }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="cart-drawer-foot" data-cart-drawer-foot{% if cart.item_count == 0 %} style="display:none"{% endif %}>
+    <div class="summary-row"><span>{{ 'sections.cart.subtotal' | t }}</span><span data-subtotal>{{ cart.total_price | money }}</span></div>
+    <div class="summary-row" data-discount-row style="display:none"><span>{{ 'sections.cart.discount' | t }}</span><span class="discount-amt" data-discount>{{ 0 | money }}</span></div>
+    <div class="summary-row"><span>{{ 'sections.cart.shipping' | t }}</span><span data-shipping>—</span></div>
+    <div class="summary-row total"><span>{{ 'sections.cart.total' | t }}</span><span data-total>{{ cart.total_price | money }}</span></div>
+    <a href="{{ routes.cart_url }}" class="btn btn-outline btn-block" style="margin-top:16px">{{ 'sections.cart.view_cart' | t }}</a>
+    <a href="{{ routes.cart_url }}/checkout" class="btn btn-primary btn-block" style="margin-top:10px">{{ 'sections.cart.checkout' | t }}</a>
+  </div>
+</aside>

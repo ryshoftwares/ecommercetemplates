@@ -1,0 +1,19 @@
+{%- comment -%}
+  snippets/search-overlay.liquid
+  Search overlay shell ported from the demo's #searchOverlay markup. Live
+  suggestions are populated by assets/search.js against Shopify's Predictive
+  Search API (routes.predictive_search_url).
+{%- endcomment -%}
+<div class="noae-search-overlay" id="searchOverlay" data-search-overlay role="dialog" aria-modal="true" aria-label="{{ 'general.search.open' | t }}">
+  <div class="noae-search-panel">
+    <form id="searchForm" action="{{ routes.search_url }}" method="get" class="noae-search-input-row" role="search" data-search-form>
+      {%- render 'icon', icon: 'search', width: 20, height: 20 -%}
+      <label for="searchInput" class="noae-visually-hidden">{{ 'general.search.placeholder' | t }}</label>
+      <input type="search" id="searchInput" name="q" placeholder="{{ 'general.search.placeholder' | t }}" autocomplete="off" data-search-input>
+      <button type="button" id="searchClose" data-search-close aria-label="{{ 'general.search.close' | t }}" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">✕</button>
+    </form>
+    <div id="searchSuggestions" class="noae-search-suggestions" data-search-suggestions>
+      <p style="color:var(--color-plum-soft);font-size:0.9rem;">Start typing to discover serums, cleansers, and rituals.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,127 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "placeholder": "Search products, rooms, materials…",
+      "open": "Open search",
+      "close": "Close search",
+      "popular_searches": "Popular searches",
+      "no_quick_matches": "No quick matches for \"{{ terms }}\". Press Enter to see full results.",
+      "results_for": "Search results for \"{{ terms }}\"",
+      "no_results": "No results for \"{{ terms }}\". Try a different search term or browse a room below.",
+      "enter_term": "Enter a search term above to find furniture, lighting and decor.",
+      "results_count": "{{ count }} results"
+    },
+    "continue_shopping": "Continue Shopping",
+    "back_to_shop": "Back to Shop"
+  },
+  "sections": {
+    "header": {
+      "menu": "Menu",
+      "open_menu": "Open menu",
+      "close_menu": "Close menu",
+      "account": "Account",
+      "wishlist": "Wishlist",
+      "cart": "Open cart",
+      "help_contact": "Help & Contact",
+      "our_story": "Our Story"
+    },
+    "announcement": {
+      "default": "Complimentary white-glove delivery on orders over ₹75,000"
+    },
+    "footer": {
+      "newsletter_heading": "Stay in Touch",
+      "copyright": "All rights reserved."
+    },
+    "cart": {
+      "title": "Your Cart",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "shipping": "Shipping",
+      "total": "Total",
+      "free": "FREE",
+      "view_cart": "View Cart",
+      "checkout": "Checkout",
+      "empty": "Your cart is empty",
+      "empty_body": "Looks like you haven't added anything yet — browse our collections to find your next piece.",
+      "remove": "Remove",
+      "quantity": "Quantity",
+      "free_shipping_unlocked": "You've unlocked FREE DELIVERY",
+      "free_shipping_remaining": "Add {{ amount }} more to unlock FREE DELIVERY",
+      "order_summary": "Order Summary",
+      "discount_code_placeholder": "Coupon code (try ARDEA10)",
+      "apply": "Apply",
+      "discount_note": "Have a coupon code? Shopify validates and applies discount codes only at checkout — we've saved this code to your order note so our team can see it, but enter it again on the checkout step.",
+      "secure_checkout": "Secure Checkout",
+      "easy_returns": "30-Day Returns",
+      "fast_shipping": "Tracked Delivery"
+    },
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "buy_now": "Buy Now",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "in_stock": "In stock, ready to ship",
+      "low_stock": "Only {{ count }} left in stock",
+      "out_of_stock": "Currently out of stock",
+      "quantity": "Quantity",
+      "sku": "SKU",
+      "brand": "Brand",
+      "finish": "Finish",
+      "quick_view": "Quick View",
+      "quick_add": "Quick Add",
+      "view_full_product": "View full details",
+      "add_to_wishlist": "Add to Wishlist",
+      "remove_from_wishlist": "Remove from wishlist",
+      "added_to_wishlist": "Added to wishlist",
+      "removed_from_wishlist": "Removed from wishlist",
+      "added_to_cart": "{{ product }} added to cart",
+      "overview": "Overview",
+      "features": "Features",
+      "materials": "Materials",
+      "dimensions": "Dimensions",
+      "delivery": "Delivery & Assembly",
+      "care": "Care",
+      "care_instructions": "Care Instructions",
+      "key_features": "Key Features",
+      "faqs": "Frequently Asked Questions",
+      "related": "Complete the Room",
+      "recently_viewed": "Recently Viewed",
+      "new": "New",
+      "sale": "Sale",
+      "bestseller": "Bestseller",
+      "limited": "Limited"
+    },
+    "wishlist": {
+      "title": "Your Wishlist",
+      "saved_items": "{{ count }} saved items",
+      "empty_title": "Your wishlist is empty",
+      "empty_body": "Tap the heart icon on any piece to save it here for later.",
+      "discover": "Browse Collections",
+      "move_to_cart": "Move to Cart"
+    },
+    "collection": {
+      "filter_title": "Filters",
+      "sort_by": "Sort products",
+      "sort_featured": "Featured",
+      "sort_newest": "Newest",
+      "sort_price_asc": "Price: Low to High",
+      "sort_price_desc": "Price: High to Low",
+      "sort_rating": "Top Rated",
+      "clear_filters": "Clear all filters",
+      "show_results": "Show Results",
+      "no_products": "No pieces match these filters",
+      "no_products_body": "Try widening your price range or clearing a filter.",
+      "result_count": {
+        "one": "{{ count }} piece",
+        "other": "{{ count }} pieces"
+      },
+      "in_stock_only": "In stock only",
+      "any_rating": "Any rating",
+      "rating_up": "{{ rating }} & up"
+    }
+  }
+}

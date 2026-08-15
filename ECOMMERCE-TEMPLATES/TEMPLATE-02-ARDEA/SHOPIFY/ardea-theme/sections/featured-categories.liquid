@@ -1,0 +1,115 @@
+{%- comment -%}
+  sections/featured-categories.liquid ("Shop by Room")
+  The demo's asymmetric 5-tile "Shop by Room" grid (.room-grid / .room-card),
+  where tile 1 spans a tall 2x2 block, tiles 2-4 fill the right side, and
+  tile 5 spans the full width beneath — see the nth-child rules ported into
+  assets/theme.css. Each block = one collection picker + image_picker +
+  label + tagline, so merchants can point tiles at real room collections.
+{%- endcomment -%}
+<section class="section container">
+  <div class="section-head reveal" data-reveal>
+    <div class="section-head__text">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    {%- if section.settings.view_all_url != blank -%}
+      <a href="{{ section.settings.view_all_url }}" class="btn btn--outline">{{ section.settings.view_all_text }}</a>
+    {%- endif -%}
+  </div>
+  <div class="room-grid reveal" data-reveal>
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign room_url = block.settings.collection.url | default: '#'
+        assign room_title = block.settings.label | default: block.settings.collection.title
+      -%}
+      <a class="room-card" href="{{ room_url }}" {{ block.shopify_attributes }}>
+        {%- if block.settings.image -%}
+          <img class="room-card__img" src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.tagline | default: room_title | escape }}" width="800" height="600" loading="lazy">
+        {%- elsif block.settings.collection.featured_image -%}
+          <img class="room-card__img" src="{{ block.settings.collection.featured_image | image_url: width: 800 }}" alt="{{ room_title | escape }}" width="800" height="600" loading="lazy">
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag: 'room-card__img placeholder-svg' }}
+        {%- endif -%}
+        <div class="room-card__overlay">
+          <h3>{{ room_title }}</h3>
+          {%- if block.settings.tagline != blank -%}<p>{{ block.settings.tagline }}</p>{%- endif -%}
+          <span class="room-card__cta">Shop {{ room_title }}</span>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Shop by Room"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Furniture that fits how you actually live"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "\"View all\" button label",
+      "default": "View All Collections"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "\"View all\" button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "room",
+      "name": "Room tile",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Tile image",
+          "info": "Falls back to the collection's featured image when left blank."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tile label",
+          "info": "Falls back to the collection title when left blank."
+        },
+        {
+          "type": "text",
+          "id": "tagline",
+          "label": "Tagline"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Featured categories",
+      "blocks": [
+        { "type": "room", "settings": { "label": "Living Room", "tagline": "Seating and tables built for slow mornings and long evenings." } },
+        { "type": "room", "settings": { "label": "Bedroom", "tagline": "Bed frames, storage and bedside pieces in quiet, natural tones." } },
+        { "type": "room", "settings": { "label": "Kitchen", "tagline": "Islands and stools in honed marble and oiled oak." } },
+        { "type": "room", "settings": { "label": "Lighting", "tagline": "Floor, pendant and table lighting in brass, rattan and ceramic." } },
+        { "type": "room", "settings": { "label": "Decor", "tagline": "Vases, mirrors and textiles that finish a room." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

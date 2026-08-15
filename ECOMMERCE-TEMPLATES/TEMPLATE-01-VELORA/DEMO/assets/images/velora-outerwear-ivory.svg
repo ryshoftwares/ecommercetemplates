@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="t10">
+  <title id="t10">Editorial silhouette study of an ivory belted VELORA trench coat against a charcoal backdrop</title>
+  <defs>
+    <linearGradient id="ow2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2B2B2B"/>
+      <stop offset="100%" stop-color="#0A0A0A"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#ow2)"/>
+  <ellipse cx="450" cy="1120" rx="380" ry="60" fill="#0A0A0A" opacity="0.3"/>
+  <path d="M450 210 L 320 300 L 290 660 L 335 1030 L 565 1030 L 610 660 L 580 300 Z" fill="#F7F3EC"/>
+  <path d="M450 210 L 375 275 L 415 355 L 450 305 L 485 355 L 525 275 Z" fill="#E4D9C6"/>
+  <rect x="380" y="620" width="140" height="26" rx="4" fill="#C9B79C" opacity="0.7"/>
+  <line x1="450" y1="360" x2="450" y2="1010" stroke="#C9B79C" stroke-width="2" opacity="0.5"/>
+  <text x="450" y="1130" font-family="Georgia, 'Playfair Display', serif" font-size="20" fill="#F7F3EC" opacity="0.6" text-anchor="middle" letter-spacing="5">VELORA — TRENCH OUTERWEAR</text>
+</svg>

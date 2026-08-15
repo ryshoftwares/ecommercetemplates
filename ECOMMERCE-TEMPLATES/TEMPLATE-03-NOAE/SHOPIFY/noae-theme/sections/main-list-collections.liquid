@@ -1,0 +1,51 @@
+{%- comment -%}
+  sections/main-list-collections.liquid
+  All-collections index, styled to match the demo's .noae-concern-grid /
+  .noae-concern-pill category tiles, reused visually as a responsive grid of
+  every real collection in collections.list.
+{%- endcomment -%}
+<section class="noae-page-header">
+  <div class="noae-container">
+    {%- render 'breadcrumb' -%}
+    <h1>{{ section.settings.heading }}</h1>
+    {%- if section.settings.subheading != blank -%}<p class="noae-page-header__intro">{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+</section>
+
+<div class="noae-container" style="padding-bottom:var(--space-9);">
+  <div class="noae-concern-grid">
+    {%- for collection in collections -%}
+      <a class="noae-concern-pill" href="{{ collection.url }}">
+        <span class="noae-concern-pill__media">
+          {%- if collection.featured_image -%}
+            <img src="{{ collection.featured_image | image_url: width: 600 }}" alt="{{ collection.featured_image.alt | default: collection.title | escape }}" width="300" height="300" loading="lazy">
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'noae-concern-pill__placeholder' }}
+          {%- endif -%}
+        </span>
+        <span class="noae-concern-pill__name">{{ collection.title }}</span>
+        <span class="noae-concern-pill__count">{{ collection.products_count }} products</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Every NOAÉ collection in one place — skincare, haircare, wellness and body."
+    }
+  ]
+}
+{% endschema %}

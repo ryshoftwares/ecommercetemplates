@@ -1,0 +1,52 @@
+{
+  "current": {
+    "logo_width": 130,
+    "color_white": "#FFFFFF",
+    "color_offwhite": "#F5F6F8",
+    "color_charcoal": "#17181C",
+    "color_slate": "#4B5563",
+    "color_slate_light": "#8A93A3",
+    "color_accent": "#2F5DFF",
+    "color_accent_dark": "#2148D6",
+    "color_border": "#E3E6EC",
+    "color_success": "#1E9E63",
+    "color_danger": "#E0453C",
+    "color_star": "#F5A623",
+    "font_heading": "space_grotesk_n6",
+    "font_body": "inter_n4",
+    "page_width": 1320,
+    "social_instagram_link": "https://www.instagram.com/",
+    "social_twitter_link": "https://twitter.com/",
+    "social_youtube_link": "https://www.youtube.com/",
+    "cart_free_shipping_threshold": 2999,
+    "cart_type_drawer": true,
+    "default_meta_description": "Shop Modix smartphones, laptops, wireless audio, smart home devices and wearables — precision engineering, real specs, and a 1-2 year warranty on every product.",
+    "enable_wishlist": true
+  },
+  "presets": {
+    "Modix Default": {
+      "logo_width": 130,
+      "color_white": "#FFFFFF",
+      "color_offwhite": "#F5F6F8",
+      "color_charcoal": "#17181C",
+      "color_slate": "#4B5563",
+      "color_slate_light": "#8A93A3",
+      "color_accent": "#2F5DFF",
+      "color_accent_dark": "#2148D6",
+      "color_border": "#E3E6EC",
+      "color_success": "#1E9E63",
+      "color_danger": "#E0453C",
+      "color_star": "#F5A623",
+      "font_heading": "space_grotesk_n6",
+      "font_body": "inter_n4",
+      "page_width": 1320,
+      "social_instagram_link": "https://www.instagram.com/",
+      "social_twitter_link": "https://twitter.com/",
+      "social_youtube_link": "https://www.youtube.com/",
+      "cart_free_shipping_threshold": 2999,
+      "cart_type_drawer": true,
+      "default_meta_description": "Shop Modix smartphones, laptops, wireless audio, smart home devices and wearables — precision engineering, real specs, and a 1-2 year warranty on every product.",
+      "enable_wishlist": true
+    }
+  }
+}

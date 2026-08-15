@@ -1,0 +1,239 @@
+{%- comment -%}
+  sections/main-page.liquid
+  Generic page template covering the demo's about.html / contact.html
+  layout. Renders page.content from Shopify Admin > Pages — never
+  hardcoded copy. A single "layout" setting switches between three visual
+  modes so About/Contact match the master demo pixel-for-pixel without
+  needing separate section files:
+    - "default": centered page-header + page.content rich text (Privacy,
+      Terms, generic pages)
+    - "about":   centered .about-hero intro + .stats-strip blocks +
+                 page.content + .value-grid blocks + native newsletter form
+                 (templates/page.about.json)
+    - "contact": .contact-grid — native Shopify {% form 'contact' %} +
+                 a block-based "Other Ways to Reach Us" info list
+                 (templates/page.contact.json)
+{%- endcomment -%}
+{%- render 'breadcrumb' -%}
+
+{%- if section.settings.layout == 'contact' -%}
+
+  <div class="page-header">
+    <div class="container">
+      <h1>{{ page.title }}</h1>
+      {%- if section.settings.intro_text != blank -%}<p class="page-header__intro">{{ section.settings.intro_text }}</p>{%- endif -%}
+    </div>
+  </div>
+
+  <div class="container section">
+    <div class="contact-grid">
+      <div>
+        <h2>Send a Message</h2>
+        {%- form 'contact', class: 'contact-form' -%}
+          {%- if form.posted_successfully? -%}
+            <p data-toast-on-load="success:{{ section.settings.form_success_message | escape }}"></p>
+          {%- endif -%}
+          <div class="form-row">
+            <div class="form-field"><label for="ContactFormName">Full Name</label><input type="text" id="ContactFormName" name="contact[name]" placeholder="Your name" value="{% if customer %}{{ customer.name }}{% endif %}" required></div>
+            <div class="form-field"><label for="ContactFormEmail">Email Address</label><input type="email" id="ContactFormEmail" name="contact[email]" placeholder="you@example.com" value="{% if customer %}{{ customer.email }}{% endif %}" required></div>
+          </div>
+          <div class="form-field">
+            <label for="ContactFormSubject">Reason for Contact</label>
+            <div class="select-wrap">
+              <select id="ContactFormSubject" name="contact[subject]" required>
+                <option value="" disabled selected>Select a reason</option>
+                {%- for option in section.settings.subject_options | split: ',' -%}
+                  <option value="{{ option | strip }}">{{ option | strip }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="ContactFormMessage">Message</label>
+            <textarea id="ContactFormMessage" name="contact[body]" placeholder="Tell us how we can help…" required minlength="10"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg btn-block">{{ section.settings.form_button_text }}</button>
+        {%- endform -%}
+      </div>
+
+      <div>
+        <h2>Other Ways to Reach Us</h2>
+        <div class="contact-info-list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'contact_info' -%}
+              <div class="contact-info-item" {{ block.shopify_attributes }}>
+                <div class="contact-info-item__icon">{%- render 'icon', icon: block.settings.icon, width: 20, height: 20 -%}</div>
+                <div>
+                  <h4>{{ block.settings.heading }}</h4>
+                  <p>{{ block.settings.body }}</p>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{%- elsif section.settings.layout == 'about' -%}
+
+  <section class="section" data-reveal>
+    <div class="container about-hero">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" style="justify-content:center;">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h1 style="margin-bottom:20px;">{{ page.title }}</h1>
+      {%- if section.settings.intro_text != blank -%}<p style="font-size:18px;max-width:60ch;margin:0 auto;">{{ section.settings.intro_text }}</p>{%- endif -%}
+    </div>
+  </section>
+
+  {%- assign stat_blocks = section.blocks | where: 'type', 'stat' -%}
+  {%- if stat_blocks.size > 0 -%}
+    <section class="section section--alt" data-reveal>
+      <div class="container">
+        <div class="stats-strip">
+          {%- for block in stat_blocks -%}
+            <div {{ block.shopify_attributes }}><strong>{{ block.settings.value }}</strong><span>{{ block.settings.label }}</span></div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- if page.content != blank -%}
+    <section class="section" data-reveal>
+      <div class="container rte" style="max-width:820px;">{{ page.content }}</div>
+    </section>
+  {%- endif -%}
+
+  {%- assign value_blocks = section.blocks | where: 'type', 'value_card' -%}
+  {%- if value_blocks.size > 0 -%}
+    <section class="section" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header__text">
+            {%- if section.settings.values_eyebrow != blank -%}<span class="eyebrow">{{ section.settings.values_eyebrow }}</span>{%- endif -%}
+            <h2>{{ section.settings.values_heading }}</h2>
+          </div>
+        </div>
+        <div class="value-grid">
+          {%- for block in value_blocks -%}
+            <div class="value-card" {{ block.shopify_attributes }}>
+              <div class="value-card__icon">{%- render 'icon', icon: block.settings.icon, width: 24, height: 24 -%}</div>
+              <h3>{{ block.settings.title }}</h3>
+              <p>{{ block.settings.body }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  <section class="section section--alt newsletter" data-reveal>
+    <div class="container">
+      <span class="eyebrow" style="justify-content:center;">Stay Updated</span>
+      <h2>Get early access to new Modix drops</h2>
+      <p>Product launches, firmware updates and members-only pricing — no spam, unsubscribe any time.</p>
+      {%- form 'customer', class: 'newsletter__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="AboutNewsletterEmail">Email address</label>
+        <input type="email" id="AboutNewsletterEmail" name="contact[email]" placeholder="you@example.com" required>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      {%- endform -%}
+    </div>
+  </section>
+
+{%- else -%}
+
+  <div class="page-header">
+    <div class="container">
+      <h1>{{ page.title }}</h1>
+    </div>
+  </div>
+  <div class="container section">
+    <div class="rte" style="max-width:760px;">{{ page.content }}</div>
+  </div>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Page layout",
+      "options": [
+        { "value": "default", "label": "Default (rich text)" },
+        { "value": "about", "label": "About (hero + stats + values + newsletter)" },
+        { "value": "contact", "label": "Contact (form + info list)" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "About layout"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Est. 2018 · Bengaluru" },
+    { "type": "textarea", "id": "intro_text", "label": "Intro text (About hero, or Contact page intro)" },
+    { "type": "text", "id": "values_eyebrow", "label": "Values eyebrow", "default": "What We Believe" },
+    { "type": "text", "id": "values_heading", "label": "Values heading", "default": "The three rules behind every Modix product" },
+    {
+      "type": "header",
+      "content": "Contact layout"
+    },
+    { "type": "text", "id": "form_button_text", "label": "Form button label", "default": "Send Message" },
+    { "type": "text", "id": "form_success_message", "label": "Success toast message", "default": "Our support team will reply within one business day." },
+    { "type": "text", "id": "subject_options", "label": "Subject dropdown options (comma separated)", "default": "Order status / tracking, Warranty claim, Returns & exchanges, Product question, Something else" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat (About)",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "2018" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Studio founded in Bengaluru" }
+      ]
+    },
+    {
+      "type": "value_card",
+      "name": "Value card (About)",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "check-circle", "label": "Check" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "home", "label": "Home" }
+          ],
+          "default": "check-circle"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Real specs, not rounded ones" },
+        { "type": "textarea", "id": "body", "label": "Body" }
+      ]
+    },
+    {
+      "type": "contact_info",
+      "name": "Contact info item (Contact)",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "account", "label": "Mail" },
+            { "value": "phone", "label": "Phone" },
+            { "value": "home", "label": "Location" },
+            { "value": "info-circle", "label": "Hours" }
+          ],
+          "default": "account"
+        },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Email Support" },
+        { "type": "richtext", "id": "body", "label": "Body" }
+      ]
+    }
+  ],
+  "max_blocks": 12
+}
+{% endschema %}

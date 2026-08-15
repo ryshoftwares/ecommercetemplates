@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="t13">
+  <title id="t13">Editorial still-life of a black structured VELORA leather tote bag against an ivory backdrop</title>
+  <defs>
+    <linearGradient id="ac1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7F3EC"/>
+      <stop offset="100%" stop-color="#E4D9C6"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#ac1)"/>
+  <ellipse cx="450" cy="820" rx="260" ry="40" fill="#0A0A0A" opacity="0.08"/>
+  <rect x="290" y="480" width="320" height="320" rx="18" fill="#0A0A0A"/>
+  <path d="M340 480 C 340 400 360 350 450 350 C 540 350 560 400 560 480" stroke="#0A0A0A" stroke-width="18" fill="none"/>
+  <rect x="290" y="480" width="320" height="40" fill="#2B2B2B"/>
+  <circle cx="360" cy="640" r="4" fill="#C9B79C"/>
+  <circle cx="540" cy="640" r="4" fill="#C9B79C"/>
+  <text x="450" y="960" font-family="Georgia, 'Playfair Display', serif" font-size="20" fill="#0A0A0A" opacity="0.55" text-anchor="middle" letter-spacing="5">VELORA — LEATHER TOTE</text>
+</svg>

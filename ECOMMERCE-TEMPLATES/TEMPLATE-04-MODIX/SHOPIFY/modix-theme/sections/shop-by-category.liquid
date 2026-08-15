@@ -1,0 +1,80 @@
+{%- comment -%}
+  sections/shop-by-category.liquid
+  Icon-forward category grid, ported 1:1 from the demo's .category-grid /
+  .category-card markup. Block-based so merchants can add/remove/reorder
+  categories; each block points at a real Shopify collection so the product
+  count is never hardcoded.
+{%- endcomment -%}
+<section class="section" data-reveal>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-header__text">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+    </div>
+    <div class="category-grid">
+      {%- for block in section.blocks -%}
+        {%- assign cat_collection = block.settings.collection -%}
+        <a class="category-card" href="{{ cat_collection.url | default: '#' }}" {{ block.shopify_attributes }}>
+          <div class="category-card__icon">{%- render 'icon', icon: block.settings.icon, width: 30, height: 30 -%}</div>
+          <h3>{{ block.settings.label | default: cat_collection.title }}</h3>
+          <span>{{ cat_collection.all_products_count | default: 0 }} Products</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop by category",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Shop by Category" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Everything you need, engineered together" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Five product families designed to work as one connected system, from your pocket to your living room." }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Label override", "info": "Leave blank to use the collection's title." },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "audio", "label": "Audio" },
+            { "value": "phone", "label": "Phone" },
+            { "value": "laptop", "label": "Laptop" },
+            { "value": "home", "label": "Home" },
+            { "value": "watch", "label": "Watch" }
+          ],
+          "default": "audio"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Shop by category",
+      "settings": {
+        "eyebrow": "Shop by Category",
+        "heading": "Everything you need, engineered together",
+        "subheading": "Five product families designed to work as one connected system, from your pocket to your living room."
+      },
+      "blocks": [
+        { "type": "category", "settings": { "label": "Audio", "icon": "audio" } },
+        { "type": "category", "settings": { "label": "Smartphones", "icon": "phone" } },
+        { "type": "category", "settings": { "label": "Laptops", "icon": "laptop" } },
+        { "type": "category", "settings": { "label": "Smart Home", "icon": "home" } },
+        { "type": "category", "settings": { "label": "Wearables", "icon": "watch" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

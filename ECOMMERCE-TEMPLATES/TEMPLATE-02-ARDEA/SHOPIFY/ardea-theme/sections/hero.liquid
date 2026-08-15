@@ -1,0 +1,158 @@
+{%- comment -%}
+  sections/hero.liquid
+  Ported 1:1 from the demo's .hero / .hero__grid / .hero__content /
+  .hero__media markup, including the two-line stacked heading (.line spans),
+  the floating .hero__media-tag price card, and the "Scroll to explore" cue.
+  The hero image is the LCP element: no loading="lazy", fetchpriority="high".
+{%- endcomment -%}
+<section class="hero container">
+  <div class="hero__grid">
+    <div class="hero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h1 class="hero__title">
+        {%- if section.settings.heading_line_1 != blank -%}<span class="line">{{ section.settings.heading_line_1 }}</span>{%- endif -%}
+        {%- if section.settings.heading_line_2 != blank -%}<span class="line">{{ section.settings.heading_line_2 }}</span>{%- endif -%}
+      </h1>
+      {%- if section.settings.lead != blank -%}
+        <p class="hero__lead lead">{{ section.settings.lead }}</p>
+      {%- endif -%}
+      <div class="hero__ctas">
+        {%- if section.settings.primary_cta_text != blank -%}
+          <a href="{{ section.settings.primary_cta_url }}" class="btn btn--primary">{{ section.settings.primary_cta_text }}</a>
+        {%- endif -%}
+        {%- if section.settings.secondary_cta_text != blank -%}
+          <a href="{{ section.settings.secondary_cta_url }}" class="btn btn--ghost">{{ section.settings.secondary_cta_text }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="hero__media">
+      {%- if section.settings.image -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          srcset="{{ section.settings.image | image_url: width: 700 }} 700w, {{ section.settings.image | image_url: width: 900 }} 900w, {{ section.settings.image | image_url: width: 1400 }} 1400w"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          alt="{{ section.settings.image.alt | default: section.settings.heading_line_1 | escape }}"
+          width="900" height="1125" fetchpriority="high">
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+      {%- if section.settings.tag_heading != blank -%}
+        <div class="hero__media-tag">
+          <strong>{{ section.settings.tag_heading }}</strong>
+          <p>{{ section.settings.tag_body }}</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+  {%- if section.settings.show_scroll_cue -%}
+    <div class="hero__scroll-cue"><span class="line"></span> {{ section.settings.scroll_cue_text }}</div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Ardea — Autumn Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading — line 1",
+      "default": "DESIGNED"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading — line 2",
+      "default": "FOR LIVING"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead paragraph",
+      "default": "Solid oak, walnut and stone furniture, hand-finished in small batches and built to be repaired, re-covered and passed on — not replaced every few years."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Primary button label",
+      "default": "Shop Collections"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_url",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary button label",
+      "default": "Explore Our Story"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_url",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Floating price tag card"
+    },
+    {
+      "type": "text",
+      "id": "tag_heading",
+      "label": "Tag heading",
+      "default": "Oak Lounge Chair"
+    },
+    {
+      "type": "text",
+      "id": "tag_body",
+      "label": "Tag body",
+      "default": "Steam-bent solid oak, undyed linen — from ₹32,900"
+    },
+    {
+      "type": "header",
+      "content": "Scroll cue"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_cue",
+      "label": "Show scroll cue",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "scroll_cue_text",
+      "label": "Scroll cue text",
+      "default": "Scroll to explore"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "settings": {
+        "eyebrow": "Ardea — Autumn Collection",
+        "heading_line_1": "DESIGNED",
+        "heading_line_2": "FOR LIVING",
+        "lead": "Solid oak, walnut and stone furniture, hand-finished in small batches and built to be repaired, re-covered and passed on — not replaced every few years.",
+        "primary_cta_text": "Shop Collections",
+        "secondary_cta_text": "Explore Our Story",
+        "tag_heading": "Oak Lounge Chair",
+        "tag_body": "Steam-bent solid oak, undyed linen — from ₹32,900"
+      }
+    }
+  ]
+}
+{% endschema %}

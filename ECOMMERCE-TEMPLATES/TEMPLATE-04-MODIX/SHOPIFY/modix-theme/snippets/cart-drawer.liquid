@@ -1,0 +1,33 @@
+{%- comment -%}
+  snippets/cart-drawer.liquid
+  Slide-in cart drawer shell, ported from the demo's .cart-drawer markup.
+  Contents are driven live by assets/cart.js against Shopify's AJAX Cart API
+  (/cart.js, /cart/add.js, /cart/change.js) — the Liquid below renders the
+  current server-side cart on first paint so there is no flash of an empty
+  drawer before JS runs.
+{%- endcomment -%}
+<aside class="cart-drawer" data-cart-drawer aria-label="{{ 'sections.cart.title' | t }}">
+  <div class="cart-drawer__header">
+    <h3>{{ 'sections.cart.title' | t }}</h3>
+    <button type="button" class="icon-btn" data-cart-close aria-label="{{ 'sections.header.close_menu' | t }}">
+      {%- render 'icon', icon: 'close', width: 20, height: 20 -%}
+    </button>
+  </div>
+  <div class="cart-drawer__progress" data-cart-drawer-progress></div>
+  <div class="cart-drawer__items" data-cart-drawer-items>
+    {%- if cart.item_count == 0 -%}
+      <div class="empty-state">
+        {%- render 'icon', icon: 'empty-cart', width: 56, height: 56 -%}
+        <h3>{{ 'sections.cart.empty' | t }}</h3>
+        <p>{{ 'sections.cart.empty_body' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">{{ 'general.continue_shopping' | t }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="cart-drawer__footer" data-cart-drawer-footer{% if cart.item_count == 0 %} style="display:none;"{% endif %}>
+    <div class="cart-drawer__subtotal"><span>{{ 'sections.cart.subtotal' | t }}</span><span data-cart-drawer-subtotal>{{ cart.total_price | money }}</span></div>
+    <a href="{{ routes.cart_url }}" class="btn btn-ghost btn-block">{{ 'sections.cart.view_cart' | t }}</a>
+    <a href="{{ routes.cart_url }}/checkout" class="btn btn-primary btn-block">{{ 'sections.cart.checkout' | t }}</a>
+  </div>
+</aside>
+<div class="overlay-scrim" data-cart-scrim></div>
